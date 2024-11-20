@@ -5,7 +5,6 @@ const Layout = () => {
   return (
     <div>
       <div>
-        {" "}
         {/* 헤더 부분 - 마무리할 때 삭제할 것!*/}
         <header style={{ padding: "10px", backgroundColor: "#f0f0f0" }}>
           <nav>
@@ -43,8 +42,8 @@ const Layout = () => {
           </nav>
         </header>
       </div>
-      <div className="flex min-h-screen items-center justify-center bg-blue-100">
-        <div className="flex min-h-screen w-[500px] justify-center bg-red-100">
+      <div className="flex min-h-screen justify-center bg-blue-100">
+        <div className="w-full max-w-lg overflow-hidden bg-white p-4 shadow-lg">
           {/* 페이지 콘텐츠를 보여주는 영역 */}
           <main>
             <Outlet />
