@@ -1,6 +1,7 @@
 // KakaoLoginButton.jsx
 import React from "react";
 import axios from "../utils/axios";
+import balloon from "../assets/images/balloon.svg";
 
 const KakaoLoginButton = () => {
   const handleKakaoLogin = () => {
@@ -47,11 +48,13 @@ const KakaoLoginButton = () => {
   };
 
   return (
-    <button
-      className="h-[60px] w-[400px] rounded-md bg-[#FEE500] font-Pretendard text-[20px] font-[700] text-black"
-      onClick={handleKakaoLogin}
-    >
-      카카오 로그인
+    // <button
+    //   className="h-[60px] w-[400px] rounded-md bg-[#FEE500] font-Pretendard text-[20px] font-[700] text-black"
+    //   onClick={handleKakaoLogin}
+    // >
+    <button className="flex items-center self-center mb-56 mt-auto w-4/5 h-14 rounded-[10px] bg-[#FEE500] cursor-pointer" onClick={handleKakaoLogin}>
+      <img src={balloon} alt="Speech Balloon" className="pl-8" />
+      <p className="text-2xl pl-20">카카오 로그인</p>
     </button>
   );
 };
