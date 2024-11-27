@@ -8,6 +8,12 @@ module.exports = {
         SBAggro: ['SBAggro'],
       },
     },
+    container : {
+      center : true,
+      screens : {
+        DEFAULT : '500px'
+      }
+    }
   },
   plugins: [],
 };
