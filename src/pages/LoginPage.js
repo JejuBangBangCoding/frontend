@@ -30,19 +30,19 @@ function LoginPage() {
     //   </div>
     // </div>
     <>
-      <Link to="/LandingPage" className="self-center mt-6 cursor-pointer">
-        <img src={upArrow1} alt="Up Arrow1" className="" />
+      <Link to="/LandingPage" className="self-center pt-4">
+        <img src={upArrow1} alt="Up Arrow1" className="w-[1.2rem] mb-[9rem]" />
       </Link>
-      <img src={textLogo} alt="Text Logo" className="self-center mt-44 w-72" />
-      <img src={smallLogo} alt="Small Logo" className="self-center pt-10 w-48" />
+      <img src={textLogo} alt="Text Logo" className="self-center w-[14.5rem] mb-8" />
+      <img src={smallLogo} alt="Small Logo" className="self-center w-40" />
       {/* <button className="flex items-center self-center mb-56 mt-auto w-4/5 h-14 rounded-[10px] bg-[#FEE500] cursor-pointer">
         <img src={balloon} alt="Speech Balloon" className="pl-8" />
         <p className="text-2xl pl-20">카카오 로그인</p> */}
         <KakaoLoginButton />
       {/* </button> */}
-      <div className="self-center mb-12 cursor-pointer">
+      <div className="self-center mb-10">
         <a href="https://github.com/JejuBangBangCoding" target="_blank" rel="noopener noreferrer">
-          <p className="text-[#C4C4C4] text-xs">Developed by <u>제주빵빵코딩단</u></p>
+          <p className="text-[#C4C4C4] text-[0.6rem]">Developed by <u>제주빵빵코딩단</u></p>
         </a>
       </div>
     </>

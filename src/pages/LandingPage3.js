@@ -11,25 +11,29 @@ const LandingPage3 = () => {
   
   return (
     <>
-    <div className="flex pt-12 gap-3 self-center">
-        <img src={whiteDot} alt="White Dot" className="" />
-        <img src={whiteDot} alt="White Dot" className="" />
-        <img src={grayDot} alt="Gray Dot" className="" />
+    <div className="flex pt-12 gap-2 self-center mb-[5.4rem]">
+        <img src={whiteDot} alt="White Dot" className="w-2" />
+        <img src={whiteDot} alt="White Dot" className="w-2" />
+        <img src={grayDot} alt="Gray Dot" className="w-2" />
     </div>
-    <img src={smallLogo} alt="Small Logo" className="self-center pt-28" />
-    <div className="relative text-xl text-center pt-8 leading-[2.5em]">
+    <img src={smallLogo} alt="Small Logo" className="self-center w-[5.5rem] mb-7" />
+    <div className="text-[1rem] font-semibold text-center leading-[2.5em]">
       <p className="">'놀앙뭐하젠'은</p>
       <p className=""><strong>여행객에게</strong> 제주 여행과 용돈벌이를</p>
       <p className="">동시에 할 수 있도록 돕는</p>
-      <p className="">일석이조 서비스인 동시에,</p>
-      <Link to="/LandingPage2" className="absolute bottom-36 left-[1.4rem] cursor-pointer">
-        <img src={leftArrow2} alt="Left Arrow2" className="" />
-      </Link>
-      <p className="pt-14"><strong>1차 산업 종사자</strong>에게는</p>
+    </div>
+    <div className="relative mt-auto mb-[3.1rem]">
+        <Link to="/LandingPage2" className="">
+          <img src={leftArrow2} alt="Left Arrow2" className="w-[1.2rem] absolute left-[0.7rem]" />
+        </Link>
+      <p className="text-[1rem] font-semibold absolute left-[7.4rem]">일석이조 서비스인 동시에,</p>
+    </div>
+    <div className="text-[1rem] font-semibold text-center leading-[2.5em] mb-[6.8rem]">
+      <p className=""><strong>1차 산업 종사자</strong>에게는</p>
       <p className="">노동력을 제공받을 수 있도록 돕는 플랫폼입니다.</p>
     </div>
-    <Link to="/LoginPage" className="self-center mt-auto mb-44">
-      <button className="w-44 h-12 rounded-[10px] border-2 border-[#FFA500] text-[#FFA500] hover:bg-[#FFA500] hover:text-white hover:shadow-xl">시작하기</button>
+    <Link to="/LoginPage" className="self-center">
+      <button className="w-[10rem] h-10 rounded-[10px] border-2 border-[#FFA500] text-[#FFA500] hover:bg-[#FFA500] text-[0.8rem] font-semibold hover:text-white hover:shadow-xl mb-36">시작하기</button>
     </Link>
   </>
   );

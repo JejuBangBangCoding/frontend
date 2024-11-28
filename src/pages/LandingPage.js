@@ -21,15 +21,15 @@ function LandingPage() {
     //   </button>
     // </div>
     <>
-      <div className="flex pt-12 gap-3 self-center">
-        <img src={grayDot} alt="Gray Dot" className="" />
-        <img src={whiteDot} alt="White Dot" className="" />
-        <img src={whiteDot} alt="White Dot" className="" />
+      <div className="flex pt-12 gap-2 self-center mb-[5.4rem]">
+        <img src={grayDot} alt="Gray Dot" className="w-2" />
+        <img src={whiteDot} alt="White Dot" className="w-2" />
+        <img src={whiteDot} alt="White Dot" className="w-2" />
       </div>
-      <img src={textLogo} alt="Text Logo" className="self-center mt-32" />
+      <img src={textLogo} alt="Text Logo" className="self-center w-[18.7rem]" />
       <div className="relative mt-auto">
         <img src={mainLogo} alt="Main Logo" className="w-full" />
-        <Link to="/LandingPage2" className="absolute bottom-2/3 right-5 cursor-pointer">
+        <Link to="/LandingPage2" className="absolute bottom-[25.2rem] right-[0.7rem] w-[1.2rem]">
           <img src={rightArrow2} alt="Right Arrow2" className="" />
         </Link>
       </div>
