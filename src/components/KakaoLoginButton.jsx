@@ -52,9 +52,9 @@ const KakaoLoginButton = () => {
     //   className="h-[60px] w-[400px] rounded-md bg-[#FEE500] font-Pretendard text-[20px] font-[700] text-black"
     //   onClick={handleKakaoLogin}
     // >
-    <button className="flex items-center self-center mb-56 mt-auto w-4/5 h-14 rounded-[10px] bg-[#FEE500] cursor-pointer" onClick={handleKakaoLogin}>
-      <img src={balloon} alt="Speech Balloon" className="pl-8" />
-      <p className="text-2xl pl-20">카카오 로그인</p>
+    <button className="flex items-center self-center mt-auto w-4/5 h-[3rem] rounded-[10px] bg-[#FEE500] mb-44" onClick={handleKakaoLogin}>
+      <img src={balloon} alt="Speech Balloon" className="w-[1.825rem] ml-[1.6rem]" />
+      <p className="text-[1.45rem] pl-12">카카오 로그인</p>
     </button>
   );
 };
