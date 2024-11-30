@@ -1,16 +1,10 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function FarmListPage() {
   const navigate = useNavigate();
-
-  const farms = [
-    { id: 1, name: "농장 1", description: "제주도 농장 1 설명" },
-    { id: 2, name: "농장 2", description: "제주도 농장 2 설명" },
-    { id: 3, name: "농장 3", description: "제주도 농장 3 설명" },
-    { id: 4, name: "농장 4", description: "제주도 농장 4 설명" },
-    { id: 5, name: "농장 5", description: "제주도 농장 5 설명" },
-  ];
+  const location = useLocation();
+  const { recommendations } = location.state || {};
 
   const handleFarmClick = (farm) => {
     navigate("/farmdetailedpage", { state: { farm } });
@@ -19,18 +13,32 @@ function FarmListPage() {
   return (
     <div>
       <h1 className="text-4xl font-bold text-purple-600">FarmListPage</h1>
-      <div className="bg-yellow-200 p-5">
-        {farms.map((farm) => (
-          <div
-            key={farm.id}
-            className="mb-4 cursor-pointer rounded bg-white p-4 shadow"
-            onClick={() => handleFarmClick(farm)}
-          >
-            <h2 className="text-2xl font-semibold">{farm.name}</h2>
-            <p>{farm.description}</p>
-          </div>
-        ))}
-      </div>
+      {recommendations && recommendations.length > 0 ? (
+        <ul className="mt-6 space-y-4">
+          {recommendations.map((farm) => (
+            <li
+              key={farm.id}
+              onClick={() => handleFarmClick(farm)}
+              className="cursor-pointer rounded border bg-white p-4 shadow hover:bg-gray-100"
+            >
+              <h3 className="text-lg font-bold">{farm.title}</h3>
+              <p>농장 이름: {farm.farm_name}</p>
+              <p>위치: {farm.location}</p>
+              {farm.image_url && (
+                <img
+                  src={farm.image_url}
+                  alt={farm.title}
+                  className="mt-2 h-40 w-full rounded object-cover"
+                />
+              )}
+              <p>매칭 점수: {farm.match_score}</p>
+              <p>추천 이유: {farm.reason}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="mt-4 text-gray-600">추천된 농장 정보가 없습니다.</p>
+      )}
     </div>
   );
 }
