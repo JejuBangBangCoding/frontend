@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # CI
+      # CI 단계
       - name: Set up SSH for GitHub
         run: |
           mkdir -p ~/.ssh
@@ -30,12 +30,15 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Build Docker image
-        run: docker build -t kjeok/jebbangco_frontend:latest .
+        run: |
+          docker build \
+            --build-arg ENV="${{ secrets.ENV }}" \
+            -t kjeok/jebbangco_frontend:latest .
 
       - name: Push Docker image to Docker Hub
         run: docker push kjeok/jebbangco_frontend:latest
 
-      # CD
+      # CD 단계
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
@@ -72,6 +75,7 @@ jobs:
             docker run -d --name jebbangco_frontend \
               --network jebbangco_network \
               -p 3000:3000 \
+              -e ENV="${{ secrets.ENV }}" \
               kjeok/jebbangco_frontend:latest
 
             # 컨테이너 상태 확인
