@@ -49,14 +49,33 @@ jobs:
           port: 22
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-            # 컨테이너 중지 및 제거
-            docker stop jebbangco_frontend || true
-            docker rm jebbangco_frontend || true
+            # 기존 컨테이너 확인 및 안전한 종료
+            if docker ps -q --filter "name=jebbangco_frontend"; then
+              docker stop jebbangco_frontend
+              docker rm jebbangco_frontend
+            fi
+
+            # 사용 중인 포트 강제 해제 (3000번 포트)
+            if lsof -i :3000 | grep LISTEN; then
+              fuser -k 3000/tcp
+            fi
 
             # 최신 이미지 가져오기
             docker pull kjeok/jebbangco_frontend:latest
 
+            # 네트워크 보장 (네트워크가 없으면 생성)
+            if ! docker network ls | grep jebbangco_network; then
+              docker network create jebbangco_network
+            fi
+
             # 새 컨테이너 실행
             docker run -d --name jebbangco_frontend \
+              --network jebbangco_network \
               -p 3000:3000 \
               kjeok/jebbangco_frontend:latest
+
+            # 컨테이너 상태 확인
+            docker ps --filter "name=jebbangco_frontend"
+
+            # 컨테이너 로그 출력 (디버깅용)
+            docker logs jebbangco_frontend
