@@ -14,8 +14,10 @@ function AiPage() {
   const [endDate, setEndDate] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [industry, setIndustry] = useState("상관없음");
-  const [accommodation, setAccommodation] = useState("상관없음");
+  const [selectedIndustries, setSelectedIndustries] = useState([]);
+  const [selectedWorkTypes, setSelectedWorkTypes] = useState([]);
+  const [provideMeal, setProvideMeal] = useState(false);
+  const [provideLodging, setProvideLodging] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { region } = location.state || {};
@@ -26,6 +28,63 @@ function AiPage() {
     setStartDate(start);
     setEndDate(end);
   };
+
+  // 업종 선택 핸들러
+  const handleIndustryClick = (industry) => {
+    if (industry === "상관없음") {
+      setSelectedIndustries([]);
+    } else {
+      setSelectedIndustries((prev) => {
+        if (prev.includes(industry)) {
+          // 이미 선택된 업종을 다시 클릭하면 해제
+          return prev.filter((item) => item !== industry);
+        } else {
+          // 새로 선택한 업종을 추가
+          return [...prev.filter((item) => item !== "상관없음"), industry];
+        }
+      });
+    }
+  };
+
+  // 상관없음 상태 설정
+  const isNoIndustrySelected = selectedIndustries.length === 0;
+
+  // 숙식 제공 여부 선택 핸들러
+  const handleAccommodationClick = (option) => {
+    if (option === "상관없음") {
+      setProvideMeal(false);
+      setProvideLodging(false);
+    } else {
+      if (option === "식사") {
+        setProvideMeal((prev) => !prev);
+      } else if (option === "숙소") {
+        setProvideLodging((prev) => !prev);
+      }
+    }
+  };
+
+  // 상관없음 버튼 상태 설정
+  const isNoPreferenceSelected = !provideMeal && !provideLodging;
+
+  // 근무형태 선택 핸들러
+  const handleWorkTypeClick = (workType) => {
+    if (workType === "상관없음") {
+      setSelectedWorkTypes([]);
+    } else {
+      setSelectedWorkTypes((prev) => {
+        if (prev.includes(workType)) {
+          // 이미 선택된 근무형태를 다시 클릭하면 해제
+          return prev.filter((item) => item !== workType);
+        } else {
+          // 새로 선택한 근무형태를 추가
+          return [...prev.filter((item) => item !== "상관없음"), workType];
+        }
+      });
+    }
+  };
+
+  // 상관없음 상태 설정
+  const isNoWorkTypeSelected = selectedWorkTypes.length === 0;
 
   // AI 추천 API 요청 핸들러
   const handleGetRecommendations = async () => {
@@ -44,8 +103,12 @@ function AiPage() {
       // 백엔드로 보낼 데이터 구성
       const requestData = {
         text: userInput,
-        industry: industry,
-        accommodation: accommodation,
+        industry:
+          selectedIndustries.length > 0 ? selectedIndustries : ["상관없음"],
+        work_type:
+          selectedWorkTypes.length > 0 ? selectedWorkTypes : ["상관없음"],
+        provide_meal: provideMeal,
+        provide_lodging: provideLodging,
         start_date: formattedStartDate,
         end_date: formattedEndDate,
       };
@@ -89,22 +152,29 @@ function AiPage() {
     return false;
   };
 
+  // 숙박 기간 계산
+  const calculateStayPeriod = () => {
+    if (startDate && endDate) {
+      const diffTime = Math.abs(endDate - startDate);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return `${diffDays}박 ${diffDays + 1}일`;
+    }
+    return "";
+  };
+
   return (
     <>
       {/* 헤더 (시작)) */}
-        <div className="flex mt-6">
-          <img src={leftArrow1} alt="Left Arrow" className="w-[1.3rem] cursor-pointer" />
-          <img src={textLogo} alt="Text Logo" className="w-[6rem]" />
-        </div>
+      <div className="mt-6 flex">
+        <img
+          src={leftArrow1}
+          alt="Left Arrow"
+          className="w-[1.3rem] cursor-pointer"
+          onClick={() => navigate("/mainpage")} // 클릭 시 MainPage로 이동
+        />
+        <img src={textLogo} alt="Text Logo" className="w-[6rem]" />
+      </div>
       {/* 헤더 (끝)) */}
-
-      {/* 지역 정보 (시작) */}
-      {/* {region && (
-        <div className="mt-4 rounded bg-gray-100 p-4">
-          <h2 className="text-2xl font-semibold">지역 정보: {region.name}</h2>
-        </div>
-      )} */}
-      {/* 지역 정보 (끝) */}
 
       {/* 선택 (시작) */}
       {!contentChanged && (
@@ -125,13 +195,13 @@ function AiPage() {
 
           {/* 날짜 선택 (시작) */}
           {startDate && endDate && (
-          <div className="mt-4">
-            <h1 className="text-xl font-semibold">선택한 기간</h1>
-            <p>
-              {startDate.toLocaleDateString()}
-              ~ {endDate.toLocaleDateString()}
-            </p>
-          </div>
+            <div className="mt-4">
+              <h1 className="text-xl font-semibold">날짜</h1>
+              <p>
+                {startDate.toLocaleDateString()} ~{" "}
+                {endDate.toLocaleDateString()} [{calculateStayPeriod()}]
+              </p>
+            </div>
           )}
           {/* 날짜 선택 (끝) */}
 
@@ -139,12 +209,69 @@ function AiPage() {
           <div className="mt-4">
             <h2 className="text-xl font-semibold">업종</h2>
             <div className="mt-2 flex space-x-2">
-              {["귤", "당근", "감자", "마늘", "양파", "상관없음"].map((type) => (
+              {["귤", "당근", "감자", "마늘", "양파", "상관없음"].map(
+                (type) => (
+                  <button
+                    key={type}
+                    onClick={() => handleIndustryClick(type)}
+                    className={`rounded border px-4 py-2 ${
+                      selectedIndustries.includes(type) ||
+                      (type === "상관없음" && isNoIndustrySelected)
+                        ? "bg-[#FFDB99]"
+                        : "bg-white"
+                    }`}
+                  >
+                    {type}
+                  </button>
+                ),
+              )}
+            </div>
+          </div>
+          {/* 업종 선택 (끝)*/}
+
+          {/* 숙식 제공 여부 선택 (시작) */}
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold">숙식 제공 여부</h2>
+            <div className="mt-2 flex space-x-2">
+              <button
+                onClick={() => handleAccommodationClick("식사")}
+                className={`rounded border px-4 py-2 ${
+                  provideMeal ? "bg-[#FFDB99]" : "bg-white"
+                }`}
+              >
+                식사
+              </button>
+              <button
+                onClick={() => handleAccommodationClick("숙소")}
+                className={`rounded border px-4 py-2 ${
+                  provideLodging ? "bg-[#FFDB99]" : "bg-white"
+                }`}
+              >
+                숙소
+              </button>
+              <button
+                onClick={() => handleAccommodationClick("상관없음")}
+                className={`rounded border px-4 py-2 ${
+                  isNoPreferenceSelected ? "bg-[#FFDB99]" : "bg-white"
+                }`}
+              >
+                상관없음
+              </button>
+            </div>
+          </div>
+          {/* 숙식 제공 여부 선택 (끝) */}
+
+          {/* 근무형태 선택 (시작) */}
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold">근무형태</h2>
+            <div className="mt-2 flex space-x-2">
+              {["주5일", "격일근무", "격주근무", "상관없음"].map((type) => (
                 <button
                   key={type}
-                  onClick={() => setIndustry(type)}
+                  onClick={() => handleWorkTypeClick(type)}
                   className={`rounded border px-4 py-2 ${
-                    industry === type
+                    selectedWorkTypes.includes(type) ||
+                    (type === "상관없음" && isNoWorkTypeSelected)
                       ? "bg-[#FFDB99]"
                       : "bg-white"
                   }`}
@@ -154,28 +281,7 @@ function AiPage() {
               ))}
             </div>
           </div>
-          {/* 업종 선택 (끝)*/}
-
-          {/* 숙식 제공 여부 선택 (시작) */}
-          <div className="mt-4">
-            <h2 className="text-xl font-semibold">숙식 제공 여부</h2>
-            <div className="mt-2 flex space-x-2">
-              {["식사", "숙소", "상관없음"].map((option) => (
-                <button
-                  key={option}
-                  onClick={() => setAccommodation(option)}
-                  className={`rounded border px-4 py-2 ${
-                    accommodation === option
-                      ? "bg-[#FFDB99]"
-                      : "bg-white"
-                  }`}
-                >
-                  {option}
-                </button>
-              ))}
-            </div>
-          </div>
-          {/* 숙식 제공 여부 선택 (시작) */}
+          {/* 근무형태 선택 (끝) */}
         </div>
       )}
       {/* 선택 (끝) */}
@@ -194,28 +300,28 @@ function AiPage() {
       {/* AI 추천 (끝) */}
 
       {/* 버튼 (시작) */}
-        <div className="flex justify-around mt-auto mb-[1.875rem]">
-          {/* 버튼 - 왼쪽 (시작) */}
-          <button className="flex justify-center items-center gap-3 bg-[#E8E8E8] cursor-pointer px-[2.7rem] py-[1.625rem] rounded-3xl">
-            <img src={refresh} alt="Refresh" className="w-[1.2rem]" />
-            <p className="font-normal text-xl">초기화</p>
-          </button>
-          {/* 버튼 - 왼쪽 (끝) */}
+      <div className="mb-[1.875rem] mt-auto flex justify-around">
+        {/* 버튼 - 왼쪽 (시작) */}
+        <button className="flex cursor-pointer items-center justify-center gap-3 rounded-3xl bg-[#E8E8E8] px-[2.7rem] py-[1.625rem]">
+          <img src={refresh} alt="Refresh" className="w-[1.2rem]" />
+          <p className="text-xl font-normal">초기화</p>
+        </button>
+        {/* 버튼 - 왼쪽 (끝) */}
 
-          {/* 버튼 - 오른쪽 (시작) */}
-          <button
-            onClick={handleClick}
-            className={`mt-4 p-1 cursor-pointer text-white ${
-              isPeriodValid() || contentChanged
-                ? "bg-blue-500"
-                : "cursor-not-allowed bg-gray-300"
-            }`}
-            disabled={!isPeriodValid() && !contentChanged}
-          >
-            {contentChanged ? "추천받기" : "다음"}
-          </button>
-          {/* 버튼 - 오른쪽 (끝) */}
-        </div>
+        {/* 버튼 - 오른쪽 (시작) */}
+        <button
+          onClick={handleClick}
+          className={`mt-4 cursor-pointer p-1 text-white ${
+            isPeriodValid() || contentChanged
+              ? "bg-blue-500"
+              : "cursor-not-allowed bg-gray-300"
+          }`}
+          disabled={!isPeriodValid() && !contentChanged}
+        >
+          {contentChanged ? "추천받기" : "다음"}
+        </button>
+        {/* 버튼 - 오른쪽 (끝) */}
+      </div>
       {/* 버튼 (끝) */}
 
       {loading && (
