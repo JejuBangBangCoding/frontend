@@ -8,12 +8,13 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-# 모든 소스 코드 복사
-COPY . .
-
 # ARG로 환경 변수 전달
 ARG ENV
-ENV ENV=$ENV
+# .env 파일 생성
+RUN echo "$ENV" > .env
+
+# 모든 소스 코드 복사
+COPY . .
 
 # 리액트 애플리케이션 빌드
 RUN npm run build
