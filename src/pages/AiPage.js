@@ -162,19 +162,32 @@ function AiPage() {
     return "";
   };
 
+  // 초기화 함수
+  const handleReset = () => {
+    setContentChanged(false);
+    setUserInput("");
+    setStartDate(null);
+    setEndDate(null);
+    setSelectedIndustries([]);
+    setSelectedWorkTypes([]);
+    setProvideMeal(false);
+    setProvideLodging(false);
+    setError(null);
+  };
+
   return (
     <>
-      {/* 헤더 (시작)) */}
-      <div className="mt-6 flex">
-        <img
-          src={leftArrow1}
-          alt="Left Arrow"
-          className="w-[1.3rem] cursor-pointer"
-          onClick={() => navigate("/mainpage")} // 클릭 시 MainPage로 이동
+      {/* 헤더 (시작) */}
+    <div className="flex justify-center mt-6 items-center relative">
+      <img
+        src={leftArrow1}
+        alt="Left Arrow"
+        className="w-[1.2rem] cursor-pointer absolute left-4"
+        onClick={() => navigate("/mainpage")}
         />
-        <img src={textLogo} alt="Text Logo" className="w-[6rem]" />
-      </div>
-      {/* 헤더 (끝)) */}
+      <img src={textLogo} alt="Text logo" className="w-[6rem]" />
+    </div>
+    {/* 헤더 (끝) */}
 
       {/* 선택 (시작) */}
       {!contentChanged && (
@@ -199,7 +212,7 @@ function AiPage() {
               <h1 className="text-xl font-semibold">날짜</h1>
               <p>
                 {startDate.toLocaleDateString()} ~{" "}
-                {endDate.toLocaleDateString()} [{calculateStayPeriod()}]
+                {endDate.toLocaleDateString()} ({calculateStayPeriod()})
               </p>
             </div>
           )}
@@ -302,19 +315,22 @@ function AiPage() {
       {/* 버튼 (시작) */}
       <div className="mb-[1.875rem] mt-auto flex justify-around">
         {/* 버튼 - 왼쪽 (시작) */}
-        <button className="flex cursor-pointer items-center justify-center gap-3 rounded-3xl bg-[#E8E8E8] px-[2.7rem] py-[1.625rem]">
+        <button
+          onClick={handleReset}
+          className="flex cursor-pointer items-center justify-center gap-3 rounded-2xl bg-[#E8E8E8] px-[2rem] py-[1.1rem]"
+        >
           <img src={refresh} alt="Refresh" className="w-[1.2rem]" />
-          <p className="text-xl font-normal">초기화</p>
+          <p className="text-lg font-normal">초기화</p>
         </button>
         {/* 버튼 - 왼쪽 (끝) */}
 
         {/* 버튼 - 오른쪽 (시작) */}
         <button
           onClick={handleClick}
-          className={`mt-4 cursor-pointer p-1 text-white ${
+          className={`cursor-pointer px-[5.5rem] text-white text-xl ${
             isPeriodValid() || contentChanged
               ? "bg-blue-500"
-              : "cursor-not-allowed bg-gray-300"
+              : "cursor-not-allowed bg-[#FFA500] rounded-2xl"
           }`}
           disabled={!isPeriodValid() && !contentChanged}
         >
