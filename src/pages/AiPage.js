@@ -3,6 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import leftArrow1 from "../assets/images/leftArrow1.svg";
+import textLogo from "../assets/images/textLogo.svg";
+import refresh from "../assets/images/refresh.svg";
 
 function AiPage() {
   const [contentChanged, setContentChanged] = useState(false);
@@ -87,17 +90,26 @@ function AiPage() {
   };
 
   return (
-    <div>
-      <h1 className="text-4xl font-bold text-blue-600">AiPage</h1>
-      {region && (
+    <>
+      {/* 헤더 (시작)) */}
+        <div className="flex mt-6">
+          <img src={leftArrow1} alt="Left Arrow" className="w-[1.3rem] cursor-pointer" />
+          <img src={textLogo} alt="Text Logo" className="w-[6rem]" />
+        </div>
+      {/* 헤더 (끝)) */}
+
+      {/* 지역 정보 (시작) */}
+      {/* {region && (
         <div className="mt-4 rounded bg-gray-100 p-4">
           <h2 className="text-2xl font-semibold">지역 정보: {region.name}</h2>
         </div>
-      )}
+      )} */}
+      {/* 지역 정보 (끝) */}
 
+      {/* 선택 (시작) */}
       {!contentChanged && (
-        <div className="mt-4">
-          <h2 className="text-xl font-semibold">기간 선택:</h2>
+        <div className="mt-10">
+          {/* 캘린더 (시작) */}
           <DatePicker
             selected={startDate}
             onChange={handleDateChange}
@@ -106,22 +118,35 @@ function AiPage() {
             selectsRange
             inline
             key={`${startDate}-${endDate}`}
-            className="mt-2"
+            className=""
             minDate={new Date()}
           />
+          {/* 캘린더 (끝) */}
 
-          {/* 업종 선택 */}
+          {/* 날짜 선택 (시작) */}
+          {startDate && endDate && (
           <div className="mt-4">
-            <h2 className="text-xl font-semibold">업종 선택:</h2>
+            <h1 className="text-xl font-semibold">선택한 기간</h1>
+            <p>
+              {startDate.toLocaleDateString()}
+              ~ {endDate.toLocaleDateString()}
+            </p>
+          </div>
+          )}
+          {/* 날짜 선택 (끝) */}
+
+          {/* 업종 선택 (시작)*/}
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold">업종</h2>
             <div className="mt-2 flex space-x-2">
-              {["농업", "어업", "축산업", "상관없음"].map((type) => (
+              {["귤", "당근", "감자", "마늘", "양파", "상관없음"].map((type) => (
                 <button
                   key={type}
                   onClick={() => setIndustry(type)}
                   className={`rounded border px-4 py-2 ${
                     industry === type
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 text-black"
+                      ? "bg-[#FFDB99]"
+                      : "bg-white"
                   }`}
                 >
                   {type}
@@ -129,19 +154,20 @@ function AiPage() {
               ))}
             </div>
           </div>
+          {/* 업종 선택 (끝)*/}
 
-          {/* 숙식 제공 여부 선택 */}
+          {/* 숙식 제공 여부 선택 (시작) */}
           <div className="mt-4">
-            <h2 className="text-xl font-semibold">숙식 제공 여부:</h2>
+            <h2 className="text-xl font-semibold">숙식 제공 여부</h2>
             <div className="mt-2 flex space-x-2">
-              {["숙식제공", "숙식만", "숙박만", "상관없음"].map((option) => (
+              {["식사", "숙소", "상관없음"].map((option) => (
                 <button
                   key={option}
                   onClick={() => setAccommodation(option)}
                   className={`rounded border px-4 py-2 ${
                     accommodation === option
-                      ? "bg-green-500 text-white"
-                      : "bg-gray-200 text-black"
+                      ? "bg-[#FFDB99]"
+                      : "bg-white"
                   }`}
                 >
                   {option}
@@ -149,19 +175,12 @@ function AiPage() {
               ))}
             </div>
           </div>
+          {/* 숙식 제공 여부 선택 (시작) */}
         </div>
       )}
+      {/* 선택 (끝) */}
 
-      {startDate && endDate && (
-        <div className="mt-4">
-          <h2 className="text-lg font-semibold">선택한 기간:</h2>
-          <p>
-            시작 날짜: {startDate.toLocaleDateString()} <br />
-            종료 날짜: {endDate.toLocaleDateString()}
-          </p>
-        </div>
-      )}
-
+      {/* AI 추천 (시작) */}
       {contentChanged && (
         <div className="mt-4">
           <textarea
@@ -172,25 +191,39 @@ function AiPage() {
           />
         </div>
       )}
+      {/* AI 추천 (끝) */}
 
-      <button
-        onClick={handleClick}
-        className={`mt-4 px-4 py-2 text-white ${
-          isPeriodValid() || contentChanged
-            ? "bg-blue-500"
-            : "cursor-not-allowed bg-gray-300"
-        }`}
-        disabled={!isPeriodValid() && !contentChanged}
-      >
-        {contentChanged ? "추천받기" : "다음"}
-      </button>
+      {/* 버튼 (시작) */}
+        <div className="flex justify-around mt-auto mb-[1.875rem]">
+          {/* 버튼 - 왼쪽 (시작) */}
+          <button className="flex justify-center items-center gap-3 bg-[#E8E8E8] cursor-pointer px-[2.7rem] py-[1.625rem] rounded-3xl">
+            <img src={refresh} alt="Refresh" className="w-[1.2rem]" />
+            <p className="font-normal text-xl">초기화</p>
+          </button>
+          {/* 버튼 - 왼쪽 (끝) */}
+
+          {/* 버튼 - 오른쪽 (시작) */}
+          <button
+            onClick={handleClick}
+            className={`mt-4 p-1 cursor-pointer text-white ${
+              isPeriodValid() || contentChanged
+                ? "bg-blue-500"
+                : "cursor-not-allowed bg-gray-300"
+            }`}
+            disabled={!isPeriodValid() && !contentChanged}
+          >
+            {contentChanged ? "추천받기" : "다음"}
+          </button>
+          {/* 버튼 - 오른쪽 (끝) */}
+        </div>
+      {/* 버튼 (끝) */}
 
       {loading && (
         <p className="mt-4 text-blue-500">추천 정보를 불러오는 중입니다...</p>
       )}
 
       {error && <p className="mt-4 text-red-500">{error}</p>}
-    </div>
+    </>
   );
 }
 
