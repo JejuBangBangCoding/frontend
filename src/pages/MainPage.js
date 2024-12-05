@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import norangMohagen from "../assets/images/norangMohagen.svg";
 import userProfile from "../assets/images/userProfile.svg";
 import questionMark from "../assets/images/questionMark.svg";
+import userProfilePlaceholder from "../assets/images/userProfile.svg";
 import map1 from "../assets/images/map1.svg";
 import map2 from "../assets/images/map2.svg";
 import map3 from "../assets/images/map3.svg";
@@ -26,23 +28,45 @@ import bulb from "../assets/images/bulb.svg";
 import hang from "../assets/images/hang.svg";
 
 function MainPage() {
+  const [user, setUser] = useState(null);
+  const [selectedRegion, setSelectedRegion] = useState(null); // 선택된 지역 이름 상태 추가
+  const [farms, setFarms] = useState([]); // API에서 가져온 농장 리스트 상태 추가
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const regions = [
-    { id: 1, name: "한경면", farms: "한경면 농장 정보" },
-    { id: 2, name: "한림읍", farms: "한림읍 농장 정보" },
-    { id: 3, name: "애월읍", farms: "애월읍 농장 정보" },
-    { id: 4, name: "제주시", farms: "애월 농장 정보" },
-    { id: 5, name: "조천읍", farms: "애월읍 농장 정보" },
-    { id: 6, name: "구좌읍", farms: "한경면 농장 정보" },
-    { id: 7, name: "대정읍", farms: "한림읍 농장 정보" },
-    { id: 8, name: "안덕면", farms: "애월 농장 정보" },
-    { id: 9, name: "중문", farms: "애월읍 농장 정보" },
-    { id: 10, name: "서귀포시", farms: "한경면 농장 정보" },
-    { id: 11, name: "남원읍", farms: "한림읍 농장 정보" },
-    { id: 12, name: "표선면", farms: "애월 농장 정보" },
-    { id: 13, name: "성산읍", farms: "성산읍 농장 정보" },
-  ];
+  useEffect(() => {
+    // 로컬 스토리지에서 사용자 정보를 가져옴
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      setUser(JSON.parse(userData));
+    } else {
+      // 로그인 정보가 없으면 로그인 페이지로 이동
+      navigate("/login");
+    }
+  }, [navigate]);
+
+  // 특정 지역 클릭 시 API 호출 핸들러
+  const handleMapClick = async (regionName) => {
+    setSelectedRegion(regionName);
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.get(
+        "http://52.78.130.126:8000/api/board/location/",
+        {
+          params: { location: regionName },
+        },
+      );
+      setFarms(response.data); // 응답 데이터를 farms 상태로 설정
+    } catch (err) {
+      console.error("지역 농장 정보를 불러오는 중 오류가 발생했습니다:", err);
+      setError("지역 농장 정보를 불러오는 중 오류가 발생했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleAiRecommendationClick = () => {
     navigate("/aipage"); // AI 추천 페이지로 이동
@@ -50,18 +74,22 @@ function MainPage() {
 
   const handleReservationClick = () => {
     navigate("/myreservationpage");
-  }
+  };
 
   return (
     <>
-      {/* 헤더 (시작)*/}
+      {/* 헤더 (시작) */}
       <div className="mb-5 mt-6 flex justify-between">
         <img
           src={norangMohagen}
           alt="norangMohagen"
           className="ml-7 w-[6rem]"
         />
-        <img src={userProfile} alt="User Profile" className="mr-7 w-[2.5rem]" />
+        <img
+          src={user?.profileImage || userProfilePlaceholder}
+          alt="User Profile"
+          className="mr-7 w-[2.5rem] rounded-full"
+        />
       </div>
       {/* 헤더 (끝)*/}
 
@@ -77,110 +105,111 @@ function MainPage() {
 
       {/* 지도 (시작) */}
       <div className="relative my-2 flex">
-          <img
-            src={map1}
-            alt="한경면"
-            className="absolute left-[2.5rem] top-24 w-[3rem]"
-          />
-          <p className="absolute left-[2.9rem] top-[7.1rem] text-[0.675rem] font-thin cursor-pointer">
-            한경면
-          </p>
-          <img
-            src={map2}
-            alt="한림읍"
-            className="absolute left-[4rem] top-[4.3rem] w-[4rem]"
-          />
-          <p className="absolute left-[4.8rem] top-[5.7rem] text-[0.675rem] font-thin cursor-pointer">
-            한림읍
-          </p>
-          <img
-            src={map3}
-            alt="애월읍"
-            className="absolute left-[5.8rem] top-[2.5rem] w-[6rem]"
-          />
-          <p className="absolute left-[7.5rem] top-[4.4rem] text-[0.675rem] font-thin cursor-pointer">
-            애월읍
-          </p>
-          <img
-            src={map4}
-            alt="제주시"
-            className="absolute left-[9.2rem] top-5 w-[5rem]"
-          />
-          <p className="absolute left-[11rem] top-[3rem] text-[0.675rem] font-thin cursor-pointer">
-            제주시
-          </p>
-          <img
-            src={map5}
-            alt="조천읍"
-            className="absolute left-[13.4rem] top-[0.5rem] w-[3.5rem]"
-          />
-          <p className="absolute left-[14.6rem] top-[2.5rem] text-[0.675rem] font-thin cursor-pointer">
-            조천읍
-          </p>
-          <img
-            src={map6}
-            alt="구좌읍"
-            className="absolute left-[16.5rem] top-1 w-[5.5rem]"
-          />
-          <p className="absolute left-[18rem] top-[1.8rem] text-[0.675rem] font-thin cursor-pointer">
-            구좌읍
-          </p>
-          <img
-            src={map7}
-            alt="대정읍"
-            className="absolute left-[2.1rem] top-[8.6rem] w-[3.1rem]"
-          />
-          <p className="absolute left-[3rem] top-[9.3rem] text-[0.675rem] font-thin cursor-pointer">
-            대정읍
-          </p>
-          <img
-            src={map8}
-            alt="안덕면"
-            className="absolute left-[5.5rem] top-[7.4rem] w-[3.1rem]"
-          />
-          <p className="absolute left-[5.6rem] top-[8.4rem] text-[0.675rem] font-thin cursor-pointer">
-            안덕면
-          </p>
-          <img
-            src={map9}
-            alt="중문"
-            className="absolute left-32 top-[7rem] w-[4rem]"
-          />
-          <p className="absolute left-[9.9rem] top-[8.4rem] text-[0.675rem] font-thin cursor-pointer">
-            중문
-          </p>
-          <img
-            src={map10}
-            alt="서귀포시"
-            className="absolute left-[12.2rem] top-[6.5rem] w-[2.3rem]"
-          />
-          <p className="absolute left-[12.4rem] top-[8.2rem] text-[0.55rem] font-thin cursor-pointer">
-            서귀포시
-          </p>
-          <img
-            src={map11}
-            alt="남원읍"
-            className="absolute left-[13.5rem] top-[5.8rem] w-[4rem]"
-          />
-          <p className="absolute left-[15rem] top-[7.1rem] text-[0.675rem] font-extralight cursor-pointer">
-            남원읍
-          </p>
-          <img
-            src={map12}
-            alt="표선면"
-            className="absolute left-[15.8rem] top-[4.5rem] w-[4rem]"
-          />
-          <p className="absolute left-[17.2rem] top-[6rem] text-[0.5rem] font-extralight cursor-pointer">
-            표선면
-          </p>
-          <img
-            src={map13}
-            alt="성산읍"
-            className="absolute left-[19rem] top-[3.1rem] w-[4rem]"
-          />
-          <p className="absolute left-[19.7rem] top-[4.6rem] text-[0.675rem] font-extralight cursor-pointer">
-            성산읍
-          </p>
+        <img
+          src={map1}
+          alt="한경면"
+          className="absolute left-[2.5rem] top-24 w-[3rem]"
+        />
+        <p className="absolute left-[2.9rem] top-[7.1rem] cursor-pointer text-[0.675rem] font-thin">
+          한경면
+        </p>
+        <img
+          src={map2}
+          alt="한림읍"
+          className="absolute left-[4rem] top-[4.3rem] w-[4rem]"
+        />
+        <p className="absolute left-[4.8rem] top-[5.7rem] cursor-pointer text-[0.675rem] font-thin">
+          한림읍
+        </p>
+        <img
+          src={map3}
+          alt="애월읍"
+          onClick={() => handleMapClick("애월읍")}
+          className="absolute left-[5.8rem] top-[2.5rem] w-[6rem] bg-slate-300"
+        />
+        <p className="absolute left-[7.5rem] top-[4.4rem] cursor-pointer text-[0.675rem] font-thin">
+          애월읍
+        </p>
+        <img
+          src={map4}
+          alt="제주시"
+          className="absolute left-[9.2rem] top-5 w-[5rem] bg-red-200"
+        />
+        <p className="absolute left-[11rem] top-[3rem] cursor-pointer text-[0.675rem] font-thin">
+          제주시
+        </p>
+        <img
+          src={map5}
+          alt="조천읍"
+          className="absolute left-[13.4rem] top-[0.5rem] w-[3.5rem]"
+        />
+        <p className="absolute left-[14.6rem] top-[2.5rem] cursor-pointer text-[0.675rem] font-thin">
+          조천읍
+        </p>
+        <img
+          src={map6}
+          alt="구좌읍"
+          className="absolute left-[16.5rem] top-1 w-[5.5rem]"
+        />
+        <p className="absolute left-[18rem] top-[1.8rem] cursor-pointer text-[0.675rem] font-thin">
+          구좌읍
+        </p>
+        <img
+          src={map7}
+          alt="대정읍"
+          className="absolute left-[2.1rem] top-[8.6rem] w-[3.1rem]"
+        />
+        <p className="absolute left-[3rem] top-[9.3rem] cursor-pointer text-[0.675rem] font-thin">
+          대정읍
+        </p>
+        <img
+          src={map8}
+          alt="안덕면"
+          className="absolute left-[5.5rem] top-[7.4rem] w-[3.1rem]"
+        />
+        <p className="absolute left-[5.6rem] top-[8.4rem] cursor-pointer text-[0.675rem] font-thin">
+          안덕면
+        </p>
+        <img
+          src={map9}
+          alt="중문"
+          className="absolute left-32 top-[7rem] w-[4rem]"
+        />
+        <p className="absolute left-[9.9rem] top-[8.4rem] cursor-pointer text-[0.675rem] font-thin">
+          중문
+        </p>
+        <img
+          src={map10}
+          alt="서귀포시"
+          className="absolute left-[12.2rem] top-[6.5rem] w-[2.3rem]"
+        />
+        <p className="absolute left-[12.4rem] top-[8.2rem] cursor-pointer text-[0.55rem] font-thin">
+          서귀포시
+        </p>
+        <img
+          src={map11}
+          alt="남원읍"
+          className="absolute left-[13.5rem] top-[5.8rem] w-[4rem]"
+        />
+        <p className="absolute left-[15rem] top-[7.1rem] cursor-pointer text-[0.675rem] font-extralight">
+          남원읍
+        </p>
+        <img
+          src={map12}
+          alt="표선면"
+          className="absolute left-[15.8rem] top-[4.5rem] w-[4rem]"
+        />
+        <p className="absolute left-[17.2rem] top-[6rem] cursor-pointer text-[0.5rem] font-extralight">
+          표선면
+        </p>
+        <img
+          src={map13}
+          alt="성산읍"
+          className="absolute left-[19rem] top-[3.1rem] w-[4rem]"
+        />
+        <p className="absolute left-[19.7rem] top-[4.6rem] cursor-pointer text-[0.675rem] font-extralight">
+          성산읍
+        </p>
       </div>
       {/* 지도 (끝) */}
 
@@ -199,101 +228,38 @@ function MainPage() {
         </div>
         {/* 모집 리스트 - 헤더 (끝) */}
 
-        {/* 모집 리스트 - 내용 (시작)) */}
+        {/* 모집 리스트 - 내용 (시작) */}
         <div className="h-[16rem] overflow-y-auto">
-          {/* 모집 리스트 - 농장 1 (시작) */}
-          <div className="my-4 flex cursor-pointer">
-            <img src={list1} alt="List 1" className="mr-4 w-[3.5rem]" />
-            {/* 모집 리스트 - 농장 1 - 가운데 (시작) */}
-            <div className="">
-              <div className="flex items-center gap-2">
-                <p className="text-[0.9rem] font-bold">귤 따기 알바 구해유</p>
-                <p className="rounded-lg border-[0.09rem] border-[#FFA500] p-1 text-[0.7rem]">
-                  숙식제공
+          {loading && <p className="text-center text-gray-500">로딩 중...</p>}
+          {error && <p className="text-center text-red-500">{error}</p>}
+          {!loading && !error && farms.length === 0 && (
+            <p className="text-center text-gray-500">지역을 선택해주세요.</p>
+          )}
+          {farms.map((farm, index) => (
+            <div key={farm.id} className="my-4 flex cursor-pointer">
+              <img
+                src={farm.image_url || list1}
+                alt={`List ${index + 1}`}
+                className="mr-4 w-[3.5rem]"
+              />
+              <div className="">
+                <div className="flex items-center gap-2">
+                  <p className="text-[0.9rem] font-bold">{farm.title}</p>
+                </div>
+                <p className="mb-[0.2rem] text-[0.8rem] font-thin">
+                  {farm.location}
                 </p>
+                {/* 매칭 점수나 별점을 추가할 수 있는 부분 */}
               </div>
-              <p className="mb-[0.2rem] text-[0.8rem] font-thin">
-                애월읍 귤동 123
-              </p>
-              <div className="flex gap-[0.15rem]">
-                <img src={star} alt="Star" className="w-[0.8rem]" />
-                <p className="text-[0.7rem] font-thin">4.9</p>
+              <div className="flex flex-col items-end justify-end text-[0.7rem]">
+                <p className="font-medium">농장 이름: {farm.farm_name}</p>
               </div>
-              {/* 모집 리스트 - 농장 1 - 가운데 (끝) */}
-
-              {/* 모집 리스트 - 농장 1 - 오른쪽 (시작) */}
             </div>
-            <div className="flex flex-col items-end justify-end text-[0.7rem]">
-              <p className="font-medium">시급 99억</p>
-              <p className="font-light">11/18 - 11/20</p>
-            </div>
-            {/* 모집 리스트 - 농장 1 - 오른쪽 (끝) */}
-          </div>
-          {/* 모집 리스트 - 농장 1 (끝) */}
-
-          {/* 모집 리스트 - 농장 2 (시작) */}
-          <div className="my-4 flex cursor-pointer">
-            <img src={list2} alt="List 2" className="mr-4 w-[3.5rem]" />
-            {/* 모집 리스트 - 농장 2 - 가운데 (시작) */}
-            <div className="">
-              <div className="flex items-center gap-2">
-                <p className="text-[0.9rem] font-bold">당근 밭에서 일할 청년</p>
-                <p className="rounded-lg border-[0.09rem] border-[#FFA500] p-1 text-[0.7rem]">
-                  숙소제공
-                </p>
-              </div>
-              <p className="mb-[0.2rem] text-[0.8rem] font-thin">
-                애월읍 당근로 123
-              </p>
-              <div className="flex gap-[0.15rem]">
-                <img src={star} alt="Star" className="w-[0.8rem]" />
-                <p className="text-[0.7rem] font-thin">4.7</p>
-              </div>
-              {/* 모집 리스트 - 농장 2 - 가운데 (끝) */}
-
-              {/* 모집 리스트 - 농장 2 - 오른쪽 (시작) */}
-            </div>
-            <div className="flex flex-col items-end justify-end text-[0.7rem]">
-              <p className="font-medium">시급 1억</p>
-              <p className="font-light">날짜 협의</p>
-            </div>
-            {/* 모집 리스트 - 농장 2 - 오른쪽 (끝) */}
-          </div>
-          {/* 모집 리스트 - 농장 2 (끝) */}
-
-          {/* 모집 리스트 - 농장 3 (시작) */}
-          <div className="my-4 flex cursor-pointer">
-            <img src={list3} alt="List 3" className="mr-4 w-[3.5rem]" />
-            {/* 모집 리스트 - 농장 3 - 가운데 (시작) */}
-            <div className="">
-              <div className="flex items-center gap-2">
-                <p className="text-[0.9rem] font-bold">밭 관리 하실 분</p>
-                <p className="rounded-lg border-[0.09rem] border-[#FFA500] p-1 text-[0.7rem]">
-                  식사제공
-                </p>
-              </div>
-              <p className="mb-[0.2rem] text-[0.8rem] font-thin">
-                제주시 애월읍 밭길 123
-              </p>
-              <div className="flex gap-[0.15rem]">
-                <img src={star} alt="Star" className="w-[0.8rem]" />
-                <p className="text-[0.7rem] font-thin">4.5</p>
-              </div>
-              {/* 모집 리스트 - 농장 3 - 가운데 (끝) */}
-
-              {/* 모집 리스트 - 농장 3 - 오른쪽 (시작) */}
-            </div>
-            <div className="flex flex-col items-end justify-end text-[0.7rem]">
-              <p className="font-medium">시급 협의</p>
-              <p className="font-light">11/18 - 11/20</p>
-            </div>
-            {/* 모집 리스트 - 농장 3 - 오른쪽 (끝) */}
-          </div>
-          {/* 모집 리스트 - 농장 3 (끝) */}
+          ))}
         </div>
-        {/* 모집 리스트 - 내용 (끝)) */}
+        {/* 모집 리스트 - 내용 (끝) */}
       </div>
-      {/* 모집 리스트 (끝)) */}
+      {/* 모집 리스트 (끝) */}
 
       {/* 버튼 (시작)*/}
       {/* 버튼 (시작)*/}
