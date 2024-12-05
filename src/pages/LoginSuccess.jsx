@@ -1,31 +1,31 @@
-// LoginSuccess.jsx
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const LoginSuccess = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const username = queryParams.get("username");
   const profileImage = queryParams.get("profile_image");
   const userId = queryParams.get("id");
 
+  useEffect(() => {
+    if (username && profileImage && userId) {
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ username, profileImage, userId })
+      );
+      navigate("/mainpage");
+    } else {
+      console.error("사용자 정보가 누락되었습니다.");
+    }
+  }, [username, profileImage, userId, navigate]);
+
   if (!username || !profileImage || !userId) {
     return <h2>로그인 정보를 불러오는 중...</h2>;
   }
 
-  return (
-    <div>
-      <h1>로그인 성공!</h1>
-      <p>
-        안녕하세요, {username}님! (ID: {userId})
-      </p>
-      <img
-        src={profileImage}
-        alt="프로필"
-        style={{ width: "150px", borderRadius: "50%" }}
-      />
-    </div>
-  );
+  return null;
 };
 
 export default LoginSuccess;
