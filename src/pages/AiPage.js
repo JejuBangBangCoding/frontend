@@ -36,10 +36,8 @@ function AiPage() {
     } else {
       setSelectedIndustries((prev) => {
         if (prev.includes(industry)) {
-          // 이미 선택된 업종을 다시 클릭하면 해제
           return prev.filter((item) => item !== industry);
         } else {
-          // 새로 선택한 업종을 추가
           return [...prev.filter((item) => item !== "상관없음"), industry];
         }
       });
@@ -73,10 +71,8 @@ function AiPage() {
     } else {
       setSelectedWorkTypes((prev) => {
         if (prev.includes(workType)) {
-          // 이미 선택된 근무형태를 다시 클릭하면 해제
           return prev.filter((item) => item !== workType);
         } else {
-          // 새로 선택한 근무형태를 추가
           return [...prev.filter((item) => item !== "상관없음"), workType];
         }
       });
@@ -92,7 +88,6 @@ function AiPage() {
     setError(null);
 
     try {
-      // 시작 날짜와 종료 날짜를 문자열로 변환 (백엔드에 전달하기 위해)
       const formattedStartDate = startDate
         ? startDate.toISOString().split("T")[0]
         : null;
@@ -100,7 +95,6 @@ function AiPage() {
         ? endDate.toISOString().split("T")[0]
         : null;
 
-      // 백엔드로 보낼 데이터 구성
       const requestData = {
         text: userInput,
         industry:
@@ -113,13 +107,11 @@ function AiPage() {
         end_date: formattedEndDate,
       };
 
-      // POST 요청 보내기
       const response = await axios.post(
         "http://52.78.130.126:8000/api/board/match/",
         requestData,
       );
 
-      // 추천받은 농장 리스트를 가지고 FarmListPage로 이동
       navigate("/farmlistpage", {
         state: { recommendations: response.data.recommendations },
       });
@@ -178,16 +170,16 @@ function AiPage() {
   return (
     <>
       {/* 헤더 (시작) */}
-    <div className="flex justify-center mt-6 items-center relative">
-      <img
-        src={leftArrow1}
-        alt="Left Arrow"
-        className="w-[1.2rem] cursor-pointer absolute left-4"
-        onClick={() => navigate("/mainpage")}
+      <div className="relative mt-6 flex items-center justify-center">
+        <img
+          src={leftArrow1}
+          alt="Left Arrow"
+          className="absolute left-4 w-[1.2rem] cursor-pointer"
+          onClick={() => navigate("/mainpage")}
         />
-      <img src={textLogo} alt="Text logo" className="w-[6rem]" />
-    </div>
-    {/* 헤더 (끝) */}
+        <img src={textLogo} alt="Text logo" className="w-[6rem]" />
+      </div>
+      {/* 헤더 (끝) */}
 
       {/* 선택 (시작) */}
       {!contentChanged && (
@@ -327,10 +319,10 @@ function AiPage() {
         {/* 버튼 - 오른쪽 (시작) */}
         <button
           onClick={handleClick}
-          className={`cursor-pointer px-[5.5rem] text-white text-xl ${
+          className={`cursor-pointer px-[5.5rem] text-xl text-white ${
             isPeriodValid() || contentChanged
               ? "bg-blue-500"
-              : "cursor-not-allowed bg-[#FFA500] rounded-2xl"
+              : "cursor-not-allowed rounded-2xl bg-[#FFA500]"
           }`}
           disabled={!isPeriodValid() && !contentChanged}
         >

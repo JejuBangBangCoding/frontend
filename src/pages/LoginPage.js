@@ -11,21 +11,16 @@ function LoginPage() {
   const location = useLocation();
 
   useEffect(() => {
-    // 콜백 URL에서 쿼리 파라미터를 파싱
     const searchParams = new URLSearchParams(location.search);
     const username = searchParams.get("username");
     const profileImage = searchParams.get("profile_image");
     const userId = searchParams.get("id");
 
-    // 만약 사용자 정보가 있다면, 메인 페이지로 리디렉션
     if (username && userId) {
-      // 사용자 정보를 로컬 스토리지에 저장 (선택사항)
       localStorage.setItem(
         "user",
         JSON.stringify({ username, profileImage, userId }),
       );
-
-      // 메인 페이지로 이동
       navigate("/mainpage");
     }
   }, [location, navigate]);

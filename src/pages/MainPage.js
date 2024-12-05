@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import norangMohagen from "../assets/images/norangMohagen.svg";
-import userProfile from "../assets/images/userProfile.svg";
 import questionMark from "../assets/images/questionMark.svg";
 import userProfilePlaceholder from "../assets/images/userProfile.svg";
 import map1 from "../assets/images/map1.svg";
@@ -21,7 +20,7 @@ import map13 from "../assets/images/map13.svg";
 import list from "../assets/images/list.svg";
 import rightArrow1 from "../assets/images/rightArrow1.svg";
 import list1 from "../assets/images/list1.svg";
-import star from "../assets/images/star.svg";
+import star from "../assets/images/star.svg"; // 이거 혹시 코드에서 사라졌나요..?
 import list2 from "../assets/images/list2.svg";
 import list3 from "../assets/images/list3.svg";
 import bulb from "../assets/images/bulb.svg";
@@ -29,19 +28,17 @@ import hang from "../assets/images/hang.svg";
 
 function MainPage() {
   const [user, setUser] = useState(null);
-  const [selectedRegion, setSelectedRegion] = useState(null); // 선택된 지역 이름 상태 추가
-  const [farms, setFarms] = useState([]); // API에서 가져온 농장 리스트 상태 추가
+  const [selectedRegion, setSelectedRegion] = useState(null);
+  const [farms, setFarms] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 로컬 스토리지에서 사용자 정보를 가져옴
     const userData = localStorage.getItem("user");
     if (userData) {
       setUser(JSON.parse(userData));
     } else {
-      // 로그인 정보가 없으면 로그인 페이지로 이동
       navigate("/login");
     }
   }, [navigate]);
@@ -59,7 +56,7 @@ function MainPage() {
           params: { location: regionName },
         },
       );
-      setFarms(response.data); // 응답 데이터를 farms 상태로 설정
+      setFarms(response.data);
     } catch (err) {
       console.error("지역 농장 정보를 불러오는 중 오류가 발생했습니다:", err);
       setError("지역 농장 정보를 불러오는 중 오류가 발생했습니다.");
@@ -69,7 +66,7 @@ function MainPage() {
   };
 
   const handleAiRecommendationClick = () => {
-    navigate("/aipage"); // AI 추천 페이지로 이동
+    navigate("/aipage");
   };
 
   const handleReservationClick = () => {
@@ -124,18 +121,23 @@ function MainPage() {
         <img
           src={map3}
           alt="애월읍"
-          onClick={() => handleMapClick("애월읍")}
-          className="absolute left-[5.8rem] top-[2.5rem] w-[6rem] bg-slate-300"
+          className="absolute left-[5.8rem] top-[2.5rem] w-[6rem]"
         />
-        <p className="absolute left-[7.5rem] top-[4.4rem] cursor-pointer text-[0.675rem] font-thin">
+        <p
+          onClick={() => handleMapClick("애월읍")}
+          className="absolute left-[7.5rem] top-[4.4rem] cursor-pointer bg-slate-300 text-[0.675rem] font-thin"
+        >
           애월읍
         </p>
         <img
           src={map4}
           alt="제주시"
-          className="absolute left-[9.2rem] top-5 w-[5rem] bg-red-200"
+          className="absolute left-[9.2rem] top-5 w-[5rem]"
         />
-        <p className="absolute left-[11rem] top-[3rem] cursor-pointer text-[0.675rem] font-thin">
+        <p
+          onClick={() => handleMapClick("제주시")}
+          className="absolute left-[11rem] top-[3rem] cursor-pointer text-[0.675rem] font-thin"
+        >
           제주시
         </p>
         <img
@@ -236,7 +238,7 @@ function MainPage() {
             <p className="text-center text-gray-500">지역을 선택해주세요.</p>
           )}
           {farms.map((farm, index) => (
-            <div key={farm.id} className="my-4 flex cursor-pointer">
+            <div key={farm.id} className="my-4 flex cursor-pointer bg-red-200">
               <img
                 src={farm.image_url || list1}
                 alt={`List ${index + 1}`}
@@ -249,7 +251,6 @@ function MainPage() {
                 <p className="mb-[0.2rem] text-[0.8rem] font-thin">
                   {farm.location}
                 </p>
-                {/* 매칭 점수나 별점을 추가할 수 있는 부분 */}
               </div>
               <div className="flex flex-col items-end justify-end text-[0.7rem]">
                 <p className="font-medium">농장 이름: {farm.farm_name}</p>

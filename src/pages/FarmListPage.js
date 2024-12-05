@@ -7,7 +7,8 @@ function FarmListPage() {
   const { recommendations } = location.state || {};
 
   const handleFarmClick = (farm) => {
-    navigate("/farmdetailedpage", { state: { farm } });
+    console.log(farm.id);
+    navigate("/farmdetailedpage", { state: { board_id: farm.id } });
   };
 
   return (

@@ -19,7 +19,7 @@ function FixReservationPage() {
       <h1 className="text-4xl font-bold text-blue-600">FixReservationPage</h1>
       {farm && (
         <div className="mt-5 rounded bg-white p-5 shadow">
-          <h2 className="mb-3 text-3xl font-semibold">{farm.name}</h2>
+          <h2 className="mb-3 text-3xl font-semibold">{farm.farm_name}</h2>
           <p className="text-lg">예약이 확정되었습니다!</p>
         </div>
       )}
