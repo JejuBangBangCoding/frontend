@@ -42,6 +42,21 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: docker push kjeok/jebbangco_frontend:latest
 
+      - name: Remove old Docker images from Docker Hub
+        run: |
+          # Fetch all tags from the Docker Hub repository
+          tags=$(curl -s -u "${{ secrets.DOCKER_USERNAME }}:${{ secrets.DOCKER_PASSWORD }}" \
+            https://hub.docker.com/v2/repositories/kjeok/jebbangco_frontend/tags/ | jq -r '.results[].name')
+
+          # Loop through tags and delete those that are not 'latest'
+          for tag in $tags; do
+            if [ "$tag" != "latest" ]; then
+              echo "Deleting old tag: $tag"
+              curl -X DELETE -u "${{ secrets.DOCKER_USERNAME }}:${{ secrets.DOCKER_PASSWORD }}" \
+                https://hub.docker.com/v2/repositories/kjeok/jebbangco_frontend/tags/$tag/
+            fi
+          done
+
       # CD 단계
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
