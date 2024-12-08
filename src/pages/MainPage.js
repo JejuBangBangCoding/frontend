@@ -51,7 +51,7 @@ function MainPage() {
 
     try {
       const response = await axios.get(
-        "http://52.78.130.126:8000/api/board/location/",
+        `${process.env.REACT_APP_BACKEND_URL}/api/board/location/`,
         {
           params: { location: regionName },
         },
