@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import list1 from "../assets/images/list1.svg";
+import { useNavigate } from "react-router-dom";
 
 const RecruitmentList = ({ selectedRegion }) => {
   const [farms, setFarms] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (selectedRegion) {
@@ -16,7 +18,6 @@ const RecruitmentList = ({ selectedRegion }) => {
   const fetchFarms = async () => {
     setLoading(true);
     setError(null);
-
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/api/board/location/`,
@@ -26,16 +27,28 @@ const RecruitmentList = ({ selectedRegion }) => {
       );
       setFarms(response.data);
     } catch (err) {
-      console.error("Error fetching farm data:", err);
-      setError("지역 농장 정보를 불러오는 중 오류가 발생했습니다.");
+      console.error("Error fetching farms:", err);
+      if (err.response) {
+        console.error("Server response:", err.response.data);
+      }
+      setError("데이터를 불러오지 못했습니다. RecruitmentList.jsx");
     } finally {
       setLoading(false);
     }
   };
 
+  const handleFarmClick = (farm) => {
+    navigate(`/farm/${farm.id}`, { state: { board_id: farm.id } });
+  };
+
   return (
-    <div className="mx-7 mt-7 h-[20rem] rounded-3xl bg-white p-4">
+    <div className="mx-7 mt-7 h-[22rem] rounded-3xl bg-white p-4">
       {/* 모집 리스트 - 헤더 */}
+      <div className="mb-3 flex items-center justify-between">
+        <h2 className="text-lg font-bold">
+          {selectedRegion ? `${selectedRegion} 모집 리스트` : "모집 리스트"}
+        </h2>
+      </div>
       <div className="flex justify-around">
         <button className="font-[400]">일하젠</button>
         <button className="font-[400]">놀젠</button>
@@ -44,7 +57,7 @@ const RecruitmentList = ({ selectedRegion }) => {
       <div className="mb-2 mt-3 h-[1px] w-full bg-gray-300"></div>
 
       {/* 모집 리스트 - 내용 */}
-      <div className="custom-scrollbar h-[16rem] overflow-y-auto">
+      <div className="custom-scrollbar h-[17rem] overflow-y-auto">
         {loading && <p className="text-center text-gray-500">로딩 중...</p>}
         {error && <p className="text-center text-red-500">{error}</p>}
         {!loading && !error && farms.length === 0 && (
@@ -54,7 +67,11 @@ const RecruitmentList = ({ selectedRegion }) => {
         )}
 
         {farms.map((farm) => (
-          <div key={farm.id} className="mt-1 flex cursor-pointer p-1">
+          <div
+            key={farm.id}
+            onClick={() => handleFarmClick(farm)}
+            className="mt-1 flex cursor-pointer p-1"
+          >
             <img
               src={farm.image_url || list1}
               alt={`Farm ${farm.id}`}

@@ -128,7 +128,7 @@ function MyReservationPage() {
                     <p className="absolute left-[-1rem] self-center rounded-full border-2 border-[#FFA500] bg-white px-[0.7rem] py-[0.2rem] text-base font-normal">
                       {item.id}
                     </p>
-                    <img src={list1} alt="Reservation Image" />
+                    <img src={list1} alt="ReservationImage" />
                   </div>
                   {/* 왼쪽 (끝) */}
 
