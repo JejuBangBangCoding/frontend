@@ -172,7 +172,7 @@ function AiPage() {
     <>
       {loading ? (
         <div className="flex h-screen items-center justify-center">
-          <LoadingSpinner /> {/* 로딩 중일 때 스피너 표시 */}
+          <LoadingSpinner />
         </div>
       ) : (
         <>
