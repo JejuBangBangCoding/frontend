@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
 import axios from "axios";
 import norangMohagen from "../assets/images/norangMohagen.svg";
 import questionMark from "../assets/images/questionMark.svg";
@@ -25,6 +26,8 @@ import list2 from "../assets/images/list2.svg";
 import list3 from "../assets/images/list3.svg";
 import bulb from "../assets/images/bulb.svg";
 import hang from "../assets/images/hang.svg";
+import leftArrow1 from "../assets/images/leftArrow1.svg";
+import textLogo from "../assets/images/textLogo.svg";
 
 function MainPage() {
   const [user, setUser] = useState(null);
@@ -75,28 +78,18 @@ function MainPage() {
 
   return (
     <>
-      {/* 헤더 (시작) */}
-      <div className="mb-5 mt-6 flex justify-between">
-        <img
-          src={norangMohagen}
-          alt="norangMohagen"
-          className="ml-7 w-[6rem]"
-        />
-        <img
-          src={user?.profileImage || userProfilePlaceholder}
-          alt="User Profile"
-          className="mr-7 w-[2.5rem] rounded-full"
-        />
-      </div>
-      {/* 헤더 (끝)*/}
+      {/* 헤더 */}
+      <Header showProfile={true} />
 
       {/* 안내 문구 (시작)*/}
-      <p className="self-center text-[0.7rem]">어디를 여행하고 싶으신가요?</p>
-      <div className="flex justify-center gap-1">
-        <img src={questionMark} alt="Question Mark" className="w-[0.8rem]" />
-        <p className="text-[0.6rem] text-[#9D9D9D]">
-          지도를 선택하면 해당 지역의 모집 리스트를 볼 수 있어요!
-        </p>
+      <div className="mt-5 flex flex-col items-center">
+        <p className="text-[17px] font-[400]">어디를 여행하고 싶으신가요?</p>
+        <div className="flex gap-1">
+          <img src={questionMark} alt="Question Mark" className="w-[0.8rem]" />
+          <p className="text-[13px] font-[300] text-[#9D9D9D]">
+            지도를 선택하면 해당 지역의 모집 리스트를 볼 수 있어요!
+          </p>
+        </div>
       </div>
       {/* 안내 문구 (끝)*/}
 
