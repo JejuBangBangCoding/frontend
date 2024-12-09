@@ -139,7 +139,7 @@ function AiPage() {
     if (startDate && endDate) {
       const diffTime = Math.abs(endDate - startDate);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      return diffDays >= 30;
+      return diffDays >= 7; // 최소 7일(7박 8일)
     }
     return false;
   };
@@ -151,7 +151,7 @@ function AiPage() {
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       return `${diffDays}박 ${diffDays + 1}일`;
     }
-    return "";
+    return "기간을 선택하세요";
   };
 
   // 초기화 함수
@@ -215,7 +215,7 @@ function AiPage() {
                   </>
                 ) : (
                   <div className="flex items-center text-gray-400">
-                    <p>날짜를 선택해주세요</p>
+                    <p>7일 이상 선택해주세요!</p>
                   </div>
                 )}
               </div>
@@ -341,7 +341,7 @@ function AiPage() {
           className={`cursor-pointer px-20 text-xl text-white ${
             isPeriodValid() || contentChanged
               ? "cursor-allowed rounded-2xl bg-[#FFA500]"
-              : "cursor-not-allowed rounded-2xl bg-[#FFA500]"
+              : "cursor-not-allowed rounded-2xl bg-gray-400"
           }`}
           disabled={!isPeriodValid() && !contentChanged}
         >
