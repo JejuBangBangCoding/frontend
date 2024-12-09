@@ -325,7 +325,7 @@ function AiPage() {
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               placeholder="ex) 안녕하세요! 저는 제주도에서 한 달 동안 지내면서 귤밭에서 일하고 싶습니다. 주변에 멋진 카페와 바다가 있으면 좋겠고, 쉬는 날에는 한라산 등반을 하고 싶습니다. 이러한 라이프스타일을 실현할 수 있는 일자리와 업체를 추천해주시면 감사하겠습니다. 제주도에서의 한 달이 특별한 경험이 되기를 기대합니다..."
-              className="mt-10 h-[400px] w-full rounded-2xl border px-4 py-3 placeholder:text-[15px] placeholder:leading-7"
+              className="mt-10 h-[392px] w-full rounded-2xl border px-4 py-3 placeholder:text-[15px] placeholder:leading-7"
             />
           </div>
           <div className="flex flex-col px-7">
@@ -355,11 +355,11 @@ function AiPage() {
       {/* AI 추천 (끝) */}
 
       {/* 버튼 (시작) */}
-      <div className="mt-8 flex justify-center space-x-3">
+      <div className="mt-16 flex justify-center space-x-3">
         {/* 버튼 - 왼쪽 (시작) */}
         <button
           onClick={handleReset}
-          className="flex cursor-pointer items-center justify-center gap-3 rounded-2xl bg-[#E8E8E8] px-6 py-[1.1rem]"
+          className="flex h-12 w-40 cursor-pointer items-center justify-center gap-3 rounded-2xl bg-[#E8E8E8] px-6 py-[1.1rem]"
         >
           <img src={refresh} alt="Refresh" className="w-[1.2rem]" />
           <p className="text-lg font-normal">초기화</p>
@@ -369,10 +369,10 @@ function AiPage() {
         {/* 버튼 - 오른쪽 (시작) */}
         <button
           onClick={handleClick}
-          className={`cursor-pointer px-20 text-xl text-white ${
+          className={`flex h-12 w-40 cursor-pointer items-center justify-center rounded-2xl text-xl text-white ${
             isPeriodValid() || contentChanged
-              ? "cursor-allowed rounded-2xl bg-[#FFA500]"
-              : "cursor-not-allowed rounded-2xl bg-gray-400"
+              ? "bg-[#FFA500]"
+              : "cursor-not-allowed bg-gray-400"
           }`}
           disabled={!isPeriodValid() && !contentChanged}
         >
