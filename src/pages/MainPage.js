@@ -3,15 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Map from "../components/Map";
 import RecruitmentList from "../components/RecruitmentList";
-import axios from "axios";
 import questionMark from "../assets/images/questionMark.svg";
-
-import list from "../assets/images/list.svg";
-import rightArrow1 from "../assets/images/rightArrow1.svg";
-import list1 from "../assets/images/list1.svg";
-import star from "../assets/images/star.svg"; // 이거 혹시 코드에서 사라졌나요..?
-import list2 from "../assets/images/list2.svg";
-import list3 from "../assets/images/list3.svg";
 import bulb from "../assets/images/bulb.svg";
 import hang from "../assets/images/hang.svg";
 
@@ -71,8 +63,7 @@ function MainPage() {
         <RecruitmentList selectedRegion={selectedRegion} />
 
         {/* 버튼 (시작)*/}
-        {/* 버튼 (시작)*/}
-        <div className="mb-5 flex justify-center gap-5">
+        <div className="mt-8 flex justify-center gap-5">
           {/* 버튼 - 왼쪽 (AI 추천 받기) */}
           <div
             onClick={handleAiRecommendationClick}
