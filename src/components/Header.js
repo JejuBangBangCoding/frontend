@@ -4,18 +4,33 @@ import UserProfile from "./UserProfile";
 import leftArrow1 from "../assets/images/leftArrow1.svg";
 import textLogo from "../assets/images/textLogo.svg";
 
-const Header = ({ showProfile = false, user }) => {
+// eslint-disable-next-line no-lone-blocks
+{
+  /*
+  페이지 상단에 위치하는 헤더를 표시
+
+  기본값(뒤로가기 버튼 표시)을 사용할 때: <Header showProfile={true} />
+
+  뒤로가기 버튼을 표시하고 싶을 때: <Header showProfile={true} showBackButton={true} />
+
+  뒤로가기 버튼을 숨기고 싶을 때: <Header showProfile={true} showBackButton={false} />
+ */
+}
+
+const Header = ({ showProfile = false, user, showBackButton = true }) => {
   const navigate = useNavigate();
 
   return (
     <div className="relative mt-6 flex items-center justify-center">
       {/* 뒤로가기 버튼 */}
-      <img
-        src={leftArrow1}
-        alt="Left Arrow"
-        className="absolute left-6 w-[1.1rem] cursor-pointer"
-        onClick={() => navigate(-1)}
-      />
+      {showBackButton && (
+        <img
+          src={leftArrow1}
+          alt="Left Arrow"
+          className="absolute left-6 w-[1.1rem] cursor-pointer"
+          onClick={() => navigate(-1)}
+        />
+      )}
 
       {/* 로고 */}
       <img src={textLogo} alt="Text logo" className="w-[6rem]" />
