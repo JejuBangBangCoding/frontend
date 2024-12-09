@@ -183,7 +183,7 @@ function AiPage() {
 
       {/* 선택 (시작) */}
       {!contentChanged && (
-        <div className="mt-10">
+        <div className="mt-5 flex flex-col items-center p-5">
           {/* 캘린더 (시작) */}
           <DatePicker
             selected={startDate}
@@ -198,95 +198,114 @@ function AiPage() {
           />
           {/* 캘린더 (끝) */}
 
-          {/* 날짜 선택 (시작) */}
-          {startDate && endDate && (
-            <div className="mt-4">
+          <div className="mt-8">
+            {/* 날짜 선택 (시작) */}
+            <div>
               <h1 className="text-xl font-semibold">날짜</h1>
-              <p>
-                {startDate.toLocaleDateString()} ~{" "}
-                {endDate.toLocaleDateString()} ({calculateStayPeriod()})
-              </p>
+              <div className="flex h-8 items-center space-x-2">
+                {startDate && endDate ? (
+                  <>
+                    <p>
+                      {startDate.toLocaleDateString()} ~{" "}
+                      {endDate.toLocaleDateString()}
+                    </p>
+                    <p className="inline-block rounded border border-[#FFA500] bg-[#FFDB99] px-1 text-center">
+                      {calculateStayPeriod()}
+                    </p>
+                  </>
+                ) : (
+                  <div className="flex items-center text-gray-400">
+                    <p>날짜를 선택해주세요</p>
+                  </div>
+                )}
+              </div>
             </div>
-          )}
-          {/* 날짜 선택 (끝) */}
+            {/* 날짜 선택 (끝) */}
 
-          {/* 업종 선택 (시작)*/}
-          <div className="mt-4">
-            <h2 className="text-xl font-semibold">업종</h2>
-            <div className="mt-2 flex space-x-2">
-              {["귤", "당근", "감자", "마늘", "양파", "상관없음"].map(
-                (type) => (
+            {/* 업종 선택 (시작)*/}
+            <div className="mt-8">
+              <h2 className="text-xl font-semibold">업종</h2>
+              <div className="mt-2 space-x-2 text-[15px]">
+                {["귤", "당근", "감자", "마늘", "양파", "상관없음"].map(
+                  (type) => (
+                    <button
+                      key={type}
+                      onClick={() => handleIndustryClick(type)}
+                      className={`inline-block rounded border border-[#FFA500] bg-[#FFDB99] px-2 py-1 text-center ${
+                        selectedIndustries.includes(type) ||
+                        (type === "상관없음" && isNoIndustrySelected)
+                          ? "bg-[#FFDB99] text-black"
+                          : "bg-white text-black"
+                      }`}
+                    >
+                      {type}
+                    </button>
+                  ),
+                )}
+              </div>
+            </div>
+            {/* 업종 선택 (끝)*/}
+
+            {/* 숙식 제공 여부 선택 (시작) */}
+            <div className="mt-8">
+              <h2 className="text-xl font-semibold">숙식 제공 여부</h2>
+              <div className="mt-2 space-x-2 text-[15px]">
+                <button
+                  onClick={() => handleAccommodationClick("식사")}
+                  className={`inline-block rounded border border-[#FFA500] px-2 py-1 text-center ${
+                    provideMeal
+                      ? "bg-[#FFDB99] text-black"
+                      : "bg-white text-black"
+                  }`}
+                >
+                  식사
+                </button>
+                <button
+                  onClick={() => handleAccommodationClick("숙소")}
+                  className={`inline-block rounded border border-[#FFA500] px-2 py-1 text-center ${
+                    provideLodging
+                      ? "bg-[#FFDB99] text-black"
+                      : "bg-white text-black"
+                  }`}
+                >
+                  숙소
+                </button>
+                <button
+                  onClick={() => handleAccommodationClick("상관없음")}
+                  className={`inline-block rounded border border-[#FFA500] px-2 py-1 text-center ${
+                    isNoPreferenceSelected
+                      ? "bg-[#FFDB99] text-black"
+                      : "bg-white text-black"
+                  }`}
+                >
+                  상관없음
+                </button>
+              </div>
+            </div>
+            {/* 숙식 제공 여부 선택 (끝) */}
+
+            {/* 근무형태 선택 (시작) */}
+            <div className="mt-8">
+              <h2 className="text-xl font-semibold">근무형태</h2>
+              <div className="mt-2 space-x-2 text-[15px]">
+                {["주5일", "격일근무", "격주근무", "상관없음"].map((type) => (
                   <button
                     key={type}
-                    onClick={() => handleIndustryClick(type)}
-                    className={`rounded border px-4 py-2 ${
-                      selectedIndustries.includes(type) ||
-                      (type === "상관없음" && isNoIndustrySelected)
-                        ? "bg-[#FFDB99]"
-                        : "bg-white"
+                    onClick={() => handleWorkTypeClick(type)}
+                    className={`inline-block rounded border border-[#FFA500] px-2 py-1 text-center ${
+                      selectedWorkTypes.includes(type) ||
+                      (type === "상관없음" && isNoWorkTypeSelected)
+                        ? "bg-[#FFDB99] text-black"
+                        : "bg-white text-black"
                     }`}
                   >
                     {type}
                   </button>
-                ),
-              )}
+                ))}
+              </div>
             </div>
+            {/* 근무형태 선택 (끝) */}
           </div>
-          {/* 업종 선택 (끝)*/}
-
-          {/* 숙식 제공 여부 선택 (시작) */}
-          <div className="mt-4">
-            <h2 className="text-xl font-semibold">숙식 제공 여부</h2>
-            <div className="mt-2 flex space-x-2">
-              <button
-                onClick={() => handleAccommodationClick("식사")}
-                className={`rounded border px-4 py-2 ${
-                  provideMeal ? "bg-[#FFDB99]" : "bg-white"
-                }`}
-              >
-                식사
-              </button>
-              <button
-                onClick={() => handleAccommodationClick("숙소")}
-                className={`rounded border px-4 py-2 ${
-                  provideLodging ? "bg-[#FFDB99]" : "bg-white"
-                }`}
-              >
-                숙소
-              </button>
-              <button
-                onClick={() => handleAccommodationClick("상관없음")}
-                className={`rounded border px-4 py-2 ${
-                  isNoPreferenceSelected ? "bg-[#FFDB99]" : "bg-white"
-                }`}
-              >
-                상관없음
-              </button>
-            </div>
-          </div>
-          {/* 숙식 제공 여부 선택 (끝) */}
-
-          {/* 근무형태 선택 (시작) */}
-          <div className="mt-4">
-            <h2 className="text-xl font-semibold">근무형태</h2>
-            <div className="mt-2 flex space-x-2">
-              {["주5일", "격일근무", "격주근무", "상관없음"].map((type) => (
-                <button
-                  key={type}
-                  onClick={() => handleWorkTypeClick(type)}
-                  className={`rounded border px-4 py-2 ${
-                    selectedWorkTypes.includes(type) ||
-                    (type === "상관없음" && isNoWorkTypeSelected)
-                      ? "bg-[#FFDB99]"
-                      : "bg-white"
-                  }`}
-                >
-                  {type}
-                </button>
-              ))}
-            </div>
-          </div>
-          {/* 근무형태 선택 (끝) */}
         </div>
       )}
       {/* 선택 (끝) */}
@@ -305,11 +324,11 @@ function AiPage() {
       {/* AI 추천 (끝) */}
 
       {/* 버튼 (시작) */}
-      <div className="mb-[1.875rem] mt-auto flex justify-around">
+      <div className="mt-8 flex justify-center space-x-3">
         {/* 버튼 - 왼쪽 (시작) */}
         <button
           onClick={handleReset}
-          className="flex cursor-pointer items-center justify-center gap-3 rounded-2xl bg-[#E8E8E8] px-[2rem] py-[1.1rem]"
+          className="flex cursor-pointer items-center justify-center gap-3 rounded-2xl bg-[#E8E8E8] px-6 py-[1.1rem]"
         >
           <img src={refresh} alt="Refresh" className="w-[1.2rem]" />
           <p className="text-lg font-normal">초기화</p>
@@ -319,9 +338,9 @@ function AiPage() {
         {/* 버튼 - 오른쪽 (시작) */}
         <button
           onClick={handleClick}
-          className={`cursor-pointer px-[5.5rem] text-xl text-white ${
+          className={`cursor-pointer px-20 text-xl text-white ${
             isPeriodValid() || contentChanged
-              ? "bg-blue-500"
+              ? "cursor-allowed rounded-2xl bg-[#FFA500]"
               : "cursor-not-allowed rounded-2xl bg-[#FFA500]"
           }`}
           disabled={!isPeriodValid() && !contentChanged}
