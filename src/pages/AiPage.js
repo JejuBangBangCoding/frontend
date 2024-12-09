@@ -139,7 +139,7 @@ function AiPage() {
     if (startDate && endDate) {
       const diffTime = Math.abs(endDate - startDate);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      return diffDays >= 30;
+      return diffDays >= 7; // 최소 7일(7박 8일)
     }
     return false;
   };
@@ -151,7 +151,7 @@ function AiPage() {
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       return `${diffDays}박 ${diffDays + 1}일`;
     }
-    return "";
+    return "기간을 선택하세요";
   };
 
   // 초기화 함수
@@ -209,13 +209,13 @@ function AiPage() {
                       {startDate.toLocaleDateString()} ~{" "}
                       {endDate.toLocaleDateString()}
                     </p>
-                    <p className="inline-block rounded border border-[#FFA500] bg-[#FFDB99] px-1 text-center">
+                    <p className="inline-block rounded-lg border border-[#FFA500] bg-[#FFDB99] px-2 text-center">
                       {calculateStayPeriod()}
                     </p>
                   </>
                 ) : (
                   <div className="flex items-center text-gray-400">
-                    <p>날짜를 선택해주세요</p>
+                    <p>7일 이상 선택해주세요!</p>
                   </div>
                 )}
               </div>
@@ -231,7 +231,7 @@ function AiPage() {
                     <button
                       key={type}
                       onClick={() => handleIndustryClick(type)}
-                      className={`inline-block rounded border border-[#FFA500] bg-[#FFDB99] px-2 py-1 text-center ${
+                      className={`inline-block rounded-xl border border-[#FFA500] bg-[#FFDB99] px-2 py-1 text-center ${
                         selectedIndustries.includes(type) ||
                         (type === "상관없음" && isNoIndustrySelected)
                           ? "bg-[#FFDB99] text-black"
@@ -252,7 +252,7 @@ function AiPage() {
               <div className="mt-2 space-x-2 text-[15px]">
                 <button
                   onClick={() => handleAccommodationClick("식사")}
-                  className={`inline-block rounded border border-[#FFA500] px-2 py-1 text-center ${
+                  className={`inline-block rounded-xl border border-[#FFA500] px-2 py-1 text-center ${
                     provideMeal
                       ? "bg-[#FFDB99] text-black"
                       : "bg-white text-black"
@@ -262,7 +262,7 @@ function AiPage() {
                 </button>
                 <button
                   onClick={() => handleAccommodationClick("숙소")}
-                  className={`inline-block rounded border border-[#FFA500] px-2 py-1 text-center ${
+                  className={`inline-block rounded-xl border border-[#FFA500] px-2 py-1 text-center ${
                     provideLodging
                       ? "bg-[#FFDB99] text-black"
                       : "bg-white text-black"
@@ -272,7 +272,7 @@ function AiPage() {
                 </button>
                 <button
                   onClick={() => handleAccommodationClick("상관없음")}
-                  className={`inline-block rounded border border-[#FFA500] px-2 py-1 text-center ${
+                  className={`inline-block rounded-xl border border-[#FFA500] px-2 py-1 text-center ${
                     isNoPreferenceSelected
                       ? "bg-[#FFDB99] text-black"
                       : "bg-white text-black"
@@ -292,7 +292,7 @@ function AiPage() {
                   <button
                     key={type}
                     onClick={() => handleWorkTypeClick(type)}
-                    className={`inline-block rounded border border-[#FFA500] px-2 py-1 text-center ${
+                    className={`inline-block rounded-xl border border-[#FFA500] px-2 py-1 text-center ${
                       selectedWorkTypes.includes(type) ||
                       (type === "상관없음" && isNoWorkTypeSelected)
                         ? "bg-[#FFDB99] text-black"
@@ -312,14 +312,45 @@ function AiPage() {
 
       {/* AI 추천 (시작) */}
       {contentChanged && (
-        <div className="mt-4">
-          <textarea
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-            placeholder="AI에게 보낼 메시지를 입력하세요..."
-            className="h-20 w-full rounded border p-2"
-          />
-        </div>
+        <>
+          <div className="mt-8 flex flex-col items-center justify-center p-5 font-Pretendard">
+            <h className="text-[20px] font-[600]">
+              제주에서 어떤 여행을 꿈꾸고 계시나요?
+            </h>
+            <h className="mt-2 text-[13px] font-[300]">
+              어떠한 내용이라도 좋아요. 자유롭게 작성해주세요.
+            </h>
+
+            <textarea
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+              placeholder="ex) 안녕하세요! 저는 제주도에서 한 달 동안 지내면서 귤밭에서 일하고 싶습니다. 주변에 멋진 카페와 바다가 있으면 좋겠고, 쉬는 날에는 한라산 등반을 하고 싶습니다. 이러한 라이프스타일을 실현할 수 있는 일자리와 업체를 추천해주시면 감사하겠습니다. 제주도에서의 한 달이 특별한 경험이 되기를 기대합니다..."
+              className="mt-10 h-[400px] w-full rounded-2xl border px-4 py-3 placeholder:text-[15px] placeholder:leading-7"
+            />
+          </div>
+          <div className="flex flex-col px-7">
+            <h className="text-[18px] font-[500]">추천 키워드</h>
+            <h className="text-[13px] font-[300]">
+              이런 내용이 들어가면 좋아요!
+            </h>
+            <div className="mt-2 flex flex-wrap gap-2 text-[15px]">
+              {[
+                "#귤",
+                "#핫플",
+                "#노을",
+                "#맛집",
+                "#낭만",
+                "#시골",
+                "#야경",
+                "#공항근처",
+              ].map((type) => (
+                <div className="inline-block rounded-xl border border-[#FFA500] bg-[#FFDB99] px-2 py-1 text-center">
+                  {type}
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
       )}
       {/* AI 추천 (끝) */}
 
@@ -341,7 +372,7 @@ function AiPage() {
           className={`cursor-pointer px-20 text-xl text-white ${
             isPeriodValid() || contentChanged
               ? "cursor-allowed rounded-2xl bg-[#FFA500]"
-              : "cursor-not-allowed rounded-2xl bg-[#FFA500]"
+              : "cursor-not-allowed rounded-2xl bg-gray-400"
           }`}
           disabled={!isPeriodValid() && !contentChanged}
         >
