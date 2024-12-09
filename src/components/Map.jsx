@@ -15,7 +15,7 @@ import map13 from "../assets/images/map13.svg";
 
 const Map = ({ onRegionClick }) => {
   return (
-    <div className="relative my-2 flex">
+    <div className="relative h-[200px]">
       <img
         src={map1}
         alt="한경면"
