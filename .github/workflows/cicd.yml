@@ -42,6 +42,13 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: docker push kjeok/jebbangco_frontend:latest
 
+      - name: Remove unused Docker images locally
+        run: |
+          echo "Cleaning up unused Docker images locally..."
+          
+          # Dangling 이미지를 포함하여 사용하지 않는 이미지 삭제
+          docker image prune -a -f
+          
       - name: Remove old Docker images from Docker Hub
         run: |
           # Fetch all tags from the Docker Hub repository
