@@ -3,9 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import LoadingSpinner from "../components/LoadingSpinner";
+import Header from "../components/Header";
 import "react-datepicker/dist/react-datepicker.css";
-import leftArrow1 from "../assets/images/leftArrow1.svg";
-import textLogo from "../assets/images/textLogo.svg";
 import refresh from "../assets/images/refresh.svg";
 
 function AiPage() {
@@ -176,17 +175,8 @@ function AiPage() {
         </div>
       ) : (
         <>
-          {/* 헤더 (시작) */}
-          <div className="relative mt-6 flex items-center justify-center">
-            <img
-              src={leftArrow1}
-              alt="Left Arrow"
-              className="absolute left-4 w-[1.2rem] cursor-pointer"
-              onClick={() => navigate("/mainpage")}
-            />
-            <img src={textLogo} alt="Text logo" className="w-[6rem]" />
-          </div>
-          {/* 헤더 (끝) */}
+          {/* 헤더 */}
+          <Header showProfile={true} />
 
           {/* 선택 (시작) */}
           {!contentChanged && (
