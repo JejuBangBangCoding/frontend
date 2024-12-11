@@ -38,26 +38,23 @@ const RecruitmentList = ({ selectedRegion }) => {
   };
 
   const handleFarmClick = (farm) => {
-    navigate(`/farm/${farm.id}`, { state: { board_id: farm.id } });
+    navigate("/farmdetailedpage", { state: { board_id: farm.id } });
   };
 
   return (
     <div className="mx-7 mt-7 h-[22rem] rounded-3xl bg-white p-4">
       {/* 모집 리스트 - 헤더 */}
-      <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-lg font-bold">
-          {selectedRegion ? `${selectedRegion} 모집 리스트` : "모집 리스트"}
-        </h2>
-      </div>
+
+      <div className="mb-3 flex items-center justify-between"></div>
       <div className="flex justify-around">
-        <button className="font-[400]">일하젠</button>
-        <button className="font-[400]">놀젠</button>
+        <button className="font-[400]">{selectedRegion} 일하젠</button>
+        <button className="font-[400]">{selectedRegion} 놀젠</button>
       </div>
       {/* 세로선 */}
       <div className="mb-2 mt-3 h-[1px] w-full bg-gray-300"></div>
 
       {/* 모집 리스트 - 내용 */}
-      <div className="custom-scrollbar h-[17rem] overflow-y-auto">
+      <div className="custom-scrollbar h-[16.5rem] overflow-y-auto">
         {loading && <p className="text-center text-gray-500">로딩 중...</p>}
         {error && <p className="text-center text-red-500">{error}</p>}
         {!loading && !error && farms.length === 0 && (
@@ -78,15 +75,13 @@ const RecruitmentList = ({ selectedRegion }) => {
               className="mr-4 w-[3.5rem]"
             />
             <div>
+              <p className="text-[15px] font-[600]">{farm.farm_name}</p>
               <div className="flex items-center gap-2">
                 <p className="text-[0.9rem] font-bold">{farm.title}</p>
               </div>
               <p className="mb-[0.2rem] text-[0.8rem] font-thin">
                 {farm.location}
               </p>
-            </div>
-            <div className="flex flex-col items-end justify-end text-[0.7rem]">
-              <p className="font-medium">농장 이름: {farm.farm_name}</p>
             </div>
           </div>
         ))}

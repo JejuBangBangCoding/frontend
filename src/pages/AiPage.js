@@ -108,7 +108,7 @@ function AiPage() {
       };
 
       const response = await axios.post(
-        "http://52.78.130.126:8000/api/board/match/",
+        `${process.env.REACT_APP_BACKEND_URL}/api/match/`,
         requestData,
       );
 
@@ -327,6 +327,7 @@ function AiPage() {
                   className="mt-10 h-[392px] w-full rounded-2xl border px-4 py-3 placeholder:text-[15px] placeholder:leading-7"
                 />
               </div>
+
               <div className="flex flex-col px-7">
                 <h className="text-[18px] font-[500]">추천 키워드</h>
                 <h className="text-[13px] font-[300]">
@@ -348,6 +349,7 @@ function AiPage() {
                     </div>
                   ))}
                 </div>
+                {error && <p className="mt-4 text-red-500">{error}</p>}
               </div>
             </>
           )}
@@ -382,8 +384,6 @@ function AiPage() {
           {/* 버튼 (끝) */}
         </>
       )}
-
-      {error && <p className="mt-4 text-red-500">{error}</p>}
     </>
   );
 }
