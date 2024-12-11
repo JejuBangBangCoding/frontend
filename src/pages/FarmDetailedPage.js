@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Header from "../components/Header";
 
 function FarmDetailedPage() {
   const location = useLocation();
@@ -33,12 +34,13 @@ function FarmDetailedPage() {
     const fetchFarmDetails = async () => {
       try {
         const response = await axios.get(
-          `http://52.78.130.126:8000/api/board/detail/?board_id=${board_id}`,
+          `${process.env.REACT_APP_BACKEND_URL}/api/board/detail/?board_id=${board_id}`,
         );
         console.log("API response data:", response.data);
 
         if (response.data.length > 0) {
           setFarmDetails(response.data[0]);
+          console.log("Farm details:", response.data[0]);
         } else {
           setError("해당 농장 정보를 찾을 수 없습니다.");
         }
@@ -98,8 +100,9 @@ function FarmDetailedPage() {
   }
 
   return (
-    <div className="p-5">
-      <h1 className="text-4xl font-bold text-pink-600">FarmDetailedPage</h1>
+    <div className="">
+      <Header showProfile={true} showBackButton={true} />
+
       {farmDetails && (
         <div className="mt-5 rounded bg-white p-5 shadow">
           <h2 className="mb-3 text-3xl font-semibold">
@@ -134,7 +137,7 @@ function FarmDetailedPage() {
           </p>
           {farmDetails.image && (
             <img
-              src={farmDetails.image}
+              src={`${process.env.REACT_APP_BACKEND_URL}${farmDetails.image}`}
               alt={farmDetails.farm_name}
               className="mt-4 h-60 w-full rounded object-cover"
             />
