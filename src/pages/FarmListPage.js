@@ -29,27 +29,38 @@ function FarmListPage() {
     <>
       <Header showProfile={true} showBackButton={true} />
 
+      <div className="mt-5 text-center">
+        <p className="text-gray-500">이미지 - 채팅 공간</p>
+      </div>
+
       {/* 카드 슬라이드 */}
       <div className="mt-5 flex justify-center">
         <div className="relative w-80 overflow-hidden">
           <div
             className="flex transition-transform duration-300"
             style={{
-              transform: `translateX(-${currentIndex * 320}px)`, // Use fixed width (320px)
-              width: `${recommendations.length * 320}px`, // Total width based on card width
+              transform: `translateX(-${currentIndex * 320}px)`,
+              width: `${recommendations.length * 320}px`,
             }}
           >
             {recommendations.map((farm) => (
               <div
                 key={farm.id}
                 className="flex-shrink-0"
-                style={{ width: "320px" }} // Fixed card width
+                style={{ width: "320px" }}
               >
                 <Card farm={farm} onClick={() => handleFarmClick(farm)} />
               </div>
             ))}
           </div>
         </div>
+      </div>
+
+      {/* 페이지 번호 */}
+      <div className="mt-1 text-center">
+        <p className="text-gray-500">
+          {currentIndex + 1} / {recommendations.length}
+        </p>
       </div>
 
       {/* 이전 다음 버튼 */}
