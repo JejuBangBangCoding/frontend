@@ -38,7 +38,7 @@ const RecruitmentList = ({ selectedRegion }) => {
   };
 
   const handleFarmClick = (farm) => {
-    navigate(`/farm/${farm.id}`, { state: { board_id: farm.id } });
+    navigate("/farmdetailedpage", { state: { board_id: farm.id } });
   };
 
   return (
