@@ -72,7 +72,7 @@ function FarmDetailedPage() {
       try {
         console.log("예약 생성 요청 데이터:", reservationData);
         const response = await axios.post(
-          "http://52.78.130.126:8000/api/board/reservation/",
+          `${process.env.REACT_APP_BACKEND_URL}/api/board/reservation/`,
           reservationData,
         );
         console.log("예약 생성 응답:", response.data);
