@@ -75,15 +75,13 @@ const RecruitmentList = ({ selectedRegion }) => {
               className="mr-4 w-[3.5rem]"
             />
             <div>
+              <p className="text-[15px] font-[600]">{farm.farm_name}</p>
               <div className="flex items-center gap-2">
                 <p className="text-[0.9rem] font-bold">{farm.title}</p>
               </div>
               <p className="mb-[0.2rem] text-[0.8rem] font-thin">
                 {farm.location}
               </p>
-            </div>
-            <div className="flex flex-col items-end justify-end text-[0.7rem]">
-              <p className="font-medium">농장 이름: {farm.farm_name}</p>
             </div>
           </div>
         ))}
