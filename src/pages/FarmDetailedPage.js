@@ -123,7 +123,7 @@ function FarmDetailedPage() {
             />
           )}
           {/* 상세 정보 */}
-          <div className="mt-3 mx-5 px-5 pt-2 bg-white rounded-t-3xl text-center">
+          <div className="mt-3 mx-5 px-5 pt-2 min-h-screen bg-white rounded-t-3xl text-center">
             {/* 태그 */}
             <div className="flex justify-center flex-wrap gap-2 mb-5">
               {farmDetails.tag?.length > 0 ? (
@@ -179,7 +179,7 @@ function FarmDetailedPage() {
                 </p>
               </div>
             </div>
-            <div className="border-[0.1rem]"></div>
+            <div className="border-[1px] my-5"></div>
             {/* 구인글 제목 */}
             <p className="font-bold text-xl my-2">{farmDetails.title}</p>
             {/* <p className="mb-2 text-lg">업종: {farmDetails.industry}</p> */}
@@ -193,11 +193,11 @@ function FarmDetailedPage() {
             <p className="text-lg mb-5"> {farmDetails.description}</p>
             <p className="">contact : 010-xxxx-xxxx</p>
             {/* 농장 위치 */}
-            <img src={map} alt="Map" className="" />
-            <p className="text-xs mb-3">{farmDetails.location}</p>
-            <div className="border-[0.1rem]"></div>
+            <img src={map} alt="Map" className="my-1" />
+            <p className="text-xs">{farmDetails.location}</p>
+            <div className="border-[1px] my-5"></div>
             {/* 명소 */}
-            <p className="text-xl font-bold my-3">근처에 있는 명소</p>
+            <p className="text-xl font-bold mb-5">근처에 있는 명소</p>
             <ol className="flex justify-center gap-3 mb-3">
               {/* 명소 1 */}
               <li className="">
@@ -233,7 +233,7 @@ function FarmDetailedPage() {
             {/* 예약 버튼 */}
             <button
               onClick={handleMatchClick}
-              className="my-3 rounded-xl bg-[#FFA500] text-white px-32 py-3"
+              className="mt-auto rounded-xl bg-[#FFA500] text-white px-44 py-3"
             >
               예약하기
             </button>
