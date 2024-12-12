@@ -76,9 +76,8 @@ function MyReservationPage() {
         />
         <img src={textLogo} alt="Text logo" className="w-[6rem]" />
       </div>
-      {/* 헤더 (끝) */}
 
-      {/* 사용자 프로필 (시작) */}
+      {/* 사용자 프로필 */}
       <div className="flex flex-col items-center">
         <img src={backImg} alt="" className="relative" />
         <img
@@ -90,15 +89,14 @@ function MyReservationPage() {
           {user?.username || "사용자"}
         </p>
       </div>
-      {/* 사용자 프로필 (끝) */}
 
       <p className="mb-2 mt-auto self-center text-xs font-normal text-[#C4C4C4]">
         각 항목을 누르시면 상세 조회를 하실 수 있습니다.
       </p>
 
-      {/* 예약 현황 (시작) */}
+      {/* 예약 현황 */}
       <div className="mx-5 h-[32.5rem] rounded-t-3xl bg-white p-5">
-        {/* 예약 현황 - 헤더 (시작) */}
+        {/* 예약 현황 - 헤더 */}
         <div className="mb-4 flex items-center">
           <img src={list} alt="List" className="mr-3 w-[1rem]" />
           <p className="text-sm font-normal">예약 현황</p>
@@ -106,7 +104,6 @@ function MyReservationPage() {
             전체 <strong>{reservations.length}</strong> 개
           </p>
         </div>
-        {/* 예약 현황 - 헤더 (끝) */}
 
         {/* 로딩 중인 경우 */}
         {loading && <p className="text-center text-gray-600">로딩 중...</p>}
@@ -114,7 +111,7 @@ function MyReservationPage() {
         {/* 에러 발생 시 */}
         {error && <p className="text-center text-red-600">{error}</p>}
 
-        {/* 예약 현황 - 리스트 (시작) */}
+        {/* 예약 현황 - 리스트 */}
         <div className="h-[29rem] overflow-y-auto">
           {reservations.length > 0
             ? reservations.map((item) => (
@@ -123,16 +120,15 @@ function MyReservationPage() {
                   className="mb-4 flex cursor-pointer rounded-3xl bg-[#FFDB99] p-4 shadow"
                   onClick={() => handleReservationClick(item)}
                 >
-                  {/* 왼쪽 (시작) */}
+                  {/* 왼쪽 */}
                   <div className="relative ml-3 mr-3 flex">
                     <p className="absolute left-[-1rem] self-center rounded-full border-2 border-[#FFA500] bg-white px-[0.7rem] py-[0.2rem] text-base font-normal">
                       {item.id}
                     </p>
                     <img src={list1} alt="ReservationImage" />
                   </div>
-                  {/* 왼쪽 (끝) */}
 
-                  {/* 중간 (시작) */}
+                  {/* 중간 */}
                   <div className="flex basis-1/2 flex-col justify-center gap-1">
                     <p className="text-sm font-bold">{item.title}</p>
                     <p className="text-xs font-light">{item.farm_name}</p>
@@ -141,16 +137,14 @@ function MyReservationPage() {
                       <p className="text-xs">{item.location}</p>
                     </div>
                   </div>
-                  {/* 중간 (끝) */}
 
-                  {/* 오른쪽 (시작) */}
+                  {/* 오른쪽 */}
                   <div className="flex basis-1/3 flex-col items-end justify-between">
                     <p className="text-[0.8rem] font-bold">{item.date}</p>
                     <p className="text-[0.6rem] font-normal">
                       {item.period_start} ~ {item.period_end}
                     </p>
                   </div>
-                  {/* 오른쪽 (끝) */}
                 </div>
               ))
             : !loading && (
@@ -159,9 +153,7 @@ function MyReservationPage() {
                 </p>
               )}
         </div>
-        {/* 예약 현황 - 리스트 (끝) */}
       </div>
-      {/* 예약 현황 (끝) */}
     </>
   );
 }

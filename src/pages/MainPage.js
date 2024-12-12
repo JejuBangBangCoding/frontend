@@ -40,7 +40,7 @@ function MainPage() {
       <Header showProfile={true} showBackButton={false} />
 
       <div className="relative mt-6 flex flex-col">
-        {/* 안내 문구 (시작)*/}
+        {/* 안내 문구 */}
         <div className="mb-5 mt-7 flex flex-col items-center">
           <p className="text-[17px] font-[400]">어디를 여행하고 싶으신가요?</p>
           <div className="flex gap-1">
@@ -54,7 +54,6 @@ function MainPage() {
             </p>
           </div>
         </div>
-        {/* 안내 문구 (끝)*/}
 
         {/* 지도 */}
         <Map onRegionClick={handleMapClick} />
@@ -62,8 +61,9 @@ function MainPage() {
         {/* 모집 리스트 */}
         <RecruitmentList selectedRegion={selectedRegion} />
 
-        {/* 버튼 (시작)*/}
+        {/* 버튼 */}
         <div className="mt-8 flex justify-center gap-5">
+          
           {/* 버튼 - 왼쪽 (AI 추천 받기) */}
           <div
             onClick={handleAiRecommendationClick}
@@ -81,9 +81,8 @@ function MainPage() {
               AI 추천 받기
             </p>
           </div>
-          {/* 버튼 - 왼쪽 (끝) */}
 
-          {/* 버튼 - 오른쪽 (시작) */}
+          {/* 버튼 - 오른쪽 */}
           <div
             onClick={handleReservationClick}
             className="box-border h-auto w-[10rem] cursor-pointer rounded-[1.875rem] bg-[#FFA500] p-5"
@@ -100,9 +99,7 @@ function MainPage() {
               예약 정보 확인
             </p>
           </div>
-          {/* 버튼 - 오른쪽 (끝) */}
         </div>
-        {/* 버튼 (끝) */}
       </div>
     </>
   );
