@@ -28,16 +28,16 @@ function LoginPage() {
   return (
     <>
       <Link to="/LandingPage" className="self-center pt-4">
-        <img src={upArrow1} alt="Up Arrow1" className="mb-[9rem] w-[1.2rem]" />
+        <img src={upArrow1} alt="Up Arrow1" className="mb-[9rem]" />
       </Link>
       <img
         src={textLogo}
         alt="Text Logo"
-        className="mb-8 w-[14.5rem] self-center"
+        className="mb-8 w-[19rem] self-center"
       />
-      <img src={smallLogo} alt="Small Logo" className="w-40 self-center" />
+      <img src={smallLogo} alt="Small Logo" className="w-48 self-center mb-36" />
       <KakaoLoginButton />
-      <div className="mb-10 self-center">
+      <div className="mt-auto self-center mb-10">
         <a
           href="https://github.com/JejuBangBangCoding"
           target="_blank"

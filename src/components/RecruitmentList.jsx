@@ -42,19 +42,19 @@ const RecruitmentList = ({ selectedRegion }) => {
   };
 
   return (
-    <div className="mx-7 mt-7 h-[22rem] rounded-3xl bg-white p-4">
+    <div className="mx-7 mt-5 h-[28rem] rounded-3xl bg-white p-4">
       {/* 모집 리스트 - 헤더 */}
-      <div className="mb-3 flex items-center justify-between"></div>
+      <div className="flex items-center justify-between"></div>
       <div className="flex justify-around">
-        <button className="font-[400]">{selectedRegion} 일하젠</button>
-        <button className="font-[400]">{selectedRegion} 놀젠</button>
+        <button className="text-xl font-semibold">일하젠</button>
+        <button className="text-xl font-semibold">놀젠</button>
       </div>
 
-      {/* 세로선 */}
-      <div className="mb-2 mt-3 h-[1px] w-full bg-gray-300"></div>
+      {/* 가로선 */}
+      <div className="my-3 h-[1px] w-full bg-gray-300"></div>
 
       {/* 모집 리스트 - 내용 */}
-      <div className="custom-scrollbar h-[16.5rem] overflow-y-auto">
+      <div className="custom-scrollbar h-[23rem] overflow-y-auto">
         {loading && <p className="text-center text-gray-500">로딩 중...</p>}
         {error && <p className="text-center text-red-500">{error}</p>}
         {!loading && !error && farms.length === 0 && (
@@ -72,16 +72,23 @@ const RecruitmentList = ({ selectedRegion }) => {
             <img
               src={farm.image_url || list1}
               alt={`Farm ${farm.id}`}
-              className="mr-4 w-[3.5rem]"
+              className="mr-4 w-24"
             />
-            <div>
-              <p className="text-[15px] font-[600]">{farm.farm_name}</p>
-              <div className="flex items-center gap-2">
-                <p className="text-[0.9rem] font-bold">{farm.title}</p>
+            <div className="">
+              <div className="flex items-center gap-2 mb-2">
+                <p className="text-lg font-bold">{farm.title}</p>
+                <p className="text-sm font-light">{farm.workdays}</p>
               </div>
-              <p className="mb-[0.2rem] text-[0.8rem] font-thin">
-                {farm.location}
-              </p>
+              <div className="flex justify-between">
+                <p className="text-sm font-light">{farm.farm_name}</p>
+              </div>
+              <div className="flex justify-between items-end">
+                <p className="text-xs rounded-xl border-[1px] border-[#FFA500] bg-white py-1 px-2">{farm.welfare} </p>
+                <div className="">
+                  <p className="text-sm text-right">시급 {farm.hourly}원</p>
+                  <p className="font-thin text-xs">{farm.period_start} ~ {farm.period_end}</p>
+                </div>
+              </div>
             </div>
           </div>
         ))}
