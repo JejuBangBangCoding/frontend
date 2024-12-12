@@ -130,7 +130,7 @@ function FarmDetailedPage() {
                 farmDetails.tag.map((tag, index) => (
                   <span 
                     key={index} 
-                    className="text-sm rounded-xl border-2 border-[#FFA500] bg-[#FFDB99] px-2 py-1"
+                    className="text-xs rounded-xl border-[0.1rem] border-[#FFA500] bg-[#FFDB99] px-2 py-1"
                   >
                     #{tag}
                   </span>
@@ -151,7 +151,7 @@ function FarmDetailedPage() {
               <p className="text-xs">지원자 (3/5)</p>
             </div>
             {/* 간단 설명 */}
-            <div className="flex justify-center items-center border-b-2 mb-3">
+            <div className="flex justify-center items-center mb-3">
               {/* 시급 */}
               <div className="flex flex-col items-center">
                 <img src={money} alt="Money" className="mb-1" />
@@ -179,8 +179,9 @@ function FarmDetailedPage() {
                 </p>
               </div>
             </div>
+            <div className="border-[0.1rem]"></div>
             {/* 구인글 제목 */}
-            <p className="font-bold text-xl mb-2">{farmDetails.title}</p>
+            <p className="font-bold text-xl my-2">{farmDetails.title}</p>
             {/* <p className="mb-2 text-lg">업종: {farmDetails.industry}</p> */}
             {/* <p className="mb-2 text-lg">
               복지 혜택:{" "}
@@ -193,9 +194,10 @@ function FarmDetailedPage() {
             <p className="">contact : 010-xxxx-xxxx</p>
             {/* 농장 위치 */}
             <img src={map} alt="Map" className="" />
-            <p className="text-xs border-b-2 mb-3">{farmDetails.location}</p>
+            <p className="text-xs mb-3">{farmDetails.location}</p>
+            <div className="border-[0.1rem]"></div>
             {/* 명소 */}
-            <p className="text-xl font-bold mb-3">근처에 있는 명소</p>
+            <p className="text-xl font-bold my-3">근처에 있는 명소</p>
             <ol className="flex justify-center gap-3 mb-3">
               {/* 명소 1 */}
               <li className="">
@@ -231,7 +233,7 @@ function FarmDetailedPage() {
             {/* 예약 버튼 */}
             <button
               onClick={handleMatchClick}
-              className="my-3 rounded-2xl bg-[#FFA500] text-white px-32 py-3"
+              className="my-3 rounded-xl bg-[#FFA500] text-white px-32 py-3"
             >
               예약하기
             </button>
