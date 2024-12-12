@@ -178,10 +178,10 @@ function AiPage() {
           {/* 헤더 */}
           <Header showProfile={true} />
 
-          {/* 선택 (시작) */}
+          {/* 선택 */}
           {!contentChanged && (
-            <div className="mt-5 flex flex-col items-center p-5">
-              {/* 캘린더 (시작) */}
+            <div className="mt-12 flex flex-col items-center">
+              {/* 캘린더 */}
               <DatePicker
                 selected={startDate}
                 onChange={handleDateChange}
@@ -193,10 +193,9 @@ function AiPage() {
                 className=""
                 minDate={new Date()}
               />
-              {/* 캘린더 (끝) */}
 
-              <div className="mt-8">
-                {/* 날짜 선택 (시작) */}
+              <div className="mt-5">
+                {/* 날짜 */}
                 <div>
                   <h1 className="text-xl font-semibold">날짜</h1>
                   <div className="flex h-8 items-center space-x-2">
@@ -217,10 +216,9 @@ function AiPage() {
                     )}
                   </div>
                 </div>
-                {/* 날짜 선택 (끝) */}
 
-                {/* 업종 선택 (시작)*/}
-                <div className="mt-8">
+                {/* 업종 선택 */}
+                <div className="mt-5">
                   <h2 className="text-xl font-semibold">업종</h2>
                   <div className="mt-2 space-x-2 text-[15px]">
                     {["귤", "당근", "감자", "마늘", "양파", "상관없음"].map(
@@ -241,9 +239,8 @@ function AiPage() {
                     )}
                   </div>
                 </div>
-                {/* 업종 선택 (끝)*/}
 
-                {/* 숙식 제공 여부 선택 (시작) */}
+                {/* 숙식 제공 여부 */}
                 <div className="mt-8">
                   <h2 className="text-xl font-semibold">숙식 제공 여부</h2>
                   <div className="mt-2 space-x-2 text-[15px]">
@@ -279,9 +276,8 @@ function AiPage() {
                     </button>
                   </div>
                 </div>
-                {/* 숙식 제공 여부 선택 (끝) */}
 
-                {/* 근무형태 선택 (시작) */}
+                {/* 근무형태 */}
                 <div className="mt-8">
                   <h2 className="text-xl font-semibold">근무형태</h2>
                   <div className="mt-2 space-x-2 text-[15px]">
@@ -303,20 +299,18 @@ function AiPage() {
                     )}
                   </div>
                 </div>
-                {/* 근무형태 선택 (끝) */}
               </div>
             </div>
           )}
-          {/* 선택 (끝) */}
 
-          {/* AI 추천 (시작) */}
+          {/* AI 추천 */}
           {contentChanged && (
             <>
               <div className="mt-8 flex flex-col items-center justify-center p-5 font-Pretendard">
                 <h className="text-[20px] font-[600]">
                   제주에서 어떤 여행을 꿈꾸고 계시나요?
                 </h>
-                <h className="mt-2 text-[13px] font-[300]">
+                <h className="mt-2 text-[13px] font-normal">
                   어떠한 내용이라도 좋아요. 자유롭게 작성해주세요.
                 </h>
 
@@ -327,7 +321,7 @@ function AiPage() {
                   className="mt-10 h-[392px] w-full rounded-2xl border px-4 py-3 placeholder:text-[15px] placeholder:leading-7"
                 />
               </div>
-
+              <p className="absolute right-10 bottom-[24.5rem] font-thin text-xs">* 150자 내외로 작성해 주세요!</p>
               <div className="flex flex-col px-7">
                 <h className="text-[18px] font-[500]">추천 키워드</h>
                 <h className="text-[13px] font-[300]">
@@ -353,35 +347,30 @@ function AiPage() {
               </div>
             </>
           )}
-          {/* AI 추천 (끝) */}
 
-          {/* 버튼 (시작) */}
-          <div className="mt-16 flex justify-center space-x-3">
-            {/* 버튼 - 왼쪽 (시작) */}
+          {/* 버튼 */}
+          <div className="mt-auto mb-5 flex justify-center space-x-3 ">
+            {/* 초기화 버튼 */}
             <button
               onClick={handleReset}
-              className="flex h-12 w-40 cursor-pointer items-center justify-center gap-3 rounded-2xl bg-[#E8E8E8] px-6 py-[1.1rem]"
+              className="flex h-18 w-40 cursor-pointer items-center justify-center gap-3 rounded-2xl bg-[#E8E8E8] px-6 py-[1.1rem]"
             >
               <img src={refresh} alt="Refresh" className="w-[1.2rem]" />
               <p className="text-lg font-normal">초기화</p>
             </button>
-            {/* 버튼 - 왼쪽 (끝) */}
-
-            {/* 버튼 - 오른쪽 (시작) */}
+            {/* 다음 버튼 */}
             <button
               onClick={handleClick}
-              className={`flex h-12 w-40 cursor-pointer items-center justify-center rounded-2xl text-xl text-white ${
+              className={`flex h-18 w-60 cursor-pointer items-center justify-center rounded-2xl text-xl text-white ${
                 isPeriodValid() || contentChanged
                   ? "bg-[#FFA500]"
-                  : "cursor-not-allowed bg-gray-400"
+                  : "cursor-not-allowed bg-[#FFA500]"
               }`}
               disabled={!isPeriodValid() && !contentChanged}
             >
               {contentChanged ? "추천받기" : "다음"}
             </button>
-            {/* 버튼 - 오른쪽 (끝) */}
           </div>
-          {/* 버튼 (끝) */}
         </>
       )}
     </>
