@@ -58,23 +58,23 @@ function MainPage() {
         {/* 모집 리스트 */}
         <RecruitmentList selectedRegion={selectedRegion} />
         {/* 버튼 */}
-        <div className="flex justify-center items-center gap-4 bg-white p-5 border shadow bottom-0 fixed">
+        <div className="flex justify-center items-center gap-4 bg-white p-5 border bottom-0 fixed pr-[1.4rem]">
           {/* AI 추천 */}
-          <div
+          <button
             onClick={handleAiRecommendationClick}
             className="rounded-xl bg-[#FFE9C1] w-[5.5rem] flex-col justify-items-center py-1.5"
           >
             <img src={bulb} alt="Bulb" className="w-7" />
             <p className="text-sm font-bold text-[#FFA500]">AI 추천</p>
-          </div>
+          </button>
           {/* 예약 정보 확인 */}
-          <div
+          <button
             onClick={handleReservationClick}
             className="rounded-xl bg-[#FFA500] w-[22rem] flex justify-center items-center gap-2 p-3"
           >
             <img src={hang} alt="Hang" className="w-6" />
             <p className="text-2xl font-medium text-white">예약 정보 확인</p>
-          </div>
+          </button>
         </div>
       </div>
     </>
