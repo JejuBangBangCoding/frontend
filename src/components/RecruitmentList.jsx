@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import list1 from "../assets/images/list1.svg";
+import test from "../assets/images/test.svg";
 import { useNavigate } from "react-router-dom";
 
 const RecruitmentList = ({ selectedRegion }) => {
@@ -42,19 +42,19 @@ const RecruitmentList = ({ selectedRegion }) => {
   };
 
   return (
-    <div className="mx-7 mt-5 h-[28rem] rounded-3xl bg-white p-4">
+    <div className="rounded-t-3xl shadow bg-white border-bg-[#FFA500] border-[1px]">
       {/* 모집 리스트 - 헤더 */}
-      <div className="flex items-center justify-between"></div>
-      <div className="flex justify-around">
-        <button className="text-xl font-semibold">일하젠</button>
-        <button className="text-xl font-semibold">놀젠</button>
+      <div className="flex justify-center">
+        <div className="flex-1 text-center text-xl text-[#FF710A] border-b border-[#FF710A] py-4">
+          <button>일하젠</button>
+        </div>
+        <div className="flex-1 text-center text-xl border-b py-4">
+          <button>놀젠</button>
+        </div>
       </div>
 
-      {/* 가로선 */}
-      <div className="my-3 h-[1px] w-full bg-gray-300"></div>
-
       {/* 모집 리스트 - 내용 */}
-      <div className="custom-scrollbar h-[23rem] overflow-y-auto">
+      <div className="p-6 custom-scrollbar h-[calc(100vh-20rem)] overflow-y-auto">
         {loading && <p className="text-center text-gray-500">로딩 중...</p>}
         {error && <p className="text-center text-red-500">{error}</p>}
         {!loading && !error && farms.length === 0 && (
@@ -67,27 +67,23 @@ const RecruitmentList = ({ selectedRegion }) => {
           <div
             key={farm.id}
             onClick={() => handleFarmClick(farm)}
-            className="mt-1 flex cursor-pointer p-1"
+            className="flex mb-3 cursor-pointer"
           >
             <img
-              src={farm.image_url || list1}
+              src={farm.image_url || test}
               alt={`Farm ${farm.id}`}
-              className="mr-4 w-24"
+              className="mr-4 rounded-xl"
             />
-            <div className="">
-              <div className="flex items-center gap-2 mb-2">
-                <p className="text-lg font-bold">{farm.title}</p>
-                <p className="text-sm font-light">{farm.workdays}</p>
+            <div className="flex justify-between w-full">
+              <div className="flex flex-col justify-around">
+                <p className="text-sm">{farm.farm_name}</p>
+                <p className="font-bold text-xl truncate">{farm.title}</p>
+                <p className="font-light border border-gray py-1 px-2 rounded-xl w-fit">#{farm.welfare}</p>
+                <p className="font-bold text-[#FFA500]">시급 {farm.hourly}</p>
               </div>
-              <div className="flex justify-between">
-                <p className="text-sm font-light">{farm.farm_name}</p>
-              </div>
-              <div className="flex justify-between items-end">
-                <p className="text-xs rounded-xl border-[1px] border-[#FFA500] bg-white py-1 px-2">{farm.welfare} </p>
-                <div className="">
-                  <p className="text-sm text-right">시급 {farm.hourly}원</p>
-                  <p className="font-thin text-xs">{farm.period_start} ~ {farm.period_end}</p>
-                </div>
+              <div className="flex-col justify-items-end">
+                <p className="text-[0.6rem] font-thin truncate">{farm.period_start} ~ {farm.period_end}</p>
+                <p className="">{farm.workdays}</p>
               </div>
             </div>
           </div>

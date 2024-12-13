@@ -38,7 +38,6 @@ function MainPage() {
     <>
       {/* 헤더 */}
       <Header showProfile={true} showBackButton={false} />
-
       <div className="flex flex-col">
         {/* 안내 문구 */}
         <div className="mt-7 flex flex-col items-center">
@@ -54,48 +53,27 @@ function MainPage() {
             </p>
           </div>
         </div>
-
         {/* 지도 */}
         <Map onRegionClick={handleMapClick} />
-
         {/* 모집 리스트 */}
         <RecruitmentList selectedRegion={selectedRegion} />
-
         {/* 버튼 */}
-        <div className="flex justify-center gap-5 my-7">
-          {/* AI 추천 받기 */}
+        <div className="flex justify-center items-center gap-4 bg-white p-5 border shadow bottom-0 fixed">
+          {/* AI 추천 */}
           <div
             onClick={handleAiRecommendationClick}
-            className="box-border h-[7.5rem] w-[13.3rem] rounded-[1.5rem] bg-[#FFA500] p-3"
+            className="rounded-xl bg-[#FFE9C1] w-[5.5rem] flex-col justify-items-center py-1.5"
           >
-            <div className="flex items-center justify-center gap-3 mt-2">
-              <img src={bulb} alt="Bulb" className="w-[3rem]" />
-              <p className="text-[1rem] font-normal text-white">
-                선택하기
-                <br />
-                어렵다면?
-              </p>
-            </div>
-            <p className="mt-1 flex justify-center text-[1.5rem] font-bold text-white">
-              AI 추천 받기
-            </p>
+            <img src={bulb} alt="Bulb" className="w-7" />
+            <p className="text-sm font-bold text-[#FFA500]">AI 추천</p>
           </div>
           {/* 예약 정보 확인 */}
           <div
             onClick={handleReservationClick}
-            className="box-border h-[7.5rem] w-[13.3rem] rounded-[1.5rem] bg-[#FFA500] p-3"
+            className="rounded-xl bg-[#FFA500] w-[22rem] flex justify-center items-center gap-2 p-3"
           >
-            <div className="flex items-center justify-center gap-3 mt-2">
-              <img src={hang} alt="Hang" className="w-[3rem]" />
-              <p className="text-[1rem] font-normal text-white">
-                어느 곳에
-                <br />
-                가시나요?
-              </p>
-            </div>
-            <p className="mt-1 flex justify-center text-[1.5rem] font-bold text-white">
-              예약 정보 확인
-            </p>
+            <img src={hang} alt="Hang" className="w-6" />
+            <p className="text-2xl font-medium text-white">예약 정보 확인</p>
           </div>
         </div>
       </div>
