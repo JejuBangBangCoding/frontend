@@ -22,7 +22,7 @@ const Map = ({ onRegionClick }) => {
     { name: "서귀포시", left: "53%", top: "63%" },
     { name: "남원읍", left: "66%", top: "58%" },
     { name: "표선면", left: "78%", top: "47%" },
-    { name: "성산읍", left: "84%", top: "33%" },
+    { name: "성산읍", left: "83%", top: "33%" },
   ];
 
   return (
@@ -35,7 +35,7 @@ const Map = ({ onRegionClick }) => {
           onClick={() => handleRegionClick(region.name)}
           className={`absolute cursor-pointer text-xl font-black transition-all duration-300 ${
             selectedRegion === region.name
-              ? "text-[1.9rem] text-[#FFA500] stroke-black stroke-2"
+              ? "text-[2rem] text-[#FFA500] stroke-black stroke-2"
               : "opacity-50"
           }`}
           style={{
