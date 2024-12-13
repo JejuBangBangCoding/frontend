@@ -231,14 +231,16 @@ function FarmDetailedPage() {
               </li>
             </ol>
             {/* 예약 버튼 */}
-            <button
-              onClick={handleMatchClick}
-              className="mt-auto rounded-xl bg-[#FFA500] text-white px-44 py-3"
-            >
-              예약하기
-            </button>
+            <div className="fixed bottom-5 rounded-xl bg-[#FFA500]">
+              <button
+                onClick={handleMatchClick}
+                className="text-white px-44 py-4"
+              >
+                예약하기
+              </button>
+            </div>
           </div>
-          </div>
+        </div>
       )}
 
       {isModalOpen && (

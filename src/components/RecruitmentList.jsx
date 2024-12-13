@@ -11,13 +11,14 @@ const RecruitmentList = ({ selectedRegion }) => {
 
   useEffect(() => {
     if (selectedRegion) {
+      setFarms([]); // 🔥 지역이 변경되었을 때 이전 리스트 초기화
+      setError(null); // 🔥 이전에 발생한 에러도 초기화
       fetchFarms();
     }
   }, [selectedRegion]);
 
   const fetchFarms = async () => {
     setLoading(true);
-    setError(null);
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/api/board/location/`,
@@ -32,6 +33,7 @@ const RecruitmentList = ({ selectedRegion }) => {
         console.error("Server response:", err.response.data);
       }
       setError("데이터를 불러오지 못했습니다. RecruitmentList.jsx");
+      setFarms([]); // 🔥 에러가 발생하면 리스트 초기화
     } finally {
       setLoading(false);
     }

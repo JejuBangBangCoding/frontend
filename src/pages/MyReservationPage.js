@@ -83,19 +83,19 @@ function MyReservationPage() {
         <img
           src={user?.profileImage || userProfilePlaceholder}
           alt="User Profile"
-          className="absolute top-32 w-[8rem] rounded-full"
+          className="absolute top-36 w-[10rem] h-[10rem] rounded-full object-cover"
         />
-        <p className="absolute top-64 text-xl font-semibold">
+        <p className="absolute top-[19.2rem] text-xl font-semibold">
           {user?.username || "사용자"}
         </p>
       </div>
 
-      <p className="mb-2 mt-auto self-center text-xs font-normal text-[#C4C4C4]">
+      <p className="mt-[5.5rem] self-center text-xs font-normal text-[#C4C4C4]">
         각 항목을 누르시면 상세 조회를 하실 수 있습니다.
       </p>
 
       {/* 예약 현황 */}
-      <div className="mx-5 h-[32.5rem] rounded-t-3xl bg-white p-5">
+      <div className="mx-5 h-[32.5rem] rounded-t-3xl bg-white p-5 min-h-screen">
         {/* 예약 현황 - 헤더 */}
         <div className="mb-4 flex items-center">
           <img src={list} alt="List" className="mr-3 w-[1rem]" />
