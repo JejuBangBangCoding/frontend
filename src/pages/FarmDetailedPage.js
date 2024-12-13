@@ -7,7 +7,7 @@ import money from "../assets/images/money.svg";
 import calendar from "../assets/images/calendar.svg";
 import clock from "../assets/images/clock.svg";
 import hourGlass from "../assets/images/hourGlass.svg";
-import map from "../assets/images/map.svg";
+import address from "../assets/images/address.svg";
 import list2 from "../assets/images/list2.svg";
 import list3 from "../assets/images/list3.svg";
 import star from "../assets/images/star.svg";
@@ -193,7 +193,7 @@ function FarmDetailedPage() {
             <p className="text-lg mb-5"> {farmDetails.description}</p>
             <p className="">contact : 010-xxxx-xxxx</p>
             {/* 농장 위치 */}
-            <img src={map} alt="Map" className="my-1" />
+            <img src={address} alt="Address" className="my-1" />
             <p className="text-xs">{farmDetails.location}</p>
             <div className="border-[1px] my-5"></div>
             {/* 명소 */}

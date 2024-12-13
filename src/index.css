@@ -8,7 +8,7 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #ffa500; /* 스크롤바 색상 */
+  background-color: #FFE9C1; /* 스크롤바 색상 */
   border-radius: 10px; /* 스크롤바 둥근 모서리 */
 }
 

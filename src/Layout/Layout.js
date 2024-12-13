@@ -55,11 +55,10 @@ const Layout = () => {
       {/* 전체 영역 wrap */}
       <div className="flex min-h-screen items-center justify-center"> 
         {/* 전체 영역 내부 콘텐츠 중심 container */}
-        <div className="flex flex-col min-h-screen container bg-[#F4F4F4] relative">
+        <div className="flex flex-col min-h-screen container bg-[#fffcf7] relative">
           {/* 페이지 콘텐츠를 보여주는 영역 */}
           {/* <main> */}
             <Outlet />
-          {/* </main> */}
         </div>
       </div>
     </>
