@@ -32,7 +32,7 @@ const RecruitmentList = ({ selectedRegion }) => {
       if (err.response) {
         console.error("Server response:", err.response.data);
       }
-      setError("데이터를 불러오지 못했습니다.");
+      setError("데이터를 불러오지 못했습니다. RecruitmentList.jsx");
       setFarms([]); // 🔥 에러가 발생하면 리스트 초기화
     } finally {
       setLoading(false);

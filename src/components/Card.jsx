@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import star from "../assets/images/star.svg";
-import location from "../assets/images/location.svg";
+
 const Card = ({ farm, onClick }) => {
   const [tags, setTags] = useState([]);
   const imageUrl = farm.image_url
@@ -32,63 +31,54 @@ const Card = ({ farm, onClick }) => {
   }, [tags]);
 
   return (
-    <>
-      {/* 농장명과 별점 */}
-      <div className="text-center">
-        <p className="text-sm">{farm.reason}</p>
-        <h1 className="text-2xl font-[700] my-1">{farm.farm_name}</h1>
-        <p className="flex text-sm justify-center items-center">
-          <img src={star} alt="" className="" />
-          {farm.match_score}
-        </p>
+    <div className="">
+      <div className="mb-3 text-center">
+        <h1 className="text-2xl font-[700]">{farm.farm_name}</h1>
+        <p className="text-sm text-gray-600">⭐{farm.match_score}</p>
       </div>
 
-      {/* 카드 */}
-      <div className="shadow my-5">
-        {/* 이미지  */}
-        <div className="">
+      <div className="w-80 overflow-hidden rounded-lg bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl">
+        {/* 이미지 */}
+        <div className="h-48 overflow-hidden">
           <img
             src={imageUrl}
             alt={farm.title}
-            className="rounded-3xl"
+            className="h-full w-full object-cover"
           />
         </div>
-      </div>
 
-      {/* 상세 설명 */}
-      <div className="justify-items-center">
-        <h3 className="text-lg font-bold text-gray-800">{farm.title}</h3>
-        <p className="flex text-sm gap-1 mt-1 mb-4">
-          <img src={location} alt="location" className="" />
-          {farm.location}
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {tags.length > 0 ? (
-            tags.map((tag, index) => (
-              <div
-                key={index}
-                className="inline-block rounded-xl border border-[#FFA500] bg-[#FFDB99] px-2 py-1 text-sm text-gray-800"
-              >
-                #{tag}
-              </div>
-            ))
-          ) : (
-            <p className="text-sm">정보 없음</p>
-          )}
+        {/* 카드 본문 */}
+        <div className="p-4">
+          <h3 className="text-lg font-bold text-gray-800">{farm.title}</h3>
+          <p className="text-sm text-gray-600">{farm.location}</p>
+          <p className="text-sm text-gray-500">{farm.reason}</p>
+          <div className="mt-10 flex flex-wrap gap-2">
+            {tags.length > 0 ? (
+              tags.map((tag, index) => (
+                <div
+                  key={index}
+                  className="inline-block rounded-xl border border-[#FFA500] bg-[#FFDB99] px-2 py-1 text-sm text-gray-800"
+                >
+                  #{tag}
+                </div>
+              ))
+            ) : (
+              <p className="text-sm">정보 없음</p>
+            )}
+          </div>
+        </div>
+
+        {/* 카드 하단 */}
+        <div className="border-t p-4">
+          <button
+            onClick={onClick}
+            className="w-full rounded-lg bg-[#FFA500] py-2 text-center text-white hover:bg-[#FF8C00]"
+          >
+            상세 보기
+          </button>
         </div>
       </div>
-
-      {/* 상세 보기 버튼 */}
-      <div className="">
-        <button
-          onClick={onClick}
-          className="w-full rounded-xl bg-[#FFA500] py-2 text-center text-white hover:bg-[#FF8C00] my-5"
-        >
-          상세 보기
-        </button>
-      </div>
-      
-    </>
+    </div>
   );
 };
 

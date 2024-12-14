@@ -113,43 +113,45 @@ function MyReservationPage() {
 
         {/* 예약 현황 - 리스트 */}
         <div className="h-[29rem] overflow-y-auto">
-          {reservations.length > 0 ? (
-            reservations.map((item) => (
-              <div
-                key={item.id}
-                className="mb-4 flex cursor-pointer rounded-3xl bg-[#FFDB99] p-4 shadow"
-                onClick={() => handleReservationClick(item)}
-              >
-                {/* 왼쪽 */}
-                <div className="relative ml-3 mr-3 flex">
-                  <p className="absolute left-[-1rem] self-center rounded-full border-2 border-[#FFA500] bg-white px-[0.7rem] py-[0.2rem] text-base font-normal">
-                    {item.id}
-                  </p>
-                  <img src={list1} alt="ReservationImage" />
-                </div>
+          {reservations.length > 0
+            ? reservations.map((item) => (
+                <div
+                  key={item.id}
+                  className="mb-4 flex cursor-pointer rounded-3xl bg-[#FFDB99] p-4 shadow"
+                  onClick={() => handleReservationClick(item)}
+                >
+                  {/* 왼쪽 */}
+                  <div className="relative ml-3 mr-3 flex">
+                    <p className="absolute left-[-1rem] self-center rounded-full border-2 border-[#FFA500] bg-white px-[0.7rem] py-[0.2rem] text-base font-normal">
+                      {item.id}
+                    </p>
+                    <img src={list1} alt="ReservationImage" />
+                  </div>
 
-                {/* 중간 */}
-                <div className="flex basis-1/2 flex-col justify-center gap-1">
-                  <p className="text-sm font-bold">{item.title}</p>
-                  <p className="text-xs font-light">{item.farm_name}</p>
-                  <div className="flex">
-                    <img src={locationIcon} alt="Location" className="mr-1" />
-                    <p className="text-xs">{item.location}</p>
+                  {/* 중간 */}
+                  <div className="flex basis-1/2 flex-col justify-center gap-1">
+                    <p className="text-sm font-bold">{item.title}</p>
+                    <p className="text-xs font-light">{item.farm_name}</p>
+                    <div className="flex">
+                      <img src={locationIcon} alt="Location" className="mr-1" />
+                      <p className="text-xs">{item.location}</p>
+                    </div>
+                  </div>
+
+                  {/* 오른쪽 */}
+                  <div className="flex basis-1/3 flex-col items-end justify-between">
+                    <p className="text-[0.8rem] font-bold">{item.date}</p>
+                    <p className="text-[0.6rem] font-normal">
+                      {item.period_start} ~ {item.period_end}
+                    </p>
                   </div>
                 </div>
-
-                {/* 오른쪽 */}
-                <div className="flex basis-1/3 flex-col items-end justify-between">
-                  <p className="text-[0.8rem] font-bold">{item.date}</p>
-                  <p className="text-[0.6rem] font-normal">
-                    {item.period_start} ~ {item.period_end}
-                  </p>
-                </div>
-              </div>
-            ))
-          ) : !loading && !error ? (
-            <p className="text-center text-gray-600">예약된 농장이 없습니다.</p>
-          ) : null}
+              ))
+            : !loading && (
+                <p className="text-center text-gray-600">
+                  예약된 농장이 없습니다.
+                </p>
+              )}
         </div>
       </div>
     </>
