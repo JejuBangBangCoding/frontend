@@ -84,88 +84,93 @@ function MyReservationPage() {
   };
 
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       <Header showProfile={true} showBackButton={true} />
 
-      {/* 배경 및 사용자 프로필 이미지 */}
-      <div className="relative mt-5 flex flex-col items-center">
-        {/* 배경 이미지 */}
-        <img
-          src={backImg}
-          alt="Background"
-          className="h-40 w-full rounded-t-3xl object-cover"
-        />
-
-        {/* 프로필 이미지 및 사용자 이름 */}
-        <div className="relative mt-[-4rem] flex flex-col items-center">
+      {/* Main Content */}
+      <div className="flex flex-grow flex-col">
+        {/* 배경 및 사용자 프로필 이미지 */}
+        <div className="relative mt-5 flex flex-col items-center">
           <img
-            src={user?.profileImage || userProfilePlaceholder}
-            alt="User Profile"
-            className="h-32 w-32 rounded-full border-4 border-white object-cover"
+            src={backImg}
+            alt="Background"
+            className="h-40 w-full rounded-t-3xl object-cover"
           />
-          <p className="absolute top-3/4 rounded-full bg-[#FFA500] px-3 py-1 text-xl font-semibold text-white">
-            {user?.username || "사용자"}
-          </p>
-        </div>
-      </div>
-
-      {/* 예약 현황 안내 문구 */}
-      <p className="mb-2 mt-8 text-center text-xs font-normal text-[#C4C4C4]">
-        각 항목을 누르시면 상세 조회를 하실 수 있습니다.
-      </p>
-
-      {/* 예약 현황 섹션 */}
-      <div className="mx-5 rounded-t-3xl bg-white p-5">
-        <div className="mb-4 flex items-center">
-          <img src={list} alt="List" className="mr-3 w-[1rem]" />
-          <p className="text-sm font-normal">예약 현황</p>
-          <p className="ml-auto text-sm">
-            전체 <strong>{reservations.length}</strong> 개
-          </p>
+          {/* 프로필 이미지 및 사용자 이름 */}
+          <div className="mt-[-4rem] flex flex-col items-center">
+            <img
+              src={user?.profileImage || userProfilePlaceholder}
+              alt="User Profile"
+              className="relative h-32 w-32 rounded-full border-4 border-white object-cover"
+            />
+            <p className="absolute top-48 rounded-full bg-[#FFA500] px-3 py-1 text-xl font-semibold text-white">
+              {user?.username || "사용자"}
+            </p>
+          </div>
         </div>
 
-        {loading && <p className="text-center text-gray-600">로딩 중...</p>}
-        {error && <p className="text-center text-red-600">{error}</p>}
+        {/* 예약 현황 안내 문구 */}
+        <p className="mb-2 mt-8 text-center text-xs font-normal text-[#C4C4C4]">
+          각 항목을 누르시면 상세 조회를 하실 수 있습니다.
+        </p>
 
-        <div className="h-[15rem] overflow-y-auto">
-          {reservations.length > 0
-            ? reservations.map((item) => (
-                <div
-                  key={item.reservation_id}
-                  className="mb-4 flex cursor-pointer rounded-3xl bg-[#FFDB99] p-4 shadow"
-                  onClick={() => handleReservationClick(item)}
-                >
-                  <div className="flex basis-1/2 flex-col justify-center gap-1">
-                    <p className="text-xs font-light">{item.farm_name}</p>
-                    <div className="flex">
-                      <img src={locationIcon} alt="Location" className="mr-1" />
-                      <p className="text-xs">예약 날짜: {item.date}</p>
-                    </div>
-                    <p className="text-[0.8rem] font-bold">근로 기간</p>
-                    <p className="text-[0.6rem] font-normal">
-                      {item.board_period_start} ~ {item.board_period_end}
-                    </p>
-                  </div>
+        {/* 예약 현황 섹션 */}
+        <div className="mx-5 flex flex-grow flex-col rounded-t-3xl bg-white p-5">
+          <div className="mb-4 flex items-center">
+            <img src={list} alt="List" className="mr-3 w-[1rem]" />
+            <p className="text-sm font-normal">예약 현황</p>
+            <p className="ml-auto text-sm">
+              전체 <strong>{reservations.length}</strong> 개
+            </p>
+          </div>
 
-                  <button
-                    className="ml-auto rounded bg-red-500 px-4 py-2 text-white"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteReservation(item.reservation_id);
-                    }}
+          {loading && <p className="text-center text-gray-600">로딩 중...</p>}
+          {error && <p className="text-center text-red-600">{error}</p>}
+
+          <div className="flex-grow overflow-y-auto">
+            {reservations.length > 0
+              ? reservations.map((item) => (
+                  <div
+                    key={item.reservation_id}
+                    className="mb-4 flex cursor-pointer rounded-3xl bg-[#FFDB99] p-4 shadow"
+                    onClick={() => handleReservationClick(item)}
                   >
-                    예약 삭제
-                  </button>
-                </div>
-              ))
-            : !loading && (
-                <p className="text-center text-gray-600">
-                  예약된 농장이 없습니다.
-                </p>
-              )}
+                    <div className="flex basis-1/2 flex-col justify-center gap-1">
+                      <p className="text-xs font-light">{item.farm_name}</p>
+                      <div className="flex">
+                        <img
+                          src={locationIcon}
+                          alt="Location"
+                          className="mr-1"
+                        />
+                        <p className="text-xs">예약 날짜: {item.date}</p>
+                      </div>
+                      <p className="text-[0.8rem] font-bold">근로 기간</p>
+                      <p className="text-[0.6rem] font-normal">
+                        {item.board_period_start} ~ {item.board_period_end}
+                      </p>
+                    </div>
+
+                    <button
+                      className="ml-auto rounded bg-red-500 px-4 py-2 text-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteReservation(item.reservation_id);
+                      }}
+                    >
+                      예약 삭제
+                    </button>
+                  </div>
+                ))
+              : !loading && (
+                  <p className="text-center text-gray-600">
+                    예약된 농장이 없습니다.
+                  </p>
+                )}
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
