@@ -7,6 +7,7 @@ const RecruitmentList = ({ selectedRegion }) => {
   const [farms, setFarms] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [activeTab, setActiveTab] = useState('일하젠'); // 🔥 현재 활성화된 탭 상태 추가
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,7 +16,7 @@ const RecruitmentList = ({ selectedRegion }) => {
       setError(null); // 🔥 이전에 발생한 에러도 초기화
       fetchFarms();
     }
-  }, [selectedRegion]);
+  }, [selectedRegion, activeTab]); // 🔥 activeTab이 변경될 때도 데이터 새로고침
 
   const fetchFarms = async () => {
     setLoading(true);
@@ -23,7 +24,7 @@ const RecruitmentList = ({ selectedRegion }) => {
       const response = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/api/board/location/`,
         {
-          params: { location: selectedRegion },
+          params: { location: selectedRegion, category: activeTab }, // 🔥 카테고리 추가
         },
       );
       setFarms(response.data);
@@ -47,11 +48,15 @@ const RecruitmentList = ({ selectedRegion }) => {
     <div className="rounded-t-3xl shadow bg-white border-bg-[#FFA500] border-[1px]">
       {/* 모집 리스트 - 헤더 */}
       <div className="flex justify-center">
-        <div className="flex-1 text-center text-xl text-[#FF710A] border-b border-[#FF710A] py-4">
-          <button>일하젠</button>
+        <div 
+          className={`flex-1 text-center text-xl py-4 border-b ${activeTab === '일하젠' ? 'text-[#FF710A] border-[#FF710A]' : ''}`}
+        >
+          <button onClick={() => setActiveTab('일하젠')}>일하젠</button>
         </div>
-        <div className="flex-1 text-center text-xl border-b py-4">
-          <button>놀젠</button>
+        <div 
+          className={`flex-1 text-center text-xl py-4 border-b ${activeTab === '놀젠' ? 'text-[#FF710A] border-[#FF710A]' : ''}`}
+        >
+          <button onClick={() => setActiveTab('놀젠')}>놀젠</button>
         </div>
       </div>
 

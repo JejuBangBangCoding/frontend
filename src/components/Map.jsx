@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import map from "../assets/images/map.svg";
+import mark from "../assets/images/mark.png"; // 위치를 나타내는 아이콘 추가
 
 const Map = ({ onRegionClick }) => {
   const [selectedRegion, setSelectedRegion] = useState(null); // 선택된 지역 상태
@@ -30,22 +31,36 @@ const Map = ({ onRegionClick }) => {
       <img src={map} alt="Map" className="w-full h-full object-cover" />
 
       {regions.map((region) => (
-        <p
+        <div
           key={region.name}
           onClick={() => handleRegionClick(region.name)}
-          className={`absolute cursor-pointer text-xl font-black transition-all duration-300 ${
-            selectedRegion === region.name
-              ? "text-[2rem] text-[#FFA500] stroke-black stroke-2"
-              : "opacity-50"
-          }`}
+          className="absolute cursor-pointer text-center"
           style={{
             left: region.left,
             top: region.top,
             transform: "translate(-50%, -50%)",
           }}
         >
-          {region.name}
-        </p>
+          {/* 위치 아이콘 추가 */}
+          {selectedRegion === region.name && (
+            <img 
+              src={mark} 
+              alt="Mark Icon" 
+              className="w-10 block mx-auto" 
+              style={{ transform: "translateY(0%)" }} 
+            />
+          )}
+          
+          <p
+            className={`cursor-pointer text-xl font-black transition-all duration-300 ${
+              selectedRegion === region.name
+                ? "text-[2rem] shadow-md shadow-black rounded-full p-1"
+                : "opacity-50"
+            }`}
+          >
+            {region.name}
+          </p>
+        </div>
       ))}
     </div>
   );
