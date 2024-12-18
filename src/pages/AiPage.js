@@ -182,7 +182,7 @@ function AiPage() {
           <div className="container mx-auto p-5">
             {/* 선택 섹션 */}
             {!contentChanged && (
-              <div className="mt-5 flex w-full flex-col items-center bg-red-100 p-5">
+              <div className="mt-5 flex w-full flex-col items-center p-5">
                 {/* 캘린더 */}
                 <DatePicker
                   selected={startDate}

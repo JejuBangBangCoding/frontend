@@ -18,7 +18,9 @@ function FarmDetailedPage() {
   useEffect(() => {
     const userData = localStorage.getItem("user");
     if (userData) {
-      setUser(JSON.parse(userData));
+      const parsedUser = JSON.parse(userData);
+      console.log("FarmDetailedPage - Parsed User:", parsedUser);
+      setUser(parsedUser);
     } else {
       navigate("/login");
     }
@@ -65,27 +67,13 @@ function FarmDetailedPage() {
   };
 
   const handleConfirmClick = async () => {
+    //  userID와 BoardID를 FixReservationPage로 전달
     if (isChecked && user && board_id) {
       const reservationData = {
-        userID: user.userId,
+        userID: Number(user.userId),
         BoardID: board_id,
       };
-
-      try {
-        console.log("예약 생성 요청 데이터:", reservationData);
-        const response = await axios.post(
-          `${process.env.REACT_APP_BACKEND_URL}/api/board/reservation/`,
-          reservationData,
-        );
-        console.log("예약 생성 응답:", response.data);
-        navigate("/fixreservationpage", { state: { board_id } });
-      } catch (err) {
-        console.error("예약 생성 중 오류가 발생했습니다:", err);
-        if (err.response) {
-          console.error("서버 응답:", err.response.data);
-        }
-        setError("예약 생성 중 오류가 발생했습니다.");
-      }
+      navigate("/fixreservationpage", { state: reservationData });
     } else {
       setError("예약 정보를 확인해주세요.");
     }
