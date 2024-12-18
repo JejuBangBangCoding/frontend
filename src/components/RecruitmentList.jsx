@@ -88,7 +88,7 @@ const RecruitmentList = ({ selectedRegion }) => {
         {loading && <p className="text-center text-gray-500">로딩 중...</p>}
         {error && <p className="text-center text-red-500">{error}</p>}
         {!loading && !error && items.length === 0 && (
-          <div className="mt-5 flex h-full items-center justify-center">
+          <div className="mt-32 flex justify-center">
             <p className="text-center text-gray-500">
               {activeTab === "일하젠"
                 ? "지역을 선택해주세요."

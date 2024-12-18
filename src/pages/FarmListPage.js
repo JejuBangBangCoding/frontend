@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import Card from "../components/Card";
+import bot from "../assets/images/bot.svg";
+import star from "../assets/images/star.svg";
+import prev from "../assets/images/prev.svg";
+import next from "../assets/images/next.svg";
+import location from "../assets/images/location.svg";
 
 function FarmListPage() {
   const navigate = useNavigate();
@@ -55,6 +60,20 @@ function FarmListPage() {
               ))}
             </div>
           </div>
+
+          {/* 이전 및 다음 버튼 */}
+          <button
+            onClick={handlePrev}
+            className="absolute left-0 top-1/2 -translate-y-1/2 transform shadow"
+          >
+            <img src={prev} alt="Previous" />
+          </button>
+          <button
+            onClick={handleNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 transform"
+          >
+            <img src={next} alt="Next" />
+          </button>
         </div>
 
         {/* 페이지 번호 */}

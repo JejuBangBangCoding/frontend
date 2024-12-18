@@ -55,7 +55,6 @@ function MainPage() {
         </div>
         {/* 지도 */}
         <Map onRegionClick={handleMapClick} />
-
         {/* 모집 리스트 */}
         <RecruitmentList selectedRegion={selectedRegion} />
 

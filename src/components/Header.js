@@ -27,13 +27,13 @@ const Header = ({ showProfile = false, user, showBackButton = true }) => {
         <img
           src={leftArrow1}
           alt="Left Arrow"
-          className="absolute left-6 w-[1.1rem] cursor-pointer"
+          className="absolute left-6 cursor-pointer"
           onClick={() => navigate(-1)}
         />
       )}
 
       {/* 로고 */}
-      <img src={textLogo} alt="Text logo" className="w-[6rem]" />
+      <img src={textLogo} alt="Text logo" className="w-[7rem]" />
 
       {/* 사용자 프로필 */}
       {showProfile && <UserProfile />}

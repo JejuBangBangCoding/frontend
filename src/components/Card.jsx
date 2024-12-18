@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import star from "../assets/images/star.svg";
+import location from "../assets/images/location.svg";
 const Card = ({ farm, onClick }) => {
   const [tags, setTags] = useState([]);
   const imageUrl = farm.image_url
@@ -40,43 +41,41 @@ const Card = ({ farm, onClick }) => {
       <div className="w-full overflow-hidden rounded-lg bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl">
         {/* 이미지 */}
         <div className="h-80 overflow-hidden">
-          <img
-            src={imageUrl}
-            alt={farm.title}
-            className="h-full w-full object-cover"
-          />
+          <img src={imageUrl} alt={farm.title} className="rounded-3xl" />
         </div>
+      </div>
 
-        {/* 카드 본문 */}
-        <div className="p-4">
-          <h3 className="text-lg font-bold text-gray-800">{farm.title}</h3>
-          <p className="text-sm text-gray-600">{farm.location}</p>
-          <p className="text-sm text-gray-500">{farm.reason}</p>
-          <div className="mt-10 flex flex-wrap gap-2">
-            {tags.length > 0 ? (
-              tags.map((tag, index) => (
-                <div
-                  key={index}
-                  className="inline-block rounded-xl border border-[#FFA500] bg-[#FFDB99] px-2 py-1 text-sm text-gray-800"
-                >
-                  #{tag}
-                </div>
-              ))
-            ) : (
-              <p className="text-sm">정보 없음</p>
-            )}
-          </div>
+      {/* 상세 설명 */}
+      <div className="justify-items-center">
+        <h3 className="text-lg font-bold text-gray-800">{farm.title}</h3>
+        <p className="mb-4 mt-1 flex gap-1 text-sm">
+          <img src={location} alt="location" className="" />
+          {farm.location}
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {tags.length > 0 ? (
+            tags.map((tag, index) => (
+              <div
+                key={index}
+                className="inline-block rounded-xl border border-[#FFA500] bg-[#FFDB99] px-2 py-1 text-sm text-gray-800"
+              >
+                #{tag}
+              </div>
+            ))
+          ) : (
+            <p className="text-sm">정보 없음</p>
+          )}
         </div>
+      </div>
 
-        {/* 카드 하단 */}
-        <div className="border-t p-4">
-          <button
-            onClick={onClick}
-            className="w-full rounded-lg bg-[#FFA500] py-2 text-center text-white hover:bg-[#FF8C00]"
-          >
-            상세 보기
-          </button>
-        </div>
+      {/* 상세 보기 버튼 */}
+      <div className="">
+        <button
+          onClick={onClick}
+          className="my-5 w-full rounded-xl bg-[#FFA500] py-2 text-center text-white hover:bg-[#FF8C00]"
+        >
+          상세 보기
+        </button>
       </div>
     </div>
   );
