@@ -27,8 +27,8 @@ const Map = ({ onRegionClick }) => {
   ];
 
   return (
-    <div className="relative w-full">
-      <img src={map} alt="Map" className="w-full h-full object-cover" />
+    <div className="relative w-full px-5">
+      <img src={map} alt="Map" className="h-full w-full object-cover" />
 
       {regions.map((region) => (
         <div
@@ -43,18 +43,18 @@ const Map = ({ onRegionClick }) => {
         >
           {/* 위치 아이콘 추가 */}
           {selectedRegion === region.name && (
-            <img 
-              src={mark} 
-              alt="Mark Icon" 
-              className="w-10 block mx-auto" 
-              style={{ transform: "translateY(0%)" }} 
+            <img
+              src={mark}
+              alt="Mark Icon"
+              className="mx-auto block w-10"
+              style={{ transform: "translateY(0%)" }}
             />
           )}
-          
+
           <p
             className={`cursor-pointer text-xl font-black transition-all duration-300 ${
               selectedRegion === region.name
-                ? "text-[2rem] shadow-md shadow-black rounded-full p-1"
+                ? "rounded-full p-1 text-[2rem] shadow-md shadow-black"
                 : "opacity-50"
             }`}
           >

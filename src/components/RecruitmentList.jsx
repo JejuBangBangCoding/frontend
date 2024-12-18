@@ -4,93 +4,168 @@ import test from "../assets/images/test.svg";
 import { useNavigate } from "react-router-dom";
 
 const RecruitmentList = ({ selectedRegion }) => {
-  const [farms, setFarms] = useState([]);
+  const [items, setItems] = useState([]); // 농장 또는 명소 리스트
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('일하젠'); // 🔥 현재 활성화된 탭 상태 추가
+  const [activeTab, setActiveTab] = useState("일하젠"); // 현재 활성화된 탭
   const navigate = useNavigate();
 
   useEffect(() => {
     if (selectedRegion) {
-      setFarms([]); // 🔥 지역이 변경되었을 때 이전 리스트 초기화
-      setError(null); // 🔥 이전에 발생한 에러도 초기화
-      fetchFarms();
+      setItems([]); // 지역 변경 시 리스트 초기화
+      setError(null); // 에러 초기화
+      fetchItems();
     }
-  }, [selectedRegion, activeTab]); // 🔥 activeTab이 변경될 때도 데이터 새로고침
+  }, [selectedRegion, activeTab]);
 
-  const fetchFarms = async () => {
+  const fetchItems = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/api/board/location/`,
-        {
-          params: { location: selectedRegion, category: activeTab }, // 🔥 카테고리 추가
-        },
-      );
-      setFarms(response.data);
-    } catch (err) {
-      console.error("Error fetching farms:", err);
-      if (err.response) {
-        console.error("Server response:", err.response.data);
+      let response;
+      if (activeTab === "일하젠") {
+        // "일하젠" 탭일 경우 농장 리스트 fetch
+        response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/api/board/location/`,
+          {
+            params: { location: selectedRegion, category: activeTab },
+          },
+        );
+      } else if (activeTab === "놀젠") {
+        // "놀젠" 탭일 경우 명소 리스트 fetch
+        response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/api/attraction/location/`,
+          {
+            params: { location: selectedRegion },
+          },
+        );
       }
-      setError("데이터를 불러오지 못했습니다.");
-      setFarms([]); // 🔥 에러가 발생하면 리스트 초기화
+      setItems(response.data);
+    } catch (err) {
+      console.error("Error fetching items:", err);
+      if (err.response && err.response.data && err.response.data.error) {
+        setError(err.response.data.error);
+      } else {
+        setError("데이터를 불러오지 못했습니다.");
+      }
+      setItems([]); // 에러 발생 시 리스트 초기화
     } finally {
       setLoading(false);
     }
   };
 
-  const handleFarmClick = (farm) => {
-    navigate("/farmdetailedpage", { state: { board_id: farm.id } });
+  const handleItemClick = (item) => {
+    if (activeTab === "일하젠") {
+      navigate("/farmdetailedpage", { state: { board_id: item.id } });
+    } else if (activeTab === "놀젠") {
+      navigate("/attractiondetailedpage", {
+        state: { attraction_id: item.id },
+      });
+    }
   };
 
   return (
-    <div className="rounded-t-3xl shadow bg-white border-bg-[#FFA500] border-[1px]">
+    <div className="border-bg-[#FFA500] mt-5 rounded-t-3xl border-[1px] bg-white shadow">
       {/* 모집 리스트 - 헤더 */}
       <div className="flex justify-center">
-        <div 
-          className={`flex-1 text-center text-xl py-4 border-b ${activeTab === '일하젠' ? 'text-[#FF710A] border-[#FF710A]' : ''}`}
+        <div
+          className={`flex-1 border-b py-4 text-center text-xl ${
+            activeTab === "일하젠" ? "border-[#FF710A] text-[#FF710A]" : ""
+          }`}
         >
-          <button onClick={() => setActiveTab('일하젠')}>일하젠</button>
+          <button onClick={() => setActiveTab("일하젠")}>일하젠</button>
         </div>
-        <div 
-          className={`flex-1 text-center text-xl py-4 border-b ${activeTab === '놀젠' ? 'text-[#FF710A] border-[#FF710A]' : ''}`}
+        <div
+          className={`flex-1 border-b py-4 text-center text-xl ${
+            activeTab === "놀젠" ? "border-[#FF710A] text-[#FF710A]" : ""
+          }`}
         >
-          <button onClick={() => setActiveTab('놀젠')}>놀젠</button>
+          <button onClick={() => setActiveTab("놀젠")}>놀젠</button>
         </div>
       </div>
 
       {/* 모집 리스트 - 내용 */}
-      <div className="p-6 custom-scrollbar h-[calc(100vh-20rem)] overflow-y-auto">
+      <div className="custom-scrollbar h-[23.5rem] overflow-y-auto p-6">
         {loading && <p className="text-center text-gray-500">로딩 중...</p>}
         {error && <p className="text-center text-red-500">{error}</p>}
-        {!loading && !error && farms.length === 0 && (
-          <div className="mt-5 flex h-[14rem] items-center justify-center">
-            <p className="text-center text-gray-500">지역을 선택해주세요.</p>
+        {!loading && !error && items.length === 0 && (
+          <div className="mt-32 flex justify-center">
+            <p className="text-center text-gray-500">
+              {activeTab === "일하젠"
+                ? "지역을 선택해주세요."
+                : "지역을 선택해주세요."}
+            </p>
           </div>
         )}
 
-        {farms.map((farm) => (
+        {items.map((item) => (
           <div
-            key={farm.id}
-            onClick={() => handleFarmClick(farm)}
-            className="flex mb-3 cursor-pointer"
+            key={item.id}
+            onClick={() => handleItemClick(item)}
+            className="mb-4 flex cursor-pointer"
           >
             <img
-              src={farm.image_url || test}
-              alt={`Farm ${farm.id}`}
-              className="mr-4 rounded-xl"
+              src={`${process.env.REACT_APP_BACKEND_URL}${item.image}` || test}
+              alt={`${activeTab === "일하젠" ? "Farm" : ""} ${item.name} 사진`}
+              className="mr-4 h-24 w-24 rounded-xl object-cover"
             />
-            <div className="flex justify-between w-full">
-              <div className="flex flex-col justify-around">
-                <p className="text-sm">{farm.farm_name}</p>
-                <p className="font-bold text-xl truncate">{farm.title}</p>
-                <p className="font-light border border-gray py-1 px-2 rounded-xl w-fit">#{farm.welfare}</p>
-                <p className="font-bold text-[#FFA500]">시급 {farm.hourly}</p>
-              </div>
-              <div className="flex-col justify-items-end">
-                <p className="text-[0.6rem] font-thin truncate">{farm.period_start} ~ {farm.period_end}</p>
-                <p className="">{farm.workdays}</p>
+
+            <div className="flex w-full justify-between">
+              <div className="flex flex-col">
+                <p className="mb-4 truncate text-xl font-bold">
+                  {activeTab === "일하젠" ? item.title : item.name}
+                </p>
+
+                <div className="flex w-[330px] items-center justify-between gap-2">
+                  <p className="text-lg">
+                    {activeTab === "일하젠" ? (
+                      item.farm_name
+                    ) : (
+                      <p className="text-base">{item.address}</p>
+                    )}
+                  </p>
+                  {activeTab === "일하젠" && item.workdays && (
+                    <p>{item.workdays.join(", ")}</p>
+                  )}
+                </div>
+
+                <div className="flex">
+                  {activeTab === "일하젠" ? (
+                    <div className="flex w-full items-center justify-between">
+                      {/* 시급 / 복지 */}
+                      <div className="flex items-center gap-2">
+                        <p className="font-bold text-[#FFA500]">
+                          시급 {item.hourly}
+                        </p>
+                        <p className="border-gray rounded-xl border px-2 py-1 text-[12px] font-normal">
+                          #{item.welfare}
+                        </p>
+                      </div>
+
+                      {/* 근무 기간 */}
+                      <div className="flex justify-end rounded p-1">
+                        <p className="text-[12px] font-light">
+                          {item.period_start} ~ {item.period_end}
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex w-[360px] items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <p className="font-bold text-[#FFA500]">
+                          평점 {item.rating}
+                        </p>
+                        <p className="border-gray rounded-xl border px-2 py-1 text-[12px] font-normal">
+                          {item.tags && item.tags.length > 0
+                            ? `#${item.tags.join(" #")}`
+                            : ""}
+                        </p>
+                      </div>
+                      <div className="flex justify-end rounded p-1">
+                        <p className="">{item.is_advertised ? "광고" : ""}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

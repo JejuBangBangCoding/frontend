@@ -41,18 +41,14 @@ const Card = ({ farm, onClick }) => {
       <div className="w-full overflow-hidden rounded-lg bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl">
         {/* 이미지 */}
         <div className="h-80 overflow-hidden">
-          <img
-            src={imageUrl}
-            alt={farm.title}
-            className="rounded-3xl"
-          />
+          <img src={imageUrl} alt={farm.title} className="rounded-3xl" />
         </div>
       </div>
 
       {/* 상세 설명 */}
       <div className="justify-items-center">
         <h3 className="text-lg font-bold text-gray-800">{farm.title}</h3>
-        <p className="flex text-sm gap-1 mt-1 mb-4">
+        <p className="mb-4 mt-1 flex gap-1 text-sm">
           <img src={location} alt="location" className="" />
           {farm.location}
         </p>
@@ -76,13 +72,12 @@ const Card = ({ farm, onClick }) => {
       <div className="">
         <button
           onClick={onClick}
-          className="w-full rounded-xl bg-[#FFA500] py-2 text-center text-white hover:bg-[#FF8C00] my-5"
+          className="my-5 w-full rounded-xl bg-[#FFA500] py-2 text-center text-white hover:bg-[#FF8C00]"
         >
           상세 보기
         </button>
       </div>
-      
-    </>
+    </div>
   );
 };
 

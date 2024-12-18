@@ -42,7 +42,7 @@ function MainPage() {
         {/* 안내 문구 */}
         <div className="mt-7 flex flex-col items-center">
           <p className="text-[17px] font-[400]">어디를 여행하고 싶으신가요?</p>
-          <div className="flex gap-1">
+          <div className="mb-5 flex gap-1">
             <img
               src={questionMark}
               alt="Question Mark"
@@ -57,12 +57,13 @@ function MainPage() {
         <Map onRegionClick={handleMapClick} />
         {/* 모집 리스트 */}
         <RecruitmentList selectedRegion={selectedRegion} />
+
         {/* 버튼 */}
-        <div className="flex justify-center items-center gap-4 bg-white p-5 border bottom-0 fixed pr-[1.4rem]">
+        <div className="fixed bottom-0 flex items-center justify-center gap-4 border bg-white p-5 pr-[1.4rem]">
           {/* AI 추천 */}
           <button
             onClick={handleAiRecommendationClick}
-            className="rounded-xl bg-[#FFE9C1] w-[5.5rem] flex-col justify-items-center py-1.5"
+            className="w-[5.5rem] flex-col justify-items-center rounded-xl bg-[#FFE9C1] py-1.5"
           >
             <img src={bulb} alt="Bulb" className="w-7" />
             <p className="text-sm font-bold text-[#FFA500]">AI 추천</p>
@@ -70,7 +71,7 @@ function MainPage() {
           {/* 예약 정보 확인 */}
           <button
             onClick={handleReservationClick}
-            className="rounded-xl bg-[#FFA500] w-[22rem] flex justify-center items-center gap-2 p-3"
+            className="flex w-[22rem] items-center justify-center gap-2 rounded-xl bg-[#FFA500] p-3"
           >
             <img src={hang} alt="Hang" className="w-6" />
             <p className="text-2xl font-medium text-white">예약 정보 확인</p>
