@@ -36,9 +36,9 @@ function MainPage() {
 
   return (
     <>
-      {/* 헤더 */}
-      <Header showProfile={true} showBackButton={false} />
-      <div className="flex flex-col">
+      <div className="flex h-screen flex-col">
+        <Header showProfile={true} showBackButton={false} />
+
         {/* 안내 문구 */}
         <div className="mt-7 flex flex-col items-center">
           <p className="text-[17px] font-[400]">어디를 여행하고 싶으신가요?</p>
@@ -53,29 +53,36 @@ function MainPage() {
             </p>
           </div>
         </div>
-        {/* 지도 */}
-        <Map onRegionClick={handleMapClick} />
-        {/* 모집 리스트 */}
-        <RecruitmentList selectedRegion={selectedRegion} />
 
-        {/* 버튼 */}
-        <div className="fixed bottom-0 flex items-center justify-center gap-4 border bg-white p-5 pr-[1.4rem]">
-          {/* AI 추천 */}
-          <button
-            onClick={handleAiRecommendationClick}
-            className="w-[5.5rem] flex-col justify-items-center rounded-xl bg-[#FFE9C1] py-1.5"
-          >
-            <img src={bulb} alt="Bulb" className="w-7" />
-            <p className="text-sm font-bold text-[#FFA500]">AI 추천</p>
-          </button>
-          {/* 예약 정보 확인 */}
-          <button
-            onClick={handleReservationClick}
-            className="flex w-[22rem] items-center justify-center gap-2 rounded-xl bg-[#FFA500] p-3"
-          >
-            <img src={hang} alt="Hang" className="w-6" />
-            <p className="text-2xl font-medium text-white">예약 정보 확인</p>
-          </button>
+        {/* 지도 및 모집 리스트를 포함하는 메인 콘텐츠 영역 */}
+        <div className="flex flex-1 flex-col">
+          {/* 지도 */}
+          <div className="flex-none">
+            <Map onRegionClick={handleMapClick} />
+          </div>
+
+          {/* 모집 리스트 */}
+          <div className="flex-1 overflow-hidden">
+            <RecruitmentList selectedRegion={selectedRegion} />
+          </div>
+
+          {/* 버튼들 */}
+          <div className="flex flex-none justify-center gap-4 border bg-white p-5">
+            <button
+              onClick={handleAiRecommendationClick}
+              className="w-[5.5rem] flex-col justify-items-center rounded-xl bg-[#FFE9C1] py-1.5"
+            >
+              <img src={bulb} alt="Bulb" className="w-7" />
+              <p className="text-sm font-bold text-[#FFA500]">AI 추천</p>
+            </button>
+            <button
+              onClick={handleReservationClick}
+              className="flex w-[22rem] items-center justify-center gap-2 rounded-xl bg-[#FFA500] p-3"
+            >
+              <img src={hang} alt="Hang" className="w-6" />
+              <p className="text-2xl font-medium text-white">예약 정보 확인</p>
+            </button>
+          </div>
         </div>
       </div>
     </>

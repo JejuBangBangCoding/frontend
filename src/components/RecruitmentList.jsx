@@ -64,7 +64,7 @@ const RecruitmentList = ({ selectedRegion }) => {
   };
 
   return (
-    <div className="border-bg-[#FFA500] mt-5 rounded-t-3xl border-[1px] bg-white shadow">
+    <div className="border-bg-[#FFA500] mt-5 flex h-full flex-col rounded-t-3xl border-[1px] bg-white shadow">
       {/* 모집 리스트 - 헤더 */}
       <div className="flex justify-center">
         <div
@@ -84,92 +84,98 @@ const RecruitmentList = ({ selectedRegion }) => {
       </div>
 
       {/* 모집 리스트 - 내용 */}
-      <div className="custom-scrollbar h-[23.5rem] overflow-y-auto p-6">
-        {loading && <p className="text-center text-gray-500">로딩 중...</p>}
-        {error && <p className="text-center text-red-500">{error}</p>}
-        {!loading && !error && items.length === 0 && (
-          <div className="mt-32 flex justify-center">
-            <p className="text-center text-gray-500">
-              {activeTab === "일하젠"
-                ? "지역을 선택해주세요."
-                : "지역을 선택해주세요."}
-            </p>
-          </div>
-        )}
+      <div className="custom-scrollbar scrollbar scrollbar-thumb-orange-500 scrollbar-track-gray-100 flex-1 overflow-y-auto p-6">
+        <div className="h-[1rem]">
+          {/* h-[1rem]은 필수 - 이슈1 확인 (삭제 금지)  */}
+          {loading && <p className="text-center text-gray-500">로딩 중...</p>}
+          {error && <p className="text-center text-red-500">{error}</p>}
+          {!loading && !error && items.length === 0 && (
+            <div className="mt-32 flex justify-center">
+              <p className="text-center text-gray-500">
+                {activeTab === "일하젠"
+                  ? "해당 지역의 농장 정보가 없습니다."
+                  : "해당 지역의 명소 정보가 없습니다."}
+              </p>
+            </div>
+          )}
+          {items.map((item) => (
+            <div
+              key={item.id}
+              onClick={() => handleItemClick(item)}
+              className="mb-4 flex cursor-pointer rounded-lg"
+            >
+              <img
+                src={
+                  `${process.env.REACT_APP_BACKEND_URL}${item.image}` || test
+                }
+                alt={`${activeTab === "일하젠" ? "Farm" : "Attraction"} ${
+                  activeTab === "일하젠" ? item.farm_name : item.name
+                } 사진`}
+                className="mr-4 h-24 w-24 rounded-xl object-cover"
+              />
 
-        {items.map((item) => (
-          <div
-            key={item.id}
-            onClick={() => handleItemClick(item)}
-            className="mb-4 flex cursor-pointer"
-          >
-            <img
-              src={`${process.env.REACT_APP_BACKEND_URL}${item.image}` || test}
-              alt={`${activeTab === "일하젠" ? "Farm" : ""} ${item.name} 사진`}
-              className="mr-4 h-24 w-24 rounded-xl object-cover"
-            />
-
-            <div className="flex w-full justify-between">
-              <div className="flex flex-col">
-                <p className="mb-4 truncate text-xl font-bold">
-                  {activeTab === "일하젠" ? item.title : item.name}
-                </p>
-
-                <div className="flex w-[330px] items-center justify-between gap-2">
-                  <p className="text-lg">
-                    {activeTab === "일하젠" ? (
-                      item.farm_name
-                    ) : (
-                      <p className="text-base">{item.address}</p>
-                    )}
+              <div className="flex w-full justify-between">
+                <div className="flex flex-col">
+                  <p className="mb-4 truncate text-xl font-bold">
+                    {activeTab === "일하젠" ? item.title : item.name}
                   </p>
-                  {activeTab === "일하젠" && item.workdays && (
-                    <p>{item.workdays.join(", ")}</p>
-                  )}
-                </div>
 
-                <div className="flex">
-                  {activeTab === "일하젠" ? (
-                    <div className="flex w-full items-center justify-between">
-                      {/* 시급 / 복지 */}
-                      <div className="flex items-center gap-2">
-                        <p className="font-bold text-[#FFA500]">
-                          시급 {item.hourly}
-                        </p>
-                        <p className="border-gray rounded-xl border px-2 py-1 text-[12px] font-normal">
-                          #{item.welfare}
-                        </p>
-                      </div>
+                  <div className="flex w-full items-center justify-between gap-2">
+                    <div className="text-lg">
+                      {activeTab === "일하젠" ? (
+                        <span>{item.farm_name}</span>
+                      ) : (
+                        <span className="text-base">{item.address}</span>
+                      )}
+                    </div>
+                    {activeTab === "일하젠" && item.workdays && (
+                      <span>{item.workdays.join(", ")}</span>
+                    )}
+                  </div>
 
-                      {/* 근무 기간 */}
-                      <div className="flex justify-end rounded p-1">
-                        <p className="text-[12px] font-light">
-                          {item.period_start} ~ {item.period_end}
-                        </p>
+                  <div className="flex">
+                    {activeTab === "일하젠" ? (
+                      <div className="flex w-full items-center justify-between">
+                        {/* 시급 / 복지 */}
+                        <div className="flex items-center gap-2">
+                          <p className="font-bold text-[#FFA500]">
+                            시급 {item.hourly}원
+                          </p>
+                          <p className="border-gray rounded-xl border px-2 py-1 text-[12px] font-normal">
+                            #{item.welfare}
+                          </p>
+                        </div>
+
+                        {/* 근무 기간 */}
+                        <div className="flex justify-end rounded p-1">
+                          <p className="text-[12px] font-light">
+                            {item.period_start} ~ {item.period_end}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="flex w-[360px] items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <p className="font-bold text-[#FFA500]">
-                          평점 {item.rating}
-                        </p>
-                        <p className="border-gray rounded-xl border px-2 py-1 text-[12px] font-normal">
-                          {item.tags && item.tags.length > 0
-                            ? `#${item.tags.join(" #")}`
-                            : ""}
-                        </p>
+                    ) : (
+                      <div className="flex w-full items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <p className="font-bold text-[#FFA500]">
+                            평점 {item.rating}
+                          </p>
+                          <p className="border-gray rounded-xl border px-2 py-1 text-[12px] font-normal">
+                            {item.tags && item.tags.length > 0
+                              ? `#${item.tags.join(" #")}`
+                              : ""}
+                          </p>
+                        </div>
+                        <div className="flex justify-end rounded p-1">
+                          <p className="">{item.is_advertised ? "광고" : ""}</p>
+                        </div>
                       </div>
-                      <div className="flex justify-end rounded p-1">
-                        <p className="">{item.is_advertised ? "광고" : ""}</p>
-                      </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
