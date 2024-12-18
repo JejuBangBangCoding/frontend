@@ -175,6 +175,9 @@ const RecruitmentList = ({ selectedRegion }) => {
               </div>
             </div>
           ))}
+          <div className="h-6">
+            {/* 마지막 리스트 아이템을 보이게 하기 위한 div(삭제 금지) */}
+          </div>
         </div>
       </div>
     </div>
