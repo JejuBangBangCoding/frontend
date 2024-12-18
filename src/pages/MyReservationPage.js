@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import leftArrow1 from "../assets/images/leftArrow1.svg";
-import textLogo from "../assets/images/textLogo.svg";
+import Header from "../components/Header";
 import backImg from "../assets/images/backImg.svg";
 import userProfilePlaceholder from "../assets/images/userProfile.svg";
 import list from "../assets/images/list.svg";
 import locationIcon from "../assets/images/location.svg";
-import list1 from "../assets/images/list1.svg";
 
 function MyReservationPage() {
   const navigate = useNavigate();
@@ -20,13 +18,13 @@ function MyReservationPage() {
   useEffect(() => {
     const userData = localStorage.getItem("user");
     if (userData) {
-      setUser(JSON.parse(userData));
+      const parsedUser = JSON.parse(userData);
+      setUser(parsedUser);
     } else {
       navigate("/login");
     }
   }, [navigate]);
 
-  // 예약 정보를 서버에서 가져오는 함수
   useEffect(() => {
     const fetchReservations = async () => {
       if (!user) {
@@ -37,16 +35,13 @@ function MyReservationPage() {
 
       try {
         const response = await axios.get(
-          `http://52.78.130.126:8000/api/board/reservation/?userID=${user.userId}`,
+          `${process.env.REACT_APP_BACKEND_URL}/api/reservation/?userID=${Number(
+            user.userId,
+          )}`,
         );
-        setReservations(response.data);
+        setReservations(response.data.reservations || []);
       } catch (err) {
-        if (err.response && err.response.status === 404) {
-          // 404 응답이 왔을 때: 예약된 농장이 없음
-          setError("예약된 농장이 없습니다.");
-        } else {
-          setError("예약 정보를 불러오는 중 오류가 발생했습니다.");
-        }
+        setError("예약 정보를 불러오는 중 오류가 발생했습니다.");
         console.error("API 호출 오류:", err);
       } finally {
         setLoading(false);
@@ -64,95 +59,118 @@ function MyReservationPage() {
     });
   };
 
+  const handleDeleteReservation = async (reservationId) => {
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_BACKEND_URL}/api/reservation/`,
+        {
+          params: {
+            ReservationID: reservationId,
+            userID: Number(user.userId),
+          },
+        },
+      );
+
+      // 상태에서 삭제된 예약만 제거
+      setReservations((prevReservations) =>
+        prevReservations.filter(
+          (reservation) => reservation.reservation_id !== reservationId,
+        ),
+      );
+    } catch (err) {
+      setError("예약 삭제 중 오류가 발생했습니다.");
+      console.error("예약 삭제 오류:", err);
+    }
+  };
+
   return (
-    <>
-      {/* 헤더 (시작) */}
-      <div className="relative my-6 flex items-center justify-center">
-        <img
-          src={leftArrow1}
-          alt="Left Arrow"
-          className="absolute left-4 w-[1.2rem] cursor-pointer"
-          onClick={() => navigate("/mainpage")}
-        />
-        <img src={textLogo} alt="Text logo" className="w-[6rem]" />
-      </div>
+    <div className="flex min-h-screen flex-col">
+      <Header showProfile={true} showBackButton={true} />
 
-      {/* 사용자 프로필 */}
-      <div className="flex flex-col items-center">
-        <img src={backImg} alt="" className="relative" />
-        <img
-          src={user?.profileImage || userProfilePlaceholder}
-          alt="User Profile"
-          className="absolute top-36 w-[10rem] h-[10rem] rounded-full object-cover"
-        />
-        <p className="absolute top-[19.2rem] text-xl font-semibold">
-          {user?.username || "사용자"}
+      {/* Main Content */}
+      <div className="flex flex-grow flex-col">
+        {/* 배경 및 사용자 프로필 이미지 */}
+        <div className="relative mt-5 flex flex-col items-center">
+          <img
+            src={backImg}
+            alt="Background"
+            className="h-40 w-full rounded-t-3xl object-cover"
+          />
+          {/* 프로필 이미지 및 사용자 이름 */}
+          <div className="mt-[-4rem] flex flex-col items-center">
+            <img
+              src={user?.profileImage || userProfilePlaceholder}
+              alt="User Profile"
+              className="relative h-32 w-32 rounded-full border-4 border-white object-cover"
+            />
+            <p className="absolute top-48 rounded-full bg-[#FFA500] px-3 py-1 text-xl font-semibold text-white">
+              {user?.username || "사용자"}
+            </p>
+          </div>
+        </div>
+
+        {/* 예약 현황 안내 문구 */}
+        <p className="mb-2 mt-8 text-center text-xs font-normal text-[#C4C4C4]">
+          각 항목을 누르시면 상세 조회를 하실 수 있습니다.
         </p>
-      </div>
 
-      <p className="mt-[5.5rem] self-center text-xs font-normal text-[#C4C4C4]">
-        각 항목을 누르시면 상세 조회를 하실 수 있습니다.
-      </p>
+        {/* 예약 현황 섹션 */}
+        <div className="mx-5 flex flex-grow flex-col rounded-t-3xl bg-white p-5">
+          <div className="mb-4 flex items-center">
+            <img src={list} alt="List" className="mr-3 w-[1rem]" />
+            <p className="text-sm font-normal">예약 현황</p>
+            <p className="ml-auto text-sm">
+              전체 <strong>{reservations.length}</strong> 개
+            </p>
+          </div>
 
-      {/* 예약 현황 */}
-      <div className="mx-5 h-[32.5rem] rounded-t-3xl bg-white p-5 min-h-screen">
-        {/* 예약 현황 - 헤더 */}
-        <div className="mb-4 flex items-center">
-          <img src={list} alt="List" className="mr-3 w-[1rem]" />
-          <p className="text-sm font-normal">예약 현황</p>
-          <p className="ml-auto text-sm">
-            전체 <strong>{reservations.length}</strong> 개
-          </p>
-        </div>
+          {loading && <p className="text-center text-gray-600">로딩 중...</p>}
+          {error && <p className="text-center text-red-600">{error}</p>}
 
-        {/* 로딩 중인 경우 */}
-        {loading && <p className="text-center text-gray-600">로딩 중...</p>}
+          <div className="flex-grow overflow-y-auto">
+            {reservations.length > 0
+              ? reservations.map((item) => (
+                  <div
+                    key={item.reservation_id}
+                    className="mb-4 flex cursor-pointer rounded-3xl bg-[#FFDB99] p-4 shadow"
+                    onClick={() => handleReservationClick(item)}
+                  >
+                    <div className="flex basis-1/2 flex-col justify-center gap-1">
+                      <p className="text-xs font-light">{item.farm_name}</p>
+                      <div className="flex">
+                        <img
+                          src={locationIcon}
+                          alt="Location"
+                          className="mr-1"
+                        />
+                        <p className="text-xs">예약 날짜: {item.date}</p>
+                      </div>
+                      <p className="text-[0.8rem] font-bold">근로 기간</p>
+                      <p className="text-[0.6rem] font-normal">
+                        {item.board_period_start} ~ {item.board_period_end}
+                      </p>
+                    </div>
 
-        {/* 에러 발생 시 */}
-        {error && <p className="text-center text-red-600">{error}</p>}
-
-        {/* 예약 현황 - 리스트 */}
-        <div className="h-[29rem] overflow-y-auto">
-          {reservations.length > 0 ? (
-            reservations.map((item) => (
-              <div
-                key={item.id}
-                className="mb-4 flex cursor-pointer rounded-3xl bg-[#FFDB99] p-4 shadow"
-                onClick={() => handleReservationClick(item)}
-              >
-                {/* 왼쪽 */}
-                <div className="relative ml-3 mr-3 flex">
-                  <p className="absolute left-[-1rem] self-center rounded-full border-2 border-[#FFA500] bg-white px-[0.7rem] py-[0.2rem] text-base font-normal">
-                    {item.id}
-                  </p>
-                  <img src={list1} alt="ReservationImage" />
-                </div>
-
-                {/* 중간 */}
-                <div className="flex basis-1/2 flex-col justify-center gap-1">
-                  <p className="text-sm font-bold">{item.title}</p>
-                  <p className="text-xs font-light">{item.farm_name}</p>
-                  <div className="flex">
-                    <img src={locationIcon} alt="Location" className="mr-1" />
-                    <p className="text-xs">{item.location}</p>
+                    <button
+                      className="ml-auto rounded bg-red-500 px-4 py-2 text-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteReservation(item.reservation_id);
+                      }}
+                    >
+                      예약 삭제
+                    </button>
                   </div>
-                </div>
-
-                {/* 오른쪽 */}
-                <div className="flex basis-1/3 flex-col items-end justify-between">
-                  <p className="text-[0.8rem] font-bold">{item.date}</p>
-                  <p className="text-[0.6rem] font-normal">
-                    {item.period_start} ~ {item.period_end}
+                ))
+              : !loading && (
+                  <p className="text-center text-gray-600">
+                    예약된 농장이 없습니다.
                   </p>
-                </div>
-              </div>
-            ))
-          ) : !loading && !error ? (
-            <p className="text-center text-gray-600">예약된 농장이 없습니다.</p>
-          ) : null}
+                )}
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

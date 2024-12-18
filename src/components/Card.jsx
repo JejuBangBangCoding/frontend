@@ -32,21 +32,15 @@ const Card = ({ farm, onClick }) => {
   }, [tags]);
 
   return (
-    <>
-      {/* 농장명과 별점 */}
-      <div className="text-center">
-        <p className="text-sm">{farm.reason}</p>
-        <h1 className="text-2xl font-[700] my-1">{farm.farm_name}</h1>
-        <p className="flex text-sm justify-center items-center">
-          <img src={star} alt="" className="" />
-          {farm.match_score}
-        </p>
+    <div className="p-5">
+      <div className="mb-3 text-center">
+        <h1 className="text-2xl font-[700]">{farm.farm_name}</h1>
+        <p className="text-sm text-gray-600">⭐{farm.match_score}</p>
       </div>
 
-      {/* 카드 */}
-      <div className="shadow my-5">
-        {/* 이미지  */}
-        <div className="">
+      <div className="w-full overflow-hidden rounded-lg bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl">
+        {/* 이미지 */}
+        <div className="h-80 overflow-hidden">
           <img
             src={imageUrl}
             alt={farm.title}

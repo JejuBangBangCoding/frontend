@@ -178,25 +178,27 @@ function AiPage() {
           {/* 헤더 */}
           <Header showProfile={true} />
 
-          {/* 선택 */}
-          {!contentChanged && (
-            <div className="mt-12 flex flex-col items-center">
-              {/* 캘린더 */}
-              <DatePicker
-                selected={startDate}
-                onChange={handleDateChange}
-                startDate={startDate}
-                endDate={endDate}
-                selectsRange
-                inline
-                key={`${startDate}-${endDate}`}
-                className=""
-                minDate={new Date()}
-              />
+          {/* Main container */}
+          <div className="container mx-auto p-5">
+            {/* 선택 섹션 */}
+            {!contentChanged && (
+              <div className="mt-5 flex w-full flex-col items-center bg-red-100 p-5">
+                {/* 캘린더 */}
+                <DatePicker
+                  selected={startDate}
+                  onChange={handleDateChange}
+                  startDate={startDate}
+                  endDate={endDate}
+                  selectsRange
+                  inline
+                  key={`${startDate}-${endDate}`}
+                  className="w-full"
+                  minDate={new Date()}
+                />
 
-              <div className="mt-5">
-                {/* 날짜 */}
-                <div>
+                {/* 날짜 선택 */}
+                <div className="mt-8 w-full">
+
                   <h1 className="text-xl font-semibold">날짜</h1>
                   <div className="flex h-8 items-center space-x-2">
                     {startDate && endDate ? (
@@ -218,15 +220,15 @@ function AiPage() {
                 </div>
 
                 {/* 업종 선택 */}
-                <div className="mt-5">
+                <div className="mt-8 w-full">
                   <h2 className="text-xl font-semibold">업종</h2>
-                  <div className="mt-2 space-x-2 text-[15px]">
+                  <div className="mt-2 flex flex-wrap gap-2 text-[15px]">
                     {["귤", "당근", "감자", "마늘", "양파", "상관없음"].map(
                       (type) => (
                         <button
                           key={type}
                           onClick={() => handleIndustryClick(type)}
-                          className={`inline-block rounded-xl border border-[#FFA500] bg-[#FFDB99] px-2 py-1 text-center ${
+                          className={`inline-block rounded-xl border border-[#FFA500] px-2 py-1 text-center ${
                             selectedIndustries.includes(type) ||
                             (type === "상관없음" && isNoIndustrySelected)
                               ? "bg-[#FFDB99] text-black"
@@ -240,10 +242,10 @@ function AiPage() {
                   </div>
                 </div>
 
-                {/* 숙식 제공 여부 */}
-                <div className="mt-8">
+                {/* 숙식 제공 여부 선택 */}
+                <div className="mt-8 w-full">
                   <h2 className="text-xl font-semibold">숙식 제공 여부</h2>
-                  <div className="mt-2 space-x-2 text-[15px]">
+                  <div className="mt-2 flex flex-wrap gap-2 text-[15px]">
                     <button
                       onClick={() => handleAccommodationClick("식사")}
                       className={`inline-block rounded-xl border border-[#FFA500] px-2 py-1 text-center ${
@@ -277,10 +279,10 @@ function AiPage() {
                   </div>
                 </div>
 
-                {/* 근무형태 */}
-                <div className="mt-8">
+                {/* 근무형태 선택 */}
+                <div className="mt-8 w-full">
                   <h2 className="text-xl font-semibold">근무형태</h2>
-                  <div className="mt-2 space-x-2 text-[15px]">
+                  <div className="mt-2 flex flex-wrap gap-2 text-[15px]">
                     {["주5일", "격일근무", "격주근무", "상관없음"].map(
                       (type) => (
                         <button
@@ -300,76 +302,80 @@ function AiPage() {
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* AI 추천 */}
-          {contentChanged && (
-            <>
-              <div className="mt-8 flex flex-col items-center justify-center p-5 font-Pretendard">
-                <h className="text-[20px] font-[600]">
-                  제주에서 어떤 여행을 꿈꾸고 계시나요?
-                </h>
-                <h className="mt-2 text-[13px] font-normal">
-                  어떠한 내용이라도 좋아요. 자유롭게 작성해주세요.
-                </h>
+            {/* AI 추천 섹션 */}
+            {contentChanged && (
+              <>
+                <div className="mt-8 flex w-full flex-col items-center justify-center p-5 font-Pretendard">
+                  <h className="text-[20px] font-[600]">
+                    제주에서 어떤 여행을 꿈꾸고 계시나요?
+                  </h>
+                  <h className="mt-2 text-[13px] font-[300]">
+                    어떠한 내용이라도 좋아요. 자유롭게 작성해주세요.
+                  </h>
 
-                <textarea
-                  value={userInput}
-                  onChange={(e) => setUserInput(e.target.value)}
-                  placeholder="ex) 안녕하세요! 저는 제주도에서 한 달 동안 지내면서 귤밭에서 일하고 싶습니다. 주변에 멋진 카페와 바다가 있으면 좋겠고, 쉬는 날에는 한라산 등반을 하고 싶습니다. 이러한 라이프스타일을 실현할 수 있는 일자리와 업체를 추천해주시면 감사하겠습니다. 제주도에서의 한 달이 특별한 경험이 되기를 기대합니다..."
-                  className="mt-10 h-[392px] w-full rounded-2xl border px-4 py-3 placeholder:text-[15px] placeholder:leading-7"
-                />
-              </div>
-              <p className="absolute right-10 bottom-[24.5rem] font-thin text-xs">* 150자 내외로 작성해 주세요!</p>
-              <div className="flex flex-col px-7">
-                <h className="text-[18px] font-[500]">추천 키워드</h>
-                <h className="text-[13px] font-[300]">
-                  이런 내용이 들어가면 좋아요!
-                </h>
-                <div className="mt-2 flex flex-wrap gap-2 text-[15px]">
-                  {[
-                    "#귤",
-                    "#핫플",
-                    "#노을",
-                    "#맛집",
-                    "#낭만",
-                    "#시골",
-                    "#야경",
-                    "#공항근처",
-                  ].map((type) => (
-                    <div className="inline-block rounded-xl border border-[#FFA500] bg-[#FFDB99] px-2 py-1 text-center">
-                      {type}
-                    </div>
-                  ))}
+                  <textarea
+                    value={userInput}
+                    onChange={(e) => setUserInput(e.target.value)}
+                    placeholder="ex) 안녕하세요! 저는 제주도에서 한 달 동안 지내면서 귤밭에서 일하고 싶습니다. 주변에 멋진 카페와 바다가 있으면 좋겠고, 쉬는 날에는 한라산 등반을 하고 싶습니다. 이러한 라이프스타일을 실현할 수 있는 일자리와 업체를 추천해주시면 감사하겠습니다. 제주도에서의 한 달이 특별한 경험이 되기를 기대합니다..."
+                    className="mt-10 h-[392px] w-full rounded-2xl border px-4 py-3 placeholder:text-[15px] placeholder:leading-7"
+                  />
                 </div>
-                {error && <p className="mt-4 text-red-500">{error}</p>}
-              </div>
-            </>
-          )}
 
-          {/* 버튼 */}
-          <div className="mt-auto mb-5 flex justify-center space-x-3 ">
-            {/* 초기화 버튼 */}
-            <button
-              onClick={handleReset}
-              className="flex h-18 w-40 cursor-pointer items-center justify-center gap-3 rounded-2xl bg-[#E8E8E8] px-6 py-[1.1rem]"
-            >
-              <img src={refresh} alt="Refresh" className="w-[1.2rem]" />
-              <p className="text-lg font-normal">초기화</p>
-            </button>
-            {/* 다음 버튼 */}
-            <button
-              onClick={handleClick}
-              className={`flex h-18 w-60 cursor-pointer items-center justify-center rounded-2xl text-xl text-white ${
-                isPeriodValid() || contentChanged
-                  ? "bg-[#FFA500]"
-                  : "cursor-not-allowed bg-[#FFA500]"
-              }`}
-              disabled={!isPeriodValid() && !contentChanged}
-            >
-              {contentChanged ? "추천받기" : "다음"}
-            </button>
+                <div className="flex w-full flex-col px-7">
+                  <h className="text-[18px] font-[500]">추천 키워드</h>
+                  <h className="text-[13px] font-[300]">
+                    이런 내용이 들어가면 좋아요!
+                  </h>
+                  <div className="mt-2 flex flex-wrap gap-2 text-[15px]">
+                    {[
+                      "#귤",
+                      "#핫플",
+                      "#노을",
+                      "#맛집",
+                      "#낭만",
+                      "#시골",
+                      "#야경",
+                      "#공항근처",
+                    ].map((type) => (
+                      <div
+                        key={type}
+                        className="inline-block rounded-xl border border-[#FFA500] bg-[#FFDB99] px-2 py-1 text-center"
+                      >
+                        {type}
+                      </div>
+                    ))}
+                  </div>
+                  {error && <p className="mt-4 text-red-500">{error}</p>}
+                </div>
+              </>
+            )}
+
+            {/* 버튼 */}
+            <div className="mt-16 flex justify-center space-x-3">
+              {/* 초기화 버튼 */}
+              <button
+                onClick={handleReset}
+                className="flex h-12 w-40 cursor-pointer items-center justify-center gap-3 rounded-2xl bg-[#E8E8E8] px-6 py-[1.1rem]"
+              >
+                <img src={refresh} alt="Refresh" className="w-[1.2rem]" />
+                <p className="text-lg font-normal">초기화</p>
+              </button>
+
+              {/* 다음/추천 버튼 */}
+              <button
+                onClick={handleClick}
+                className={`flex h-12 w-40 cursor-pointer items-center justify-center rounded-2xl text-xl text-white ${
+                  isPeriodValid() || contentChanged
+                    ? "bg-[#FFA500]"
+                    : "cursor-not-allowed bg-gray-400"
+                }`}
+                disabled={!isPeriodValid() && !contentChanged}
+              >
+                {contentChanged ? "추천받기" : "다음"}
+              </button>
+            </div>
           </div>
         </>
       )}
