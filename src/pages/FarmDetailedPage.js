@@ -245,7 +245,7 @@ function FarmDetailedPage() {
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="rounded-[2rem] bg-white p-8 text-center shadow-md h-[36rem] overflow-y-auto mx-5">
+          <div className="rounded-[2rem] bg-white p-8 text-center shadow-md h-[36rem] overflow-y-auto custom-scrollbar mx-5">
             <h2 className="mb-4 text-2xl font-bold">유의사항</h2>
             <p className="mb-4 font-light text-sm">모두를 위한 유의사항 안내이니 꼭 읽어봐 주세요!</p>
             <div className="text-left leading-8">
