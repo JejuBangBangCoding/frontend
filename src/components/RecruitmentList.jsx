@@ -84,7 +84,7 @@ const RecruitmentList = ({ selectedRegion }) => {
       </div>
 
       {/* 모집 리스트 - 내용 */}
-      <div className="custom-scrollbar h-[22rem] overflow-y-auto p-6">
+      <div className="custom-scrollbar h-[23.5rem] overflow-y-auto p-6">
         {loading && <p className="text-center text-gray-500">로딩 중...</p>}
         {error && <p className="text-center text-red-500">{error}</p>}
         {!loading && !error && items.length === 0 && (
@@ -120,7 +120,7 @@ const RecruitmentList = ({ selectedRegion }) => {
                     {activeTab === "일하젠" ? (
                       item.farm_name
                     ) : (
-                      <p className="text-[15px]">{item.address}</p>
+                      <p className="text-base">{item.address}</p>
                     )}
                   </p>
                   {activeTab === "일하젠" && item.workdays && (
