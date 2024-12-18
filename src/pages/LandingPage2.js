@@ -11,18 +11,18 @@ const LandingPage2 = () => {
   return (
     <>
       <div className="mb-[5.4rem] flex gap-2 self-center pt-12">
-        <img src={whiteDot} alt="White Dot" className="w-2" />
-        <img src={grayDot} alt="Gray Dot" className="w-2" />
-        <img src={whiteDot} alt="White Dot" className="w-2" />
+        <img src={whiteDot} alt="White Dot" className="" />
+        <img src={grayDot} alt="Gray Dot" className="" />
+        <img src={whiteDot} alt="White Dot" className="" />
       </div>
       <img
         src={smallLogo}
         alt="Small Logo"
-        className="mb-7 w-[5.5rem] self-center"
+        className="mb-7 self-center"
       />
       <div className="text-center">
-        <p className="mb-3 text-[2.5rem] font-black">놀앙뭐하젠:</p>
-        <p className="mb-[-0.3rem] self-center text-[1rem]">
+        <p className="mb-3 text-[3rem] font-black">놀앙뭐하젠:</p>
+        <p className="mb-[-0.3rem] self-center text-[1.175rem]">
           표준어로{" "}
           <u>
             <strong>‘놀아서 뭐 할래?’</strong>
@@ -33,23 +33,21 @@ const LandingPage2 = () => {
           의미가 담긴 <strong>제주어</strong>
         </p>
       </div>
-      <div class="mx-[0.65rem] mb-12 mt-auto flex justify-between">
-        <Link to="/LandingPage" className="">
-          <img
-            src={leftArrow1}
-            alt="Left Arrow1"
-            className="bottom-[25.2rem] left-[0.7rem] w-[1.2rem]"
-          />
-        </Link>
-        <Link to="/LandingPage3" className="">
-          <img
-            src={rightArrow1}
-            alt="Right Arrow1"
-            className="bottom-[25.2rem] right-[0.7rem] w-[1.2rem]"
-          />
-        </Link>
-      </div>
-      <img src={scene} alt="Scene" className="w-full" />
+      <Link to="/LandingPage" className="absolute bottom-2/4 left-2">
+        <img
+          src={leftArrow1}
+          alt="Left Arrow1"
+          className=""
+        />
+      </Link>
+      <Link to="/LandingPage3" className="absolute bottom-2/4 right-2">
+        <img
+          src={rightArrow1}
+          alt="Right Arrow1"
+          className=""
+        />
+      </Link>
+      <img src={scene} alt="Scene" className="mt-auto" />
     </>
   );
 };

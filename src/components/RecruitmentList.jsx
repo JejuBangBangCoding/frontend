@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import list1 from "../assets/images/list1.svg";
+import test from "../assets/images/test.svg";
 import { useNavigate } from "react-router-dom";
 
 const RecruitmentList = ({ selectedRegion }) => {
   const [farms, setFarms] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [activeTab, setActiveTab] = useState('일하젠'); // 🔥 현재 활성화된 탭 상태 추가
   const navigate = useNavigate();
 
   useEffect(() => {
     if (selectedRegion) {
+      setFarms([]); // 🔥 지역이 변경되었을 때 이전 리스트 초기화
+      setError(null); // 🔥 이전에 발생한 에러도 초기화
       fetchFarms();
     }
-  }, [selectedRegion]);
+  }, [selectedRegion, activeTab]); // 🔥 activeTab이 변경될 때도 데이터 새로고침
 
   const fetchFarms = async () => {
     setLoading(true);
-    setError(null);
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/api/board/location/`,
         {
-          params: { location: selectedRegion },
+          params: { location: selectedRegion, category: activeTab }, // 🔥 카테고리 추가
         },
       );
       setFarms(response.data);
@@ -31,7 +33,8 @@ const RecruitmentList = ({ selectedRegion }) => {
       if (err.response) {
         console.error("Server response:", err.response.data);
       }
-      setError("데이터를 불러오지 못했습니다. RecruitmentList.jsx");
+      setError("데이터를 불러오지 못했습니다.");
+      setFarms([]); // 🔥 에러가 발생하면 리스트 초기화
     } finally {
       setLoading(false);
     }
@@ -42,19 +45,23 @@ const RecruitmentList = ({ selectedRegion }) => {
   };
 
   return (
-    <div className="mx-7 mt-7 h-[22rem] rounded-3xl bg-white p-4">
+    <div className="rounded-t-3xl shadow bg-white border-bg-[#FFA500] border-[1px]">
       {/* 모집 리스트 - 헤더 */}
-      <div className="mb-3 flex items-center justify-between"></div>
-      <div className="flex justify-around">
-        <button className="font-[400]">{selectedRegion} 일하젠</button>
-        <button className="font-[400]">{selectedRegion} 놀젠</button>
+      <div className="flex justify-center">
+        <div 
+          className={`flex-1 text-center text-xl py-4 border-b ${activeTab === '일하젠' ? 'text-[#FF710A] border-[#FF710A]' : ''}`}
+        >
+          <button onClick={() => setActiveTab('일하젠')}>일하젠</button>
+        </div>
+        <div 
+          className={`flex-1 text-center text-xl py-4 border-b ${activeTab === '놀젠' ? 'text-[#FF710A] border-[#FF710A]' : ''}`}
+        >
+          <button onClick={() => setActiveTab('놀젠')}>놀젠</button>
+        </div>
       </div>
 
-      {/* 세로선 */}
-      <div className="mb-2 mt-3 h-[1px] w-full bg-gray-300"></div>
-
       {/* 모집 리스트 - 내용 */}
-      <div className="custom-scrollbar h-[16.5rem] overflow-y-auto">
+      <div className="p-6 custom-scrollbar h-[calc(100vh-20rem)] overflow-y-auto">
         {loading && <p className="text-center text-gray-500">로딩 중...</p>}
         {error && <p className="text-center text-red-500">{error}</p>}
         {!loading && !error && farms.length === 0 && (
@@ -67,21 +74,24 @@ const RecruitmentList = ({ selectedRegion }) => {
           <div
             key={farm.id}
             onClick={() => handleFarmClick(farm)}
-            className="mt-1 flex cursor-pointer p-1"
+            className="flex mb-3 cursor-pointer"
           >
             <img
-              src={farm.image_url || list1}
+              src={farm.image_url || test}
               alt={`Farm ${farm.id}`}
-              className="mr-4 w-[3.5rem]"
+              className="mr-4 rounded-xl"
             />
-            <div>
-              <p className="text-[15px] font-[600]">{farm.farm_name}</p>
-              <div className="flex items-center gap-2">
-                <p className="text-[0.9rem] font-bold">{farm.title}</p>
+            <div className="flex justify-between w-full">
+              <div className="flex flex-col justify-around">
+                <p className="text-sm">{farm.farm_name}</p>
+                <p className="font-bold text-xl truncate">{farm.title}</p>
+                <p className="font-light border border-gray py-1 px-2 rounded-xl w-fit">#{farm.welfare}</p>
+                <p className="font-bold text-[#FFA500]">시급 {farm.hourly}</p>
               </div>
-              <p className="mb-[0.2rem] text-[0.8rem] font-thin">
-                {farm.location}
-              </p>
+              <div className="flex-col justify-items-end">
+                <p className="text-[0.6rem] font-thin truncate">{farm.period_start} ~ {farm.period_end}</p>
+                <p className="">{farm.workdays}</p>
+              </div>
             </div>
           </div>
         ))}

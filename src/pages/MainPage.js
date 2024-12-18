@@ -38,10 +38,9 @@ function MainPage() {
     <>
       {/* 헤더 */}
       <Header showProfile={true} showBackButton={false} />
-
-      <div className="relative mt-6 flex flex-col">
-        {/* 안내 문구 (시작)*/}
-        <div className="mb-5 mt-7 flex flex-col items-center">
+      <div className="flex flex-col">
+        {/* 안내 문구 */}
+        <div className="mt-7 flex flex-col items-center">
           <p className="text-[17px] font-[400]">어디를 여행하고 싶으신가요?</p>
           <div className="flex gap-1">
             <img
@@ -54,55 +53,29 @@ function MainPage() {
             </p>
           </div>
         </div>
-        {/* 안내 문구 (끝)*/}
-
         {/* 지도 */}
         <Map onRegionClick={handleMapClick} />
-
         {/* 모집 리스트 */}
         <RecruitmentList selectedRegion={selectedRegion} />
-
-        {/* 버튼 (시작)*/}
-        <div className="mt-8 flex justify-center gap-5">
-          {/* 버튼 - 왼쪽 (AI 추천 받기) */}
-          <div
+        {/* 버튼 */}
+        <div className="flex justify-center items-center gap-4 bg-white p-5 border bottom-0 fixed pr-[1.4rem]">
+          {/* AI 추천 */}
+          <button
             onClick={handleAiRecommendationClick}
-            className="box-border h-auto w-[10rem] cursor-pointer rounded-[1.875rem] bg-[#FFA500] p-5"
+            className="rounded-xl bg-[#FFE9C1] w-[5.5rem] flex-col justify-items-center py-1.5"
           >
-            <div className="flex items-center justify-center gap-3">
-              <img src={bulb} alt="Bulb" className="w-[2.5rem]" />
-              <p className="text-[0.7rem] font-normal text-white">
-                선택하기
-                <br />
-                어렵다면?
-              </p>
-            </div>
-            <p className="mt-2 flex justify-center text-[1.2rem] font-bold text-white">
-              AI 추천 받기
-            </p>
-          </div>
-          {/* 버튼 - 왼쪽 (끝) */}
-
-          {/* 버튼 - 오른쪽 (시작) */}
-          <div
+            <img src={bulb} alt="Bulb" className="w-7" />
+            <p className="text-sm font-bold text-[#FFA500]">AI 추천</p>
+          </button>
+          {/* 예약 정보 확인 */}
+          <button
             onClick={handleReservationClick}
-            className="box-border h-auto w-[10rem] cursor-pointer rounded-[1.875rem] bg-[#FFA500] p-5"
+            className="rounded-xl bg-[#FFA500] w-[22rem] flex justify-center items-center gap-2 p-3"
           >
-            <div className="flex items-center justify-center gap-3">
-              <img src={hang} alt="Hang" className="w-[2.5rem]" />
-              <p className="text-[0.7rem] font-normal text-white">
-                어느 곳에
-                <br />
-                가시나요?
-              </p>
-            </div>
-            <p className="mt-2 flex justify-center text-[1.2rem] font-bold text-white">
-              예약 정보 확인
-            </p>
-          </div>
-          {/* 버튼 - 오른쪽 (끝) */}
+            <img src={hang} alt="Hang" className="w-6" />
+            <p className="text-2xl font-medium text-white">예약 정보 확인</p>
+          </button>
         </div>
-        {/* 버튼 (끝) */}
       </div>
     </>
   );

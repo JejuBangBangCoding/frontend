@@ -198,6 +198,7 @@ function AiPage() {
 
                 {/* 날짜 선택 */}
                 <div className="mt-8 w-full">
+
                   <h1 className="text-xl font-semibold">날짜</h1>
                   <div className="flex h-8 items-center space-x-2">
                     {startDate && endDate ? (
