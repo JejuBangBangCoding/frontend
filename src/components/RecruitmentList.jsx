@@ -101,57 +101,71 @@ const RecruitmentList = ({ selectedRegion }) => {
           <div
             key={item.id}
             onClick={() => handleItemClick(item)}
-            className="mb-3 flex cursor-pointer"
+            className="mb-4 flex cursor-pointer"
           >
             <img
-              src={item.image_url || test}
-              alt={`${activeTab === "일하젠" ? "Farm" : "Attraction"} ${item.id}`}
+              src={`${process.env.REACT_APP_BACKEND_URL}${item.image}` || test}
+              alt={`${activeTab === "일하젠" ? "Farm" : ""} ${item.name} 사진`}
               className="mr-4 h-24 w-24 rounded-xl object-cover"
             />
-            <div className="flex w-full justify-between bg-red-100">
-              <div className="flex flex-col justify-around">
-                <p className="truncate text-xl font-bold">
+
+            <div className="flex w-full justify-between">
+              <div className="flex flex-col">
+                <p className="mb-4 truncate text-xl font-bold">
                   {activeTab === "일하젠" ? item.title : item.name}
                 </p>
-                <p className="text-sm">
-                  {activeTab === "일하젠" ? item.farm_name : item.address}
-                </p>
 
-                {activeTab === "일하젠" ? (
-                  <>
-                    <p className="border-gray w-fit rounded-xl border px-2 py-1 font-light">
-                      #{item.welfare}
-                    </p>
-                    <p className="font-bold text-[#FFA500]">
-                      시급 {item.hourly}
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <p className="border-gray w-fit rounded-xl border px-2 py-1 font-light">
-                      {item.tags && item.tags.length > 0
-                        ? `#${item.tags.join(" #")}`
-                        : ""}
-                    </p>
-                    <p className="font-bold text-[#FFA500]">
-                      평점 {item.rating}
-                    </p>
-                  </>
-                )}
-              </div>
-              <div className="flex flex-col justify-end">
-                {activeTab === "일하젠" ? (
-                  <>
-                    <p className="truncate text-[0.6rem] font-thin">
-                      {item.period_start} ~ {item.period_end}
-                    </p>
-                    <p className="">{item.workdays}+</p>
-                  </>
-                ) : (
-                  <>
-                    <p className="">{item.is_advertised ? "광고" : ""}</p>
-                  </>
-                )}
+                <div className="flex w-[330px] items-center justify-between gap-2">
+                  <p className="text-lg">
+                    {activeTab === "일하젠" ? (
+                      item.farm_name
+                    ) : (
+                      <p className="text-[15px]">{item.address}</p>
+                    )}
+                  </p>
+                  {activeTab === "일하젠" && item.workdays && (
+                    <p>{item.workdays.join(", ")}</p>
+                  )}
+                </div>
+
+                <div className="flex">
+                  {activeTab === "일하젠" ? (
+                    <div className="flex w-full items-center justify-between">
+                      {/* 시급 / 복지 */}
+                      <div className="flex items-center gap-2">
+                        <p className="font-bold text-[#FFA500]">
+                          시급 {item.hourly}
+                        </p>
+                        <p className="border-gray rounded-xl border px-2 py-1 text-[12px] font-normal">
+                          #{item.welfare}
+                        </p>
+                      </div>
+
+                      {/* 근무 기간 */}
+                      <div className="flex justify-end rounded p-1">
+                        <p className="text-[12px] font-light">
+                          {item.period_start} ~ {item.period_end}
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex w-[360px] items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <p className="font-bold text-[#FFA500]">
+                          평점 {item.rating}
+                        </p>
+                        <p className="border-gray rounded-xl border px-2 py-1 text-[12px] font-normal">
+                          {item.tags && item.tags.length > 0
+                            ? `#${item.tags.join(" #")}`
+                            : ""}
+                        </p>
+                      </div>
+                      <div className="flex justify-end rounded p-1">
+                        <p className="">{item.is_advertised ? "광고" : ""}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
