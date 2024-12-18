@@ -57,12 +57,17 @@ function MainPage() {
         {/* 지도 및 모집 리스트를 포함하는 메인 콘텐츠 영역 */}
         <div className="flex flex-1 flex-col">
           {/* 지도 */}
-          <Map onRegionClick={handleMapClick} />
-          {/* 모집 리스트 */}
-          <RecruitmentList selectedRegion={selectedRegion} />
+          <div className="flex-none">
+            <Map onRegionClick={handleMapClick} />
+          </div>
 
-          <div className="flex justify-center gap-4 border bg-white p-5">
-            {/* AI 추천 */}
+          {/* 모집 리스트 */}
+          <div className="flex-1 overflow-hidden">
+            <RecruitmentList selectedRegion={selectedRegion} />
+          </div>
+
+          {/* 버튼들 */}
+          <div className="flex flex-none justify-center gap-4 border bg-white p-5">
             <button
               onClick={handleAiRecommendationClick}
               className="w-[5.5rem] flex-col justify-items-center rounded-xl bg-[#FFE9C1] py-1.5"
@@ -70,7 +75,6 @@ function MainPage() {
               <img src={bulb} alt="Bulb" className="w-7" />
               <p className="text-sm font-bold text-[#FFA500]">AI 추천</p>
             </button>
-            {/* 예약 정보 확인 */}
             <button
               onClick={handleReservationClick}
               className="flex w-[22rem] items-center justify-center gap-2 rounded-xl bg-[#FFA500] p-3"
