@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "../components/Header";
+import check from "../assets/images/resevationClear.svg";
 
 function FixReservationPage() {
   const location = useLocation();
@@ -13,7 +14,6 @@ function FixReservationPage() {
 
   useEffect(() => {
     if (!userID || !board_id) {
-      // 대소문자 수정
       setError("예약 정보를 찾을 수 없습니다.");
       return;
     }
@@ -27,13 +27,12 @@ function FixReservationPage() {
           },
         );
 
-        // 특정 board_id와 일치하는 예약 찾기
-        const reservation = response.data.reservations.find(
-          (res) => res.board_id === board_id, // 대소문자 수정
+        const matchedReservation = response.data.reservations.find(
+          (res) => res.board_id === board_id,
         );
 
-        if (reservation) {
-          setReservationDetails(reservation);
+        if (matchedReservation) {
+          setReservationDetails(matchedReservation);
         } else {
           setError("해당 예약을 찾을 수 없습니다.");
         }
@@ -44,19 +43,53 @@ function FixReservationPage() {
     };
 
     fetchReservationDetails();
-  }, [userID, board_id]); // 대소문자 수정
+  }, [userID, board_id]);
 
   return (
     <div>
-      <Header showProfile={true} showBackButton={true} />
-      {error && <p className="mb-4 text-center text-red-600">{error}</p>}
+      <Header showProfile={true} showBackButton={false} />
 
       {reservationDetails && !error && (
+        <div className="relative mt-10 flex flex-col items-center px-5">
+          <div className="flex flex-col items-center">
+            <img
+              src={`${process.env.REACT_APP_BACKEND_URL}${reservationDetails.image}`}
+              alt="Farm"
+              className="mb-4 h-full w-full rounded-lg object-cover"
+            />
+
+            {/* 예약 상세 정보 카드 */}
+            <div className="absolute top-72 mt-6 w-96 rounded-lg border border-orange-300 bg-white py-6 text-left shadow-md">
+              <div className="mt-3 flex flex-col items-center">
+                <p className="mb-2">
+                  <span className="font-semibold">예약 번호:</span>{" "}
+                  {reservationDetails.reservation_number}
+                </p>
+                <p className="mb-2">
+                  <span className="font-semibold">농장 이름:</span>{" "}
+                  {reservationDetails.farm_name}
+                </p>
+                <p className="mb-2">
+                  <span className="font-semibold">예약 날짜:</span>{" "}
+                  {reservationDetails.date}
+                </p>
+              </div>
+              <div className="flex items-end justify-center gap-1">
+                <h2 className="mb-2 flex items-end text-2xl font-bold text-blue-600">
+                  예약이 확정되었습니다!
+                </h2>
+                <img src={check} alt="Check" className="w-10" />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {error && (
         <div className="mt-10 flex flex-col items-center">
-          {/* 예약 성공 아이콘 (예: 체크 아이콘) */}
-          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
             <svg
-              className="h-10 w-10 text-green-600"
+              className="h-10 w-10 text-red-600"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
@@ -66,38 +99,31 @@ function FixReservationPage() {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M5 13l4 4L19 7"
+                d="M6 18L18 6M6 6l12 12"
               />
             </svg>
           </div>
-          <h2 className="mb-2 text-2xl font-bold text-green-600">예약 완료</h2>
-          <p className="text-gray-700">예약이 성공적으로 확정되었습니다.</p>
+          <h2 className="mb-2 text-2xl font-bold text-red-600">예약 실패</h2>
+          <p className="text-gray-700">{error}</p>
 
-          {/* 예약 상세 정보 카드 */}
           <div className="mt-6 w-full max-w-md rounded-lg border border-gray-300 bg-white p-6 text-left shadow-md">
-            <p className="mb-2">
-              <span className="font-semibold">예약 번호:</span>{" "}
-              {reservationDetails.reservation_number}
-            </p>
-            <p className="mb-2">
-              <span className="font-semibold">농장 이름:</span>{" "}
-              {reservationDetails.farm_name}
-            </p>
-            <p className="mb-2">
-              <span className="font-semibold">예약 날짜:</span>{" "}
-              {reservationDetails.date}
-            </p>
-            {/* 필요한 예약 상세 정보를 추가로 표시할 수 있음 */}
+            <p>예약 과정에서 문제가 발생했습니다. 아래 내용을 확인해주세요.</p>
+            <ul className="mt-3 list-disc pl-5 text-sm text-gray-600">
+              <li>유효한 userID와 board_id가 전달되었는지 확인</li>
+              <li>서버 응답 상태 및 네트워크 연결 상태 확인</li>
+            </ul>
           </div>
         </div>
       )}
 
-      <button
-        onClick={() => navigate("/mainpage")}
-        className="mt-5 w-full rounded bg-[#FFA500] px-6 py-3 text-white"
-      >
-        메인 홈으로 이동
-      </button>
+      <div className="mt-16 px-14">
+        <button
+          onClick={() => navigate("/mainpage")}
+          className="mt-5 w-full rounded-md bg-[#FFA500] px-6 py-3 text-xl font-semibold text-white hover:bg-[#FF710A]"
+        >
+          메인 홈으로 이동
+        </button>
+      </div>
     </div>
   );
 }
