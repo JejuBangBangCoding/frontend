@@ -11,7 +11,6 @@ import FarmListPage from "./pages/FarmListPage";
 import FarmDetailedPage from "./pages/FarmDetailedPage";
 import FixReservationPage from "./pages/FixReservationPage";
 import MyReservationPage from "./pages/MyReservationPage";
-import DetailedReservationPage from "./pages/DetailedReservationPage";
 import NotFound from "./pages/NotFound";
 import LoginSuccess from "./pages/LoginSuccess";
 
@@ -38,10 +37,6 @@ const App = () => {
         <Route path="/farmdetailedpage" element={<FarmDetailedPage />} />
         <Route path="/fixreservationpage" element={<FixReservationPage />} />
         <Route path="/myreservationpage" element={<MyReservationPage />} />
-        <Route
-          path="/detailedreservationpage"
-          element={<DetailedReservationPage />}
-        />
         <Route path="*" element={<NotFound />}></Route>
       </Route>
     </Routes>
