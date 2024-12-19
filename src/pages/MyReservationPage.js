@@ -123,7 +123,6 @@ function MyReservationPage() {
           </div>
 
           {loading && <p className="text-center text-gray-600">로딩 중...</p>}
-          {error && <p className="text-center text-red-600">{error}</p>}
 
           <div className="flex-grow overflow-y-auto">
             {reservations.length > 0
