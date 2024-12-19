@@ -92,7 +92,14 @@ function FarmDetailedPage() {
           reservationData,
         );
         console.log("예약 생성 응답:", response.data);
-        navigate("/fixreservationpage", { state: { board_id } });
+
+        navigate("/fixreservationpage", {
+          state: {
+            reservation: response.data.reservation,
+            userID: user.userId,
+            board_id: board_id,
+          },
+        });
       } catch (err) {
         console.error("예약 생성 중 오류가 발생했습니다:", err);
         if (err.response) {

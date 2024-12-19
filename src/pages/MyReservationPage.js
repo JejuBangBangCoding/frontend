@@ -112,11 +112,6 @@ function MyReservationPage() {
           </div>
         </div>
 
-        {/* 예약 현황 안내 문구 */}
-        <p className="text-md mb-2 mt-8 text-center font-normal text-[#C4C4C4]">
-          각 항목을 누르시면 상세 조회를 하실 수 있습니다.
-        </p>
-
         {/* 예약 현황 섹션 */}
         <div className="mx-5 flex flex-grow flex-col rounded-t-3xl bg-white p-5">
           <div className="mb-4 flex items-center">
@@ -128,7 +123,6 @@ function MyReservationPage() {
           </div>
 
           {loading && <p className="text-center text-gray-600">로딩 중...</p>}
-          {error && <p className="text-center text-red-600">{error}</p>}
 
           <div className="flex-grow overflow-y-auto">
             {reservations.length > 0
@@ -161,7 +155,7 @@ function MyReservationPage() {
                           {item.board_period_end}
                         </p>
                         <button
-                          className="rounded bg-gray-500 px-2 py-1 text-xs text-white hover:bg-red-500"
+                          className="mr-1 rounded bg-gray-500 px-2 py-1 text-xs text-white hover:bg-red-500"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDeleteReservation(item.reservation_id);
@@ -179,6 +173,10 @@ function MyReservationPage() {
                   </p>
                 )}
           </div>
+          {/* 예약 현황 안내 문구 */}
+          <p className="text-md mb-2 mt-8 text-center font-normal text-[#C4C4C4]">
+            각 항목을 누르시면 상세 조회를 하실 수 있습니다.
+          </p>
         </div>
       </div>
     </div>
