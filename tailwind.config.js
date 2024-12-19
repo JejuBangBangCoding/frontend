@@ -14,12 +14,6 @@ module.exports = {
         DEFAULT: "500px",
       },
     },
-    container : {
-      center : true,
-      screens : {
-        DEFAULT : '500px'
-      }
-    }
   },
   plugins: [],
 };
