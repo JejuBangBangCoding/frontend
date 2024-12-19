@@ -1,9 +1,10 @@
 import React from "react";
+import "./Loding.css";
 
 const LoadingSpinner = () => {
   return (
     <div className="flex h-full items-center justify-center">
-      <div className="h-16 w-16 animate-spin rounded-full border-4 border-solid border-[#FFA500] border-t-transparent"></div>
+      <div className="loading-spinner"></div>
     </div>
   );
 };
