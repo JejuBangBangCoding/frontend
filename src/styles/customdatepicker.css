@@ -1,0 +1,21 @@
+/* custom-datepicker.css */
+.custom-calendar {
+  @apply rounded-lg bg-white shadow-lg;
+}
+
+.custom-calendar .react-datepicker__header {
+  @apply bg-[#FFA500] text-white;
+}
+
+.custom-calendar .react-datepicker__day {
+  @apply text-black;
+}
+
+.custom-calendar .react-datepicker__day--selected,
+.custom-calendar .react-datepicker__day--keyboard-selected {
+  @apply bg-[#FFA500] text-white;
+}
+
+.custom-calendar .react-datepicker__day:hover {
+  @apply bg-[#FFDB99];
+}

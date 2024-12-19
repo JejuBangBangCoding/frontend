@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Header from "../components/Header";
 import "react-datepicker/dist/react-datepicker.css";
+import "../styles/customdatepicker.css";
 import refresh from "../assets/images/refresh.svg";
 
 function AiPage() {
@@ -168,7 +169,7 @@ function AiPage() {
   };
 
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-[#F4F4F4]">
       {loading ? (
         <div className="flex h-screen items-center justify-center">
           <LoadingSpinner />
@@ -194,11 +195,16 @@ function AiPage() {
                   key={`${startDate}-${endDate}`}
                   className="w-full"
                   minDate={new Date()}
+                  calendarClassName="custom-calendar"
+                  dayClassName={(date) =>
+                    date.getDay() === 0 || date.getDay() === 6
+                      ? "text-red-500"
+                      : undefined
+                  }
                 />
 
                 {/* 날짜 선택 */}
                 <div className="mt-8 w-full">
-
                   <h1 className="text-xl font-semibold">날짜</h1>
                   <div className="flex h-8 items-center space-x-2">
                     {startDate && endDate ? (
@@ -353,11 +359,11 @@ function AiPage() {
             )}
 
             {/* 버튼 */}
-            <div className="mt-16 flex justify-center space-x-3">
+            <div className="mt-16 flex flex-1 gap-3">
               {/* 초기화 버튼 */}
               <button
                 onClick={handleReset}
-                className="flex h-12 w-40 cursor-pointer items-center justify-center gap-3 rounded-2xl bg-[#E8E8E8] px-6 py-[1.1rem]"
+                className="flex h-16 w-2/5 cursor-pointer items-center justify-center gap-3 rounded-2xl bg-[#E8E8E8] px-6 py-[1.1rem]"
               >
                 <img src={refresh} alt="Refresh" className="w-[1.2rem]" />
                 <p className="text-lg font-normal">초기화</p>
@@ -366,9 +372,9 @@ function AiPage() {
               {/* 다음/추천 버튼 */}
               <button
                 onClick={handleClick}
-                className={`flex h-12 w-40 cursor-pointer items-center justify-center rounded-2xl text-xl text-white ${
+                className={`flex h-16 w-3/5 items-center justify-center rounded-2xl text-xl text-white ${
                   isPeriodValid() || contentChanged
-                    ? "bg-[#FFA500]"
+                    ? "cursor-pointer bg-[#FFA500]"
                     : "cursor-not-allowed bg-gray-400"
                 }`}
                 disabled={!isPeriodValid() && !contentChanged}
@@ -379,7 +385,7 @@ function AiPage() {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 }
 
