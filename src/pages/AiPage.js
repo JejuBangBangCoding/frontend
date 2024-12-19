@@ -1,17 +1,17 @@
+// src/pages/AiPage.jsx
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import DatePicker from "react-datepicker";
+import CustomCalendar from "../components/CustomCalendar";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Header from "../components/Header";
-import "react-datepicker/dist/react-datepicker.css";
 import refresh from "../assets/images/refresh.svg";
 
 function AiPage() {
   const [contentChanged, setContentChanged] = useState(false);
   const [userInput, setUserInput] = useState("");
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedIndustries, setSelectedIndustries] = useState([]);
@@ -23,10 +23,18 @@ function AiPage() {
   const { region } = location.state || {};
 
   // 날짜 선택 핸들러
-  const handleDateChange = (dates) => {
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
+  const handleDateSelect = (date) => {
+    if (!selectedStartDate || (selectedStartDate && selectedEndDate)) {
+      setSelectedStartDate(date);
+      setSelectedEndDate(null);
+    } else {
+      if (date < selectedStartDate) {
+        setSelectedEndDate(selectedStartDate);
+        setSelectedStartDate(date);
+      } else {
+        setSelectedEndDate(date);
+      }
+    }
   };
 
   // 업종 선택 핸들러
@@ -88,11 +96,11 @@ function AiPage() {
     setError(null);
 
     try {
-      const formattedStartDate = startDate
-        ? startDate.toISOString().split("T")[0]
+      const formattedStartDate = selectedStartDate
+        ? selectedStartDate.toISOString().split("T")[0]
         : null;
-      const formattedEndDate = endDate
-        ? endDate.toISOString().split("T")[0]
+      const formattedEndDate = selectedEndDate
+        ? selectedEndDate.toISOString().split("T")[0]
         : null;
 
       const requestData = {
@@ -136,8 +144,8 @@ function AiPage() {
 
   // 유효한 기간인지 확인
   const isPeriodValid = () => {
-    if (startDate && endDate) {
-      const diffTime = Math.abs(endDate - startDate);
+    if (selectedStartDate && selectedEndDate) {
+      const diffTime = Math.abs(selectedEndDate - selectedStartDate);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       return diffDays >= 7; // 최소 7일(7박 8일)
     }
@@ -146,8 +154,8 @@ function AiPage() {
 
   // 숙박 기간 계산
   const calculateStayPeriod = () => {
-    if (startDate && endDate) {
-      const diffTime = Math.abs(endDate - startDate);
+    if (selectedStartDate && selectedEndDate) {
+      const diffTime = Math.abs(selectedEndDate - selectedStartDate);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       return `${diffDays}박 ${diffDays + 1}일`;
     }
@@ -158,8 +166,8 @@ function AiPage() {
   const handleReset = () => {
     setContentChanged(false);
     setUserInput("");
-    setStartDate(null);
-    setEndDate(null);
+    setSelectedStartDate(null);
+    setSelectedEndDate(null);
     setSelectedIndustries([]);
     setSelectedWorkTypes([]);
     setProvideMeal(false);
@@ -168,49 +176,46 @@ function AiPage() {
   };
 
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-[#F4F4F4]">
       {loading ? (
         <div className="flex h-screen items-center justify-center">
           <LoadingSpinner />
         </div>
       ) : (
-        <>
+        <div className="flex flex-col">
           {/* 헤더 */}
           <Header showProfile={true} />
 
           {/* Main container */}
-          <div className="container mx-auto p-5">
+          <div className="container relative mx-auto p-5">
             {/* 선택 섹션 */}
             {!contentChanged && (
-              <div className="mt-5 flex w-full flex-col items-center p-5">
-                {/* 캘린더 */}
-                <DatePicker
-                  selected={startDate}
-                  onChange={handleDateChange}
-                  startDate={startDate}
-                  endDate={endDate}
-                  selectsRange
-                  inline
-                  key={`${startDate}-${endDate}`}
-                  className="w-full"
-                  minDate={new Date()}
+              <div className="flex w-full flex-col items-center p-6">
+                {/* 커스텀 캘린더 */}
+                <CustomCalendar
+                  selectedStartDate={selectedStartDate}
+                  selectedEndDate={selectedEndDate}
+                  onDateSelect={handleDateSelect}
                 />
 
-                {/* 날짜 선택 */}
+                {/* 날짜 선택 정보 */}
                 <div className="mt-8 w-full">
-
                   <h1 className="text-xl font-semibold">날짜</h1>
-                  <div className="flex h-8 items-center space-x-2">
-                    {startDate && endDate ? (
+                  <div className="flex items-center space-x-2">
+                    {selectedStartDate && selectedEndDate ? (
                       <>
                         <p>
-                          {startDate.toLocaleDateString()} ~{" "}
-                          {endDate.toLocaleDateString()}
+                          {selectedStartDate.toLocaleDateString()} ~{" "}
+                          {selectedEndDate.toLocaleDateString()}
                         </p>
                         <p className="inline-block rounded-lg border border-[#FFA500] bg-[#FFDB99] px-2 text-center">
                           {calculateStayPeriod()}
                         </p>
                       </>
+                    ) : selectedStartDate ? (
+                      <p className="text-gray-700">
+                        {selectedStartDate.toLocaleDateString()} ~
+                      </p>
                     ) : (
                       <div className="flex items-center text-gray-400">
                         <p>7일 이상 선택해주세요!</p>
@@ -220,7 +225,7 @@ function AiPage() {
                 </div>
 
                 {/* 업종 선택 */}
-                <div className="mt-8 w-full">
+                <div className="mt-4 w-full">
                   <h2 className="text-xl font-semibold">업종</h2>
                   <div className="mt-2 flex flex-wrap gap-2 text-[15px]">
                     {["귤", "당근", "감자", "마늘", "양파", "상관없음"].map(
@@ -243,7 +248,7 @@ function AiPage() {
                 </div>
 
                 {/* 숙식 제공 여부 선택 */}
-                <div className="mt-8 w-full">
+                <div className="mt-4 w-full">
                   <h2 className="text-xl font-semibold">숙식 제공 여부</h2>
                   <div className="mt-2 flex flex-wrap gap-2 text-[15px]">
                     <button
@@ -280,7 +285,7 @@ function AiPage() {
                 </div>
 
                 {/* 근무형태 선택 */}
-                <div className="mt-8 w-full">
+                <div className="mt-4 w-full">
                   <h2 className="text-xl font-semibold">근무형태</h2>
                   <div className="mt-2 flex flex-wrap gap-2 text-[15px]">
                     {["주5일", "격일근무", "격주근무", "상관없음"].map(
@@ -307,7 +312,7 @@ function AiPage() {
             {/* AI 추천 섹션 */}
             {contentChanged && (
               <>
-                <div className="mt-8 flex w-full flex-col items-center justify-center p-5 font-Pretendard">
+                <div className="mt-2 flex w-full flex-col items-center justify-center p-5 font-Pretendard">
                   <h className="text-[20px] font-[600]">
                     제주에서 어떤 여행을 꿈꾸고 계시나요?
                   </h>
@@ -351,13 +356,14 @@ function AiPage() {
                 </div>
               </>
             )}
-
-            {/* 버튼 */}
-            <div className="mt-16 flex justify-center space-x-3">
+          </div>
+          {/* 버튼 */}
+          <div className="fixed bottom-0 p-7">
+            <div className="flex gap-3">
               {/* 초기화 버튼 */}
               <button
                 onClick={handleReset}
-                className="flex h-12 w-40 cursor-pointer items-center justify-center gap-3 rounded-2xl bg-[#E8E8E8] px-6 py-[1.1rem]"
+                className="flex h-16 w-44 cursor-pointer items-center justify-center gap-3 rounded-2xl bg-[#E8E8E8] py-[1.1rem]"
               >
                 <img src={refresh} alt="Refresh" className="w-[1.2rem]" />
                 <p className="text-lg font-normal">초기화</p>
@@ -366,9 +372,9 @@ function AiPage() {
               {/* 다음/추천 버튼 */}
               <button
                 onClick={handleClick}
-                className={`flex h-12 w-40 cursor-pointer items-center justify-center rounded-2xl text-xl text-white ${
+                className={`flex h-16 w-64 items-center justify-center rounded-2xl text-xl text-white ${
                   isPeriodValid() || contentChanged
-                    ? "bg-[#FFA500]"
+                    ? "cursor-pointer bg-[#FFA500]"
                     : "cursor-not-allowed bg-gray-400"
                 }`}
                 disabled={!isPeriodValid() && !contentChanged}
@@ -377,9 +383,9 @@ function AiPage() {
               </button>
             </div>
           </div>
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 }
 

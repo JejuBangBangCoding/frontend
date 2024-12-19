@@ -53,10 +53,13 @@ function MyReservationPage() {
     }
   }, [user]);
 
-  const handleReservationClick = (reservationItem) => {
-    navigate("/detailedreservationpage", {
-      state: { reservation: reservationItem },
-    });
+  const handleReservationClick = (item) => {
+    if (item.board_id) {
+      navigate("/farmdetailedpage", { state: { board_id: item.board_id } });
+    } else {
+      console.error("Board ID가 존재하지 않습니다:", item);
+      alert("선택한 농장의 정보를 찾을 수 없습니다.");
+    }
   };
 
   const handleDeleteReservation = async (reservationId) => {
@@ -110,7 +113,7 @@ function MyReservationPage() {
         </div>
 
         {/* 예약 현황 안내 문구 */}
-        <p className="mb-2 mt-8 text-center text-xs font-normal text-[#C4C4C4]">
+        <p className="text-md mb-2 mt-8 text-center font-normal text-[#C4C4C4]">
           각 항목을 누르시면 상세 조회를 하실 수 있습니다.
         </p>
 
@@ -132,34 +135,42 @@ function MyReservationPage() {
               ? reservations.map((item) => (
                   <div
                     key={item.reservation_id}
-                    className="mb-4 flex cursor-pointer rounded-3xl bg-[#FFDB99] p-4 shadow"
+                    className="mb-4 flex cursor-pointer rounded-3xl bg-[#FFDB99] p-3 shadow"
                     onClick={() => handleReservationClick(item)}
                   >
-                    <div className="flex basis-1/2 flex-col justify-center gap-1">
-                      <p className="text-xs font-light">{item.farm_name}</p>
-                      <div className="flex">
-                        <img
-                          src={locationIcon}
-                          alt="Location"
-                          className="mr-1"
-                        />
-                        <p className="text-xs">예약 날짜: {item.date}</p>
-                      </div>
-                      <p className="text-[0.8rem] font-bold">근로 기간</p>
-                      <p className="text-[0.6rem] font-normal">
-                        {item.board_period_start} ~ {item.board_period_end}
-                      </p>
-                    </div>
+                    <img
+                      src={
+                        `${process.env.REACT_APP_BACKEND_URL}${item.image}` ||
+                        test
+                      }
+                      alt={item.farm_name + " 사진"}
+                      className="mr-4 h-24 w-24 rounded-2xl object-cover"
+                    />
+                    <div className="flex w-full flex-col justify-between">
+                      <div>
+                        <p className="text-lg font-bold">{item.farm_name}</p>
 
-                    <button
-                      className="ml-auto rounded bg-red-500 px-4 py-2 text-white"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteReservation(item.reservation_id);
-                      }}
-                    >
-                      예약 삭제
-                    </button>
+                        <div className="flex">
+                          <img src={locationIcon} alt="Location" />
+                          <p className="ml-1 text-xs">예약 날짜: {item.date}</p>
+                        </div>
+                      </div>
+                      <div className="flex w-full items-center justify-between">
+                        <p className="text-xs font-normal">
+                          근로 기간: <br /> {item.board_period_start} ~{" "}
+                          {item.board_period_end}
+                        </p>
+                        <button
+                          className="rounded bg-gray-500 px-2 py-1 text-xs text-white hover:bg-red-500"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteReservation(item.reservation_id);
+                          }}
+                        >
+                          예약 삭제
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 ))
               : !loading && (

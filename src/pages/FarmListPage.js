@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import Card from "../components/Card";
-import bot from "../assets/images/bot.svg";
-import star from "../assets/images/star.svg";
-import prev from "../assets/images/prev.svg";
-import next from "../assets/images/next.svg";
-import location from "../assets/images/location.svg";
+import AI from "../assets/images/ai.png";
 
 function FarmListPage() {
   const navigate = useNavigate();
@@ -31,75 +27,69 @@ function FarmListPage() {
   };
 
   return (
-    <>
+    <div>
       <Header showProfile={true} showBackButton={true} />
 
-      <div className="container mx-auto">
-        <div className="mt-5 text-center">
-          <p className="text-gray-500">이미지 - 채팅 공간</p>
-        </div>
-
-        {/* 카드 슬라이드 */}
-        <div className="mt-5 flex justify-center">
-          <div className="relative w-full overflow-hidden">
-            <div
-              className="flex transition-transform duration-300"
-              style={{
-                transform: `translateX(-${currentIndex * 500}px)`,
-                width: `${recommendations.length * 500}px`,
-              }}
-            >
-              {recommendations.map((farm) => (
-                <div
-                  key={farm.id}
-                  className="flex-shrink-0"
-                  style={{ width: "500px" }}
-                >
-                  <Card farm={farm} onClick={() => handleFarmClick(farm)} />
-                </div>
-              ))}
-            </div>
+      <div className="mt-5 flex justify-center gap-3">
+        <div className="flex h-full items-start">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#ffd68b]">
+            <img src={AI} alt="AI" className="h-8 w-8" />
           </div>
-
-          {/* 이전 및 다음 버튼 */}
-          <button
-            onClick={handlePrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 transform shadow"
-          >
-            <img src={prev} alt="Previous" />
-          </button>
-          <button
-            onClick={handleNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 transform"
-          >
-            <img src={next} alt="Next" />
-          </button>
         </div>
-
-        {/* 페이지 번호 */}
-        <div className="mt-1 text-center">
-          <p className="text-gray-500">
-            {currentIndex + 1} / {recommendations.length}
+        <div className="mt-5 w-[380px] rounded-b-xl rounded-e-xl bg-[#FFDB99] p-2 text-sm">
+          <p className="">
+            애월에서 바다를 바라보며 일할 수 있는 로맨틱한 일자리 몇 가지를 준비
+            했어요. 숙박도 제공되니 더 편안하게 머무를 수 있습니다!
           </p>
         </div>
+      </div>
 
-        {/* 이전 다음 버튼 */}
-        <div className="mt-4 flex justify-center gap-4">
-          <button
-            onClick={handlePrev}
-            className="rounded-full bg-gray-700 px-4 py-2 text-white"
+      {/* 카드 슬라이드 */}
+      <div className="flex justify-center">
+        <div className="relative w-full overflow-hidden">
+          <div
+            className="flex transition-transform duration-300"
+            style={{
+              transform: `translateX(-${currentIndex * 500}px)`,
+              width: `${recommendations.length * 500}px`,
+            }}
           >
-            &lt; Prev
-          </button>
-          <button
-            onClick={handleNext}
-            className="rounded-full bg-gray-700 px-4 py-2 text-white"
-          >
-            Next &gt;
-          </button>
+            {recommendations.map((farm) => (
+              <div
+                key={farm.id}
+                className="flex-shrink-0"
+                style={{ width: "500px" }}
+              >
+                <Card farm={farm} onClick={() => handleFarmClick(farm)} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </>
+
+      {/* 페이지 번호 */}
+      <div className="text-center">
+        <p className="text-gray-500">
+          {currentIndex + 1} / {recommendations.length}
+        </p>
+      </div>
+
+      {/* 이전 다음 버튼 */}
+      <div className="mt-4 flex justify-center gap-4">
+        <button
+          onClick={handlePrev}
+          className="rounded-full bg-gray-700 px-4 py-2 text-white hover:bg-[#FFA500]"
+        >
+          &lt; 이전
+        </button>
+        <button
+          onClick={handleNext}
+          className="rounded-full bg-gray-700 px-4 py-2 text-white hover:bg-[#FFA500]"
+        >
+          다음 &gt;
+        </button>
+      </div>
+    </div>
   );
 }
 
