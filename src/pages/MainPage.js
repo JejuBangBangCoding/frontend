@@ -40,9 +40,9 @@ function MainPage() {
         <Header showProfile={true} showBackButton={false} />
 
         {/* 안내 문구 */}
-        <div className="mt-7 flex flex-col items-center">
+        <div className="mt-5 flex flex-col items-center">
           <p className="text-[17px] font-[400]">어디를 여행하고 싶으신가요?</p>
-          <div className="mb-5 flex gap-1">
+          <div className="flex gap-1">
             <img
               src={questionMark}
               alt="Question Mark"

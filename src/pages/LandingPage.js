@@ -17,14 +17,14 @@ function LandingPage() {
       </div>
 
       {/* 텍스트 로고 */}
-      <img src={textLogo} alt="Text Logo" className="mt-4 self-center" />
+      <img src={textLogo} alt="Text Logo" className="mt-24 w-68 self-center" />
 
       {/* 메인 그림 */}
       <div className="flex flex-grow items-end justify-center">
         <img
           src={mainLogo}
           alt="Main Logo"
-          className="w-full max-w-md object-contain"
+          className="w-full object-contain"
         />
       </div>
       <Link to="/LandingPage2" className="absolute bottom-2/4 right-3">

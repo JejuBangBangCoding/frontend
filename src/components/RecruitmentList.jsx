@@ -64,7 +64,7 @@ const RecruitmentList = ({ selectedRegion }) => {
   };
 
   return (
-    <div className="border-bg-[#FFA500] mt-5 flex h-full flex-col rounded-t-3xl border-[1px] bg-white shadow">
+    <div className="border-bg-[#FFA500] flex h-full flex-col rounded-t-3xl border-[1px] bg-white shadow">
       {/* 모집 리스트 - 헤더 */}
       <div className="flex justify-center">
         <div
