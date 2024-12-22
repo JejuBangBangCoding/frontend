@@ -27,7 +27,7 @@ const Map = ({ onRegionClick }) => {
   ];
 
   return (
-    <div className="relative w-full px-5">
+    <div className="relative w-full">
       <img src={map} alt="Map" className="h-full w-full object-cover" />
 
       {regions.map((region) => (
@@ -46,7 +46,7 @@ const Map = ({ onRegionClick }) => {
             <img
               src={mark}
               alt="Mark Icon"
-              className="mx-auto block w-10"
+              className="mx-auto block w-8"
               style={{ transform: "translateY(0%)" }}
             />
           )}
@@ -54,7 +54,7 @@ const Map = ({ onRegionClick }) => {
           <p
             className={`cursor-pointer text-xl font-black transition-all duration-300 ${
               selectedRegion === region.name
-                ? "rounded-full p-1 text-[2rem] shadow-md shadow-black"
+                ? "rounded-full p-0 text-[2rem]"
                 : "opacity-50"
             }`}
           >
