@@ -106,14 +106,17 @@ function MyReservationPage() {
               alt="User Profile"
               className="relative h-32 w-32 rounded-full border-4 border-white object-cover"
             />
-            <p className="absolute top-48 rounded-full bg-[#FFA500] px-3 py-1 text-xl font-semibold text-white">
+            <p className="absolute top-56 rounded-full bg-[#FFA500] px-3 py-1 text-xl font-semibold text-white">
               {user?.username || "사용자"}
+            </p>
+            <p className="text-[#C4C4C4] text-xs mt-10">
+              각 항목을 누르시면 상세 조회를 하실 수 있습니다.
             </p>
           </div>
         </div>
 
         {/* 예약 현황 섹션 */}
-        <div className="mx-5 flex flex-grow flex-col rounded-t-3xl bg-white p-5">
+        <div className="mt-2 mx-5 flex flex-grow flex-col rounded-t-3xl bg-white p-5">
           <div className="mb-4 flex items-center">
             <img src={list} alt="List" className="mr-3 w-[1rem]" />
             <p className="text-sm font-normal">예약 현황</p>
@@ -138,24 +141,23 @@ function MyReservationPage() {
                         test
                       }
                       alt={item.farm_name + " 사진"}
-                      className="mr-4 h-24 w-24 rounded-2xl object-cover"
+                      className="ml-1 mr-4 h-24 w-24 rounded-2xl object-cover"
                     />
-                    <div className="flex w-full flex-col justify-between">
-                      <div>
-                        <p className="text-lg font-bold">{item.farm_name}</p>
-
-                        <div className="flex">
-                          <img src={locationIcon} alt="Location" />
-                          <p className="ml-1 text-xs">예약 날짜: {item.date}</p>
+                    <div className="flex w-full justify-between">
+                      <div className="">
+                        <div className="flex mt-2">
+                          <p className="text-xs text-[#a1a0a0] mr-[0.3rem]">예약날짜</p>
+                          <p className="text-xs">{item.date}</p>
                         </div>
+                        <p className="mt-1">{item.board_title}</p>
+                        <p className="text-sm font-semibold mb-1">{item.farm_name}</p>
+                          <p className="text-xs font-normal">{item.board_period_start} ~{" "}
+                            {item.board_period_end}
+                          </p>
                       </div>
-                      <div className="flex w-full items-center justify-between">
-                        <p className="text-xs font-normal">
-                          근로 기간: <br /> {item.board_period_start} ~{" "}
-                          {item.board_period_end}
-                        </p>
+                      <div className="self-end">
                         <button
-                          className="mr-1 rounded bg-gray-500 px-2 py-1 text-xs text-white hover:bg-red-500"
+                          className="rounded bg-gray-500 px-2 py-1 text-xs text-white hover:bg-red-500 mr-2"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDeleteReservation(item.reservation_id);
