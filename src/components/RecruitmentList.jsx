@@ -116,7 +116,7 @@ const RecruitmentList = ({ selectedRegion }) => {
 
               <div className="flex w-full justify-between">
                 <div className="flex flex-col">
-                  <p className="mb-4 truncate text-xl font-bold">
+                  <p className="truncate text-xl font-bold">
                     {activeTab === "일하젠" ? item.title : item.name}
                   </p>
 
