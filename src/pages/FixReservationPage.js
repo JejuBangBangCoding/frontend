@@ -51,34 +51,45 @@ function FixReservationPage() {
 
       {reservationDetails && !error && (
         <div className="relative mt-10 flex flex-col items-center px-5">
+          {/* 예약 성공 텍스트 */}
+          <div className="flex-col justify-items-center">
+          <img src={check} alt="Check" className="w-20" />
+            <h2 className="mt-3 mb-5 flex items-end text-2xl font-bold">
+              예약이 확정되었습니다!
+            </h2>
+          </div>
+          {/* 예약된 농장 이미지 */}
           <div className="flex flex-col items-center">
             <img
               src={`${process.env.REACT_APP_BACKEND_URL}${reservationDetails.image}`}
               alt="Farm"
-              className="mb-4 h-full w-full rounded-lg object-cover"
+              className="w-80 rounded-t-xl"
             />
-
             {/* 예약 상세 정보 카드 */}
-            <div className="absolute top-72 mt-6 w-96 rounded-lg border border-orange-300 bg-white py-6 text-left shadow-md">
-              <div className="mt-3 flex flex-col items-center">
-                <p className="mb-2">
-                  <span className="font-semibold">예약 번호:</span>{" "}
-                  {reservationDetails.reservation_number}
+            <div className="w-80 rounded-b-xl border bg-white py-6 text-left shadow">
+              <div className="flex-col justify-items-center">
+                <p className="">
+                  <span className=""></span>{" "}
+                  {reservationDetails.board_title}
                 </p>
-                <p className="mb-2">
-                  <span className="font-semibold">농장 이름:</span>{" "}
+                <p className="mb-5">
+                  <span className=""></span>{" "}
                   {reservationDetails.farm_name}
                 </p>
-                <p className="mb-2">
-                  <span className="font-semibold">예약 날짜:</span>{" "}
+              </div>
+              <div className="flex-col justify-items-start ml-5">
+                <p className="">
+                  <span className="text-[#C0C0C0]">예약번호</span>{" "}
+                  {reservationDetails.reservation_number}
+                </p>
+                <p className="my-2">
+                  <span className="text-[#C0C0C0]">예약날짜</span>{" "}
                   {reservationDetails.date}
                 </p>
-              </div>
-              <div className="flex items-end justify-center gap-1">
-                <h2 className="mb-2 flex items-end text-2xl font-bold text-blue-600">
-                  예약이 확정되었습니다!
-                </h2>
-                <img src={check} alt="Check" className="w-10" />
+                <p className="">
+                  <span className="text-[#C0C0C0]">예약날짜</span>{" "}
+                  {reservationDetails.board_period_start} ~ {reservationDetails.board_period_end}
+                </p>
               </div>
             </div>
           </div>
@@ -119,9 +130,9 @@ function FixReservationPage() {
       <div className="mt-16 px-14">
         <button
           onClick={() => navigate("/mainpage")}
-          className="mt-5 w-full rounded-md bg-[#FFA500] px-6 py-3 text-xl font-semibold text-white hover:bg-[#FF710A]"
+          className="w-full rounded-lg bg-[#FFA500] px-6 py-3 text-xl font-semibold text-white hover:bg-[#FF710A]"
         >
-          메인 홈으로 이동
+          확인
         </button>
       </div>
     </div>

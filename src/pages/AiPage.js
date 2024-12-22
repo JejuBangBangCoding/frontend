@@ -176,7 +176,7 @@ function AiPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#F4F4F4]">
+    <div className="flex min-h-screen flex-col bg-[#FFF9F0]">
       {loading ? (
         <div className="flex h-screen items-center justify-center">
           <LoadingSpinner />

@@ -30,13 +30,13 @@ function FarmListPage() {
     <div>
       <Header showProfile={true} showBackButton={true} />
 
-      <div className="mt-5 flex justify-center gap-3">
+      <div className="mt-10 flex justify-center gap-3">
         <div className="flex h-full items-start">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#ffd68b]">
             <img src={AI} alt="AI" className="h-8 w-8" />
           </div>
         </div>
-        <div className="mt-5 w-[380px] rounded-b-xl rounded-e-xl bg-[#FFDB99] p-2 text-sm">
+        <div className="w-[380px] rounded-b-xl rounded-e-xl bg-[#FFDB99] p-2 text-sm">
           <p className="">
             애월에서 바다를 바라보며 일할 수 있는 로맨틱한 일자리 몇 가지를 준비
             했어요. 숙박도 제공되니 더 편안하게 머무를 수 있습니다!
