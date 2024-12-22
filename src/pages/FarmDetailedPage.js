@@ -12,6 +12,9 @@ import address from "../assets/images/address.svg";
 import list2 from "../assets/images/list2.svg";
 import list3 from "../assets/images/list3.svg";
 import star from "../assets/images/star.svg";
+import arte from "../assets/images/arte_image.jpeg";
+import handam from "../assets/images/handam_image.jpeg";
+import randys from "../assets/images/randys_image.jpeg";
 
 function FarmDetailedPage() {
   const location = useLocation();
@@ -221,38 +224,47 @@ function FarmDetailedPage() {
             <ol className="mb-16 flex justify-center gap-3">
               {/* 명소 1 */}
               <li className="">
-                <img src={list2} alt="" className="w-[7rem]" />
-                <p className="text-xl font-bold">한담해변</p>
-                <div className="flex justify-center">
+                <img src={handam} alt="Handam" className="w-[9rem] rounded-2xl" />
+                <p className="text-xl font-bold mt-3 mb-1">한담해변</p>
+                <div className="flex justify-center mb-2">
                   <img src={star} alt="Star" className="w-3" />
-                  <p className="text-xs">4.7</p>
+                  <p className="text-xs">4.6</p>
                 </div>
                 <p className="text-[0.6rem] font-semibold">
-                  차로 5분거리 (14km)
+                  차로 6분거리 (2.8km)
                 </p>
               </li>
               {/* 명소 2 */}
-              <li className="">
-                <img src={list3} alt="" className="w-[7rem]" />
-                <p className="text-xl font-bold">한담해변</p>
-                <div className="flex justify-center">
-                  <img src={star} alt="Star" className="w-3" />
-                  <p className="text-xs">4.7</p>
+              <li className="relative">
+                <div className="relative">
+                  <img
+                    src={randys}
+                    alt="Randys"
+                    className="w-[9rem] rounded-2xl"
+                  />
+                  <p className="absolute top-2 right-2 text-xs p-1 border rounded-lg border-[#FFDB99] bg-[#ffffff]">
+                    광고
+                  </p>
                 </div>
-                <p className="text-[0.6rem] font-semibold">
-                  차로 5분거리 (14km)
-                </p>
+                <p className="text-xl font-bold mt-3 mb-1">랜디스도넛</p>
+                <div className="flex justify-center mb-2">
+                  <img src={star} alt="Star" className="w-3" />
+                  <p className="text-xs">3.8</p>
+                </div>
+                  <p className="text-[0.6rem] font-semibold">
+                    차로 11분거리 (5.1km)
+                  </p>
               </li>
               {/* 명소 3 */}
               <li className="">
-                <img src={list2} alt="" className="w-[7rem]" />
-                <p className="text-xl font-bold">한담해변</p>
-                <div className="flex justify-center">
+                <img src={arte} alt="Arte" className="w-[9rem] rounded-2xl" />
+                <p className="text-xl font-bold mt-3 mb-1">아르떼뮤지엄</p>
+                <div className="flex justify-center mb-2">
                   <img src={star} alt="Star" className="w-3" />
-                  <p className="text-xs">4.7</p>
+                  <p className="text-xs">4.2</p>
                 </div>
                 <p className="text-[0.6rem] font-semibold">
-                  차로 5분거리 (14km)
+                  차로 5분거리 (2.2km)
                 </p>
               </li>
             </ol>
