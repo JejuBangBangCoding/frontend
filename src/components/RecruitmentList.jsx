@@ -105,21 +105,22 @@ const RecruitmentList = ({ selectedRegion }) => {
               className="mb-4 flex cursor-pointer rounded-lg"
             >
               <div className="relative mr-3">
-                <img
-                  src={
-                    `${process.env.REACT_APP_BACKEND_URL}${item.image}` || test
-                  }
-                  alt={`${activeTab === "일하젠" ? "Farm" : "Attraction"} ${
-                    activeTab === "일하젠" ? item.farm_name : item.name
-                  } 사진`}
-                  className="h-24 w-32 rounded-xl object-cover"
-                />
-                <div className="absolute top-2 right-2 bg-white rounded-lg px-2 py-1 shadow border-[#FFA500]">
-                  <p className="text-xs font-semibold text-gray-700">
-                    {item.is_advertised ? "광고" : ""}
-                  </p>
-                </div>
-              </div>
+  <img
+    src={
+      `${process.env.REACT_APP_BACKEND_URL}${item.image}` || test
+    }
+    alt={`${activeTab === "일하젠" ? "Farm" : "Attraction"} ${
+      activeTab === "일하젠" ? item.farm_name : item.name
+    } 사진`}
+    className="h-24 w-32 rounded-xl object-cover"
+  />
+  {item.is_advertised && ( // 광고 항목만 표시
+    <div className="absolute top-2 right-2 bg-white rounded-lg px-2 py-1 shadow border-[#FFA500]">
+      <p className="text-xs font-semibold text-gray-700">광고</p>
+    </div>
+  )}
+</div>
+
               <div className="flex w-full justify-between">
                 <div className="flex flex-col">
                   <p className="truncate text-xl font-bold">
