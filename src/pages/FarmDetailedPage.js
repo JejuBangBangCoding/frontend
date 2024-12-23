@@ -15,6 +15,7 @@ import star from "../assets/images/star.svg";
 import arte from "../assets/images/arte_image.jpeg";
 import handam from "../assets/images/handam_image.jpeg";
 import randys from "../assets/images/randys_image.jpeg";
+import phoneNumber from "../assets/images/phoneNumber.png";
 
 function FarmDetailedPage() {
   const location = useLocation();
@@ -211,7 +212,7 @@ function FarmDetailedPage() {
 
             {/* 설명 */}
             <p className="mb-5 text-lg"> {farmDetails.description}</p>
-            <p className="">contact : 010-xxxx-xxxx</p>
+            <p className="">☏ 010-1234-5678</p>
 
             {/* 농장 위치 */}
             <img src={address} alt="Address" className="my-1" />

@@ -145,12 +145,12 @@ function MyReservationPage() {
                     />
                     <div className="flex w-full justify-between">
                       <div className="">
-                        <div className="flex mt-2">
+                        <div className="flex mt-1">
                           <p className="text-xs text-[#a1a0a0] mr-[0.3rem]">예약날짜</p>
-                          <p className="text-xs">{item.date}</p>
+                          <p className="text-xs font-light">{item.date}</p>
                         </div>
-                        <p className="mt-1">{item.board_title}</p>
-                        <p className="text-sm font-semibold mb-1">{item.farm_name}</p>
+                        <p className="text-lg font-bold mt-1">{item.board_title}</p>
+                        <p className="text-md font-medium mb-[2px]">{item.farm_name}</p>
                           <p className="text-xs font-normal">{item.board_period_start} ~{" "}
                             {item.board_period_end}
                           </p>
@@ -175,10 +175,6 @@ function MyReservationPage() {
                   </p>
                 )}
           </div>
-          {/* 예약 현황 안내 문구 */}
-          <p className="text-md mb-2 mt-8 text-center font-normal text-[#C4C4C4]">
-            각 항목을 누르시면 상세 조회를 하실 수 있습니다.
-          </p>
         </div>
       </div>
     </div>
