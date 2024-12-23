@@ -16,7 +16,7 @@ const Modal = ({
   <div className="relative mx-5 max-w-md rounded-[1.5rem] bg-white py-6 px-5 text-center shadow-md">
     <h2 className="mb-4 text-2xl font-bold">{title}</h2>
     <div
-      className="custom-scrollbar max-h-[50vh] overflow-y-auto pr-10 text-left leading-8"
+      className="custom-scrollbar max-h-[50vh] overflow-y-auto pr-10 text-middle leading-8"
       style={{
         scrollbarWidth: "thin", // Firefox
         scrollbarColor: "#FFE9C1 transparent", // Firefox
