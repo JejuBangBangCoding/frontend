@@ -27,7 +27,7 @@ function LandingPage() {
           className="w-full object-contain"
         />
       </div>
-      <Link to="/LandingPage2" className="absolute bottom-2/4 right-3">
+      <Link to="/LandingPage2" className="absolute bottom-[32.5rem] right-3">
         <img src={rightArrow2} alt="Right Arrow2" className="" />
       </Link>
     </div>

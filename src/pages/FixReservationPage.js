@@ -68,28 +68,30 @@ function FixReservationPage() {
             {/* 예약 상세 정보 카드 */}
             <div className="w-80 rounded-b-xl border bg-white py-6 text-left shadow">
               <div className="flex-col justify-items-center">
-                <p className="">
+                <p className="text-xl font-semibold">
                   <span className=""></span>{" "}
                   {reservationDetails.board_title}
                 </p>
-                <p className="mb-5">
+                <p className="mb-5 text-sm font-medium">
                   <span className=""></span>{" "}
                   {reservationDetails.farm_name}
                 </p>
               </div>
               <div className="flex-col justify-items-start ml-5">
-                <p className="">
-                  <span className="text-[#C0C0C0]">예약번호</span>{" "}
-                  {reservationDetails.reservation_number}
-                </p>
-                <p className="my-2">
-                  <span className="text-[#C0C0C0]">예약날짜</span>{" "}
-                  {reservationDetails.date}
-                </p>
-                <p className="">
-                  <span className="text-[#C0C0C0]">예약날짜</span>{" "}
+              <p className="">
+                <span className="text-[#C0C0C0]">예약번호</span>
+                <span className="ml-2">{reservationDetails.reservation_number}</span>
+              </p>
+              <p className="my-2">
+                <span className="text-[#C0C0C0]">예약날짜</span>
+                <span className="ml-2">{reservationDetails.date}</span>
+              </p>
+              <p className="">
+                <span className="text-[#C0C0C0]">예약기간</span>
+                <span className="ml-2">
                   {reservationDetails.board_period_start} ~ {reservationDetails.board_period_end}
-                </p>
+                </span>
+              </p>
               </div>
             </div>
           </div>
@@ -127,7 +129,7 @@ function FixReservationPage() {
         </div>
       )}
 
-      <div className="mt-16 px-14">
+      <div className="mt-10 px-14">
         <button
           onClick={() => navigate("/mainpage")}
           className="w-full rounded-lg bg-[#FFA500] px-6 py-3 text-xl font-semibold text-white hover:bg-[#FF710A]"

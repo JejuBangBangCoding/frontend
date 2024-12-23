@@ -20,34 +20,34 @@ const RecruitmentList = ({ selectedRegion }) => {
 
   const fetchItems = async () => {
     setLoading(true);
+    setError(null); // 에러 초기화
     try {
       let response;
       if (activeTab === "일하젠") {
-        // "일하젠" 탭일 경우 농장 리스트 fetch
         response = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/api/board/location/`,
           {
             params: { location: selectedRegion, category: activeTab },
-          },
+          }
         );
       } else if (activeTab === "놀젠") {
-        // "놀젠" 탭일 경우 명소 리스트 fetch
         response = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/api/attraction/location/`,
           {
             params: { location: selectedRegion },
-          },
+          }
         );
       }
-      setItems(response.data);
+
+      // 응답 데이터 확인 및 설정
+      if (response.data && Array.isArray(response.data)) {
+        setItems(response.data);
+      } else {
+        setItems([]); // 예상치 못한 응답 형식일 경우 초기화
+      }
     } catch (err) {
       console.error("Error fetching items:", err);
-      if (err.response && err.response.data && err.response.data.error) {
-        setError(err.response.data.error);
-      } else {
-        setError("데이터를 불러오지 못했습니다.");
-      }
-      setItems([]); // 에러 발생 시 리스트 초기화
+      setError("해당 지역의 농장 정보가 없습니다."); // 에러 메시지 설정
     } finally {
       setLoading(false);
     }
@@ -86,7 +86,7 @@ const RecruitmentList = ({ selectedRegion }) => {
       {/* 모집 리스트 - 내용 */}
       <div className="custom-scrollbar scrollbar scrollbar-thumb-orange-500 scrollbar-track-gray-100 flex-1 overflow-y-auto p-6">
         <div className="h-[1rem]">
-          {/* h-[1rem]은 필수 - 이슈1 확인 (삭제 금지)  */}
+          {/* h-[1rem]은 필수 - 이슈1 확인 (삭제 금지) */}
           {loading && <p className="text-center text-gray-500">로딩 중...</p>}
           {error && <p className="text-center text-red-500">{error}</p>}
           {!loading && !error && items.length === 0 && (
@@ -104,23 +104,29 @@ const RecruitmentList = ({ selectedRegion }) => {
               onClick={() => handleItemClick(item)}
               className="mb-4 flex cursor-pointer rounded-lg"
             >
-              <img
-                src={
-                  `${process.env.REACT_APP_BACKEND_URL}${item.image}` || test
-                }
-                alt={`${activeTab === "일하젠" ? "Farm" : "Attraction"} ${
-                  activeTab === "일하젠" ? item.farm_name : item.name
-                } 사진`}
-                className="mr-4 h-24 w-24 rounded-xl object-cover"
-              />
-
+              <div className="relative mr-3">
+                <img
+                  src={
+                    `${process.env.REACT_APP_BACKEND_URL}${item.image}` || test
+                  }
+                  alt={`${activeTab === "일하젠" ? "Farm" : "Attraction"} ${
+                    activeTab === "일하젠" ? item.farm_name : item.name
+                  } 사진`}
+                  className="h-24 w-32 rounded-xl object-cover"
+                />
+                <div className="absolute top-2 right-2 bg-white rounded-lg px-2 py-1 shadow border-[#FFA500]">
+                  <p className="text-xs font-semibold text-gray-700">
+                    {item.is_advertised ? "광고" : ""}
+                  </p>
+                </div>
+              </div>
               <div className="flex w-full justify-between">
                 <div className="flex flex-col">
                   <p className="truncate text-xl font-bold">
                     {activeTab === "일하젠" ? item.title : item.name}
                   </p>
 
-                  <div className="flex w-full items-center justify-between gap-2">
+                  <div className="flex w-full items-center justify-between gap-1">
                     <div className="text-lg">
                       {activeTab === "일하젠" ? (
                         <span>{item.farm_name}</span>
@@ -141,13 +147,13 @@ const RecruitmentList = ({ selectedRegion }) => {
                           <p className="font-bold text-[#FFA500]">
                             시급 {item.hourly}원
                           </p>
-                          <p className="border-gray rounded-xl border px-2 py-1 text-[12px] font-normal">
+                          <p className="border-gray rounded-xl border px-2 py-1 text-[10px] font-normal mr-2">
                             #{item.welfare}
                           </p>
                         </div>
 
                         {/* 근무 기간 */}
-                        <div className="flex justify-end rounded p-1">
+                        <div className="flex justify-end rounded ">
                           <p className="text-[12px] font-light">
                             {item.period_start} ~ {item.period_end}
                           </p>
@@ -159,14 +165,20 @@ const RecruitmentList = ({ selectedRegion }) => {
                           <p className="font-bold text-[#FFA500]">
                             평점 {item.rating}
                           </p>
-                          <p className="border-gray rounded-xl border px-2 py-1 text-[12px] font-normal">
-                            {item.tags && item.tags.length > 0
-                              ? `#${item.tags.join(" #")}`
-                              : ""}
+                          <p className="border-gray rounded-xl text-[12px] font-normal">
+                            {item.tags && item.tags.length > 0 ? (
+                              item.tags.map((tag, index) => (
+                                <span
+                                  key={index}
+                                  className="inline-block rounded-lg border px-2 py-1 mr-1"
+                                >
+                                  #{tag}
+                                </span>
+                              ))
+                            ) : (
+                              ""
+                            )}
                           </p>
-                        </div>
-                        <div className="flex justify-end rounded p-1">
-                          <p className="">{item.is_advertised ? "광고" : ""}</p>
                         </div>
                       </div>
                     )}
