@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "../components/Header";
-import backImg from "../assets/images/backImg.svg";
+import backgroundImg from "../assets/images/backgroundImg.png";
 import userProfilePlaceholder from "../assets/images/userProfile.svg";
 import list from "../assets/images/list.svg";
 import locationIcon from "../assets/images/location.svg";
@@ -95,28 +95,28 @@ function MyReservationPage() {
         {/* 배경 및 사용자 프로필 이미지 */}
         <div className="relative mt-5 flex flex-col items-center">
           <img
-            src={backImg}
-            alt="Background"
-            className="h-40 w-full rounded-t-3xl object-cover"
+            src={backgroundImg}
+            alt="BackgroundImg"
+            className="h-32 w-full object-cover"
           />
           {/* 프로필 이미지 및 사용자 이름 */}
-          <div className="mt-[-4rem] flex flex-col items-center">
+          <div className="flex flex-col items-center">
             <img
               src={user?.profileImage || userProfilePlaceholder}
               alt="User Profile"
-              className="relative h-32 w-32 rounded-full border-4 border-white object-cover"
+              className="absolute top-12 h-28 w-28 rounded-full border-2 border-white object-cover"
             />
-            <p className="absolute top-56 rounded-full bg-[#FFA500] px-3 py-1 text-xl font-semibold text-white">
+            <p className="absolute top-40 rounded-full font-semibold">
               {user?.username || "사용자"}
             </p>
-            <p className="text-[#C4C4C4] text-xs mt-10">
+            <p className="text-[#C4C4C4] text-[0.6rem] mt-16">
               각 항목을 누르시면 상세 조회를 하실 수 있습니다.
             </p>
           </div>
         </div>
 
         {/* 예약 현황 섹션 */}
-        <div className="mt-2 mx-5 flex flex-grow flex-col rounded-t-3xl bg-white p-5">
+        <div className="flex flex-grow flex-col rounded-t-3xl bg-white p-5 border">
           <div className="mb-4 flex items-center">
             <img src={list} alt="List" className="mr-3 w-[1rem]" />
             <p className="text-sm font-normal">예약 현황</p>
@@ -132,7 +132,7 @@ function MyReservationPage() {
               ? reservations.map((item) => (
                   <div
                     key={item.reservation_id}
-                    className="mb-4 flex cursor-pointer rounded-3xl bg-[#FFDB99] p-3 shadow"
+                    className="mb-4 flex cursor-pointer rounded-xl bg-[#FFDB99] p-3 shadow"
                     onClick={() => handleReservationClick(item)}
                   >
                     <img
@@ -141,7 +141,7 @@ function MyReservationPage() {
                         test
                       }
                       alt={item.farm_name + " 사진"}
-                      className="ml-1 mr-4 h-24 w-24 rounded-2xl object-cover"
+                      className="ml-1 mr-3 h-20 w-20 rounded-xl object-cover"
                     />
                     <div className="flex w-full justify-between">
                       <div className="">
@@ -149,15 +149,15 @@ function MyReservationPage() {
                           <p className="text-xs text-[#a1a0a0] mr-[0.3rem]">예약날짜</p>
                           <p className="text-xs font-light">{item.date}</p>
                         </div>
-                        <p className="text-lg font-bold mt-1">{item.board_title}</p>
-                        <p className="text-md font-medium mb-[2px]">{item.farm_name}</p>
-                          <p className="text-xs font-normal">{item.board_period_start} ~{" "}
+                        <p className="font-bold">{item.board_title}</p>
+                        <p className="text-xs font-medium mb-1 ">{item.farm_name}</p>
+                          <p className="text-[0.6rem] font-normal">{item.board_period_start} ~{" "}
                             {item.board_period_end}
                           </p>
                       </div>
                       <div className="self-end">
                         <button
-                          className="rounded bg-gray-500 px-2 py-1 text-xs text-white hover:bg-red-500 mr-2"
+                          className="rounded bg-gray-500 px-1.5 py-1 text-[0.6rem] text-white hover:bg-red-500 mr-1"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDeleteReservation(item.reservation_id);

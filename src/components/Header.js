@@ -21,19 +21,19 @@ const Header = ({ showProfile = false, user, showBackButton = true }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative mt-6 flex items-center justify-center">
+    <div className="relative mt-5 flex items-center justify-center">
       {/* 뒤로가기 버튼 */}
       {showBackButton && (
         <img
           src={leftArrow1}
           alt="Left Arrow"
-          className="absolute left-6 cursor-pointer"
+          className="absolute left-6 cursor-pointer w-5"
           onClick={() => navigate(-1)}
         />
       )}
 
       {/* 로고 */}
-      <img src={textLogo} alt="Text logo" className="w-[7rem]" />
+      <img src={textLogo} alt="Text logo" className="w-[6rem]" />
 
       {/* 사용자 프로필 */}
       {showProfile && <UserProfile />}

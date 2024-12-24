@@ -46,15 +46,15 @@ const Map = ({ onRegionClick }) => {
             <img
               src={mark}
               alt="Mark Icon"
-              className="mx-auto block w-8"
+              className="mx-auto block w-7"
               style={{ transform: "translateY(0%)" }}
             />
           )}
 
           <p
-            className={`cursor-pointer text-xl font-black transition-all duration-300 ${
+            className={`cursor-pointer text-sm font-black transition-all duration-300 ${
               selectedRegion === region.name
-                ? "rounded-full p-0 text-[2rem]"
+                ? "rounded-full p-0 text-[1.1rem]"
                 : "opacity-50"
             }`}
           >

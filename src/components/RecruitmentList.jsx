@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import test from "../assets/images/test.svg";
 import { useNavigate } from "react-router-dom";
+import star from "../assets/images/star.svg";
 
 const RecruitmentList = ({ selectedRegion }) => {
   const [items, setItems] = useState([]); // 농장 또는 명소 리스트
@@ -69,18 +70,18 @@ const RecruitmentList = ({ selectedRegion }) => {
   };
 
   return (
-    <div className="border-bg-[#FFA500] flex h-full flex-col rounded-t-3xl border-[1px] bg-white shadow">
+    <div className="border-bg-[#FFA500] flex h-full flex-col rounded-t-2xl border-[1px] bg-white shadow">
       {/* 모집 리스트 - 헤더 */}
       <div className="flex justify-center">
         <div
-          className={`flex-1 border-b py-4 text-center text-xl ${
+          className={`flex-1 border-b py-3 text-sm text-center ${
             activeTab === "일하젠" ? "border-[#FF710A] text-[#FF710A]" : ""
           }`}
         >
           <button onClick={() => setActiveTab("일하젠")}>일하젠</button>
         </div>
         <div
-          className={`flex-1 border-b py-4 text-center text-xl ${
+          className={`flex-1 border-b py-3 text-sm text-center ${
             activeTab === "놀젠" ? "border-[#FF710A] text-[#FF710A]" : ""
           }`}
         >
@@ -89,7 +90,7 @@ const RecruitmentList = ({ selectedRegion }) => {
       </div>
 
       {/* 모집 리스트 - 내용 */}
-      <div className="custom-scrollbar scrollbar scrollbar-thumb-orange-500 scrollbar-track-gray-100 flex-1 overflow-y-auto p-6">
+      <div className="custom-scrollbar scrollbar scrollbar-thumb-orange-500 scrollbar-track-gray-100 flex-1 overflow-y-auto p-4">
         <div className="h-[1rem]">
           {/* h-[1rem]은 필수 - 이슈1 확인 (삭제 금지) */}
           {loading && <p className="mt-32 text-center text-gray-500">로딩 중...</p>}
@@ -103,97 +104,109 @@ const RecruitmentList = ({ selectedRegion }) => {
               </p>
             </div>
           )}
-          {items.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => handleItemClick(item)}
-              className="mb-4 flex cursor-pointer rounded-lg"
-            >
-              <div className="relative mr-3">
-  <img
-    src={
-      `${process.env.REACT_APP_BACKEND_URL}${item.image}` || test
-    }
-    alt={`${activeTab === "일하젠" ? "Farm" : "Attraction"} ${
-      activeTab === "일하젠" ? item.farm_name : item.name
-    } 사진`}
-    className="h-24 w-32 rounded-xl object-cover"
-  />
-  {item.is_advertised && ( // 광고 항목만 표시
-    <div className="absolute top-2 right-2 bg-white rounded-lg px-2 py-1 shadow border-[#FFA500]">
-      <p className="text-xs font-semibold text-gray-700">광고</p>
-    </div>
-  )}
-</div>
 
-              <div className="flex w-full justify-between">
-                <div className="flex flex-col">
-                  <p className="truncate text-xl font-bold">
-                    {activeTab === "일하젠" ? item.title : item.name}
-                  </p>
-
-                  <div className="flex w-full items-center justify-between gap-1">
-                    <div className="text-lg">
-                      {activeTab === "일하젠" ? (
-                        <span>{item.farm_name}</span>
-                      ) : (
-                        <span className="text-base">{item.address}</span>
-                      )}
-                    </div>
-                    {activeTab === "일하젠" && item.workdays && (
-                      <span>{item.workdays.join(", ")}</span>
+          {activeTab === "일하젠" && (
+            <div>
+              {items.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => handleItemClick(item)}
+                  className="mb-3 flex cursor-pointer rounded-lg"
+                >
+                  <div className="relative mr-3">
+                    <img
+                      src={
+                        `${process.env.REACT_APP_BACKEND_URL}${item.image}` || test
+                      }
+                      alt={`Farm ${item.farm_name} 사진`}
+                      className="h-24 w-32 rounded-lg object-cover"
+                    />
+                    {item.is_advertised && (
+                      <div className="absolute top-1 right-1 bg-white rounded-lg px-1.5 py-1 shadow border-[1px] border-[#FFA500]">
+                        <p className="text-[0.6rem] font-semibold text-gray-700">
+                          광고
+                        </p>
+                      </div>
                     )}
                   </div>
-
-                  <div className="flex">
-                    {activeTab === "일하젠" ? (
-                      <div className="flex w-full items-center justify-between">
-                        {/* 시급 / 복지 */}
-                        <div className="flex items-center gap-2">
-                          <p className="font-bold text-[#FFA500]">
-                            시급 {item.hourly}원
-                          </p>
-                          <p className="border-gray rounded-xl border px-2 py-1 text-[10px] font-normal mr-2">
-                            #{item.welfare}
-                          </p>
-                        </div>
-
-                        {/* 근무 기간 */}
-                        <div className="flex justify-end rounded ">
-                          <p className="text-[12px] font-light">
-                            {item.period_start} ~ {item.period_end}
-                          </p>
-                        </div>
+                  <div className="flex w-full">
+                    <div className="flex-col flex-1">
+                      <p className="truncate text-[15px] font-bold">{item.title}</p>
+                      <div className="text-[13px] my-1">
+                        <span>{item.farm_name}</span>
                       </div>
-                    ) : (
-                      <div className="flex w-full items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <p className="font-bold text-[#FFA500]">
-                            평점 {item.rating}
-                          </p>
-                          <p className="border-gray rounded-xl text-[12px] font-normal">
-                            {item.tags && item.tags.length > 0 ? (
-                              item.tags.map((tag, index) => (
-                                <span
-                                  key={index}
-                                  className="inline-block rounded-lg border px-2 py-1 mr-1"
-                                >
-                                  #{tag}
-                                </span>
-                              ))
-                            ) : (
-                              ""
-                            )}
-                          </p>
-                        </div>
+                      <div className="flex items-center justify-between">
+                        <p className="text-[12px] font-light">
+                          {item.period_start} ~ {item.period_end}
+                        </p>
+                        {item.workdays && (
+                          <span className="text-[12px]">{item.workdays.join(", ")}</span>
+                        )}
+                      </div>
+                      <div className="flex justify-between mt-1">
+                        <p className="font-bold text-[13px] text-[rgb(255,165,0)]">
+                          시급 {item.hourly}원
+                        </p>
+                        <p className="border-[#cecdcd] rounded-lg border px-[0.3rem] py-[0.15rem] text-[11px] text-[#868686] font-normal">
+                          #{item.welfare}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          
+          {activeTab === "놀젠" && (
+            <div>
+              {items.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => handleItemClick(item)}
+                  className="mb-3 flex cursor-pointer rounded-lg"
+                >
+                  <div className="flex w-full">
+                    <div className="flex flex-col flex-1 justify-between">
+                      <p className="truncate text-[13px]">{item.name}</p>
+                      <div className="text-[14px] font-bold my-1">
+                        <span>{item.address}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <p className="flex text-[12px] font-light">
+                          <img src={star} alt="Star" className="w-3 mr-1" />
+                          {item.rating}
+                        </p>
+                        <p className="border-[#cecdcd] rounded-lg border px-[0.3rem] py-[0.15rem] text-[11px] text-[#868686] font-normal mr-3">
+                          #{item.tags}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="relative">
+                    {/* 명소 이미지 */}
+                    <img
+                      src={
+                        `${process.env.REACT_APP_BACKEND_URL}${item.image}` || test
+                      }
+                      alt={`Attraction ${item.name} 사진`}
+                      className="h-24 w-32 rounded-lg object-cover"
+                    />
+                    {/* 광고 문구 */}
+                    {item.is_advertised && (
+                      <div className="absolute top-1 right-1 bg-white rounded-lg px-1.5 py-1 shadow border-[1px] border-[#FFA500]">
+                        <p className="text-[0.6rem] font-semibold text-gray-700">
+                          광고
+                        </p>
                       </div>
                     )}
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
-          <div className="h-6">
+          )}
+          <div className="h-1">
             {/* 마지막 리스트 아이템을 보이게 하기 위한 div(삭제 금지) */}
           </div>
         </div>

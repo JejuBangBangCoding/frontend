@@ -40,15 +40,15 @@ function MainPage() {
         <Header showProfile={true} showBackButton={false} />
 
         {/* 안내 문구 */}
-        <div className="mt-5 flex flex-col items-center">
-          <p className="text-[17px] font-[400]">어디를 여행하고 싶으신가요?</p>
+        <div className="mt-4 flex flex-col items-center">
+          <p className="text-[13px] font-[400]">어디를 여행하고 싶으신가요?</p>
           <div className="flex gap-1">
             <img
               src={questionMark}
               alt="Question Mark"
               className="w-[0.8rem]"
             />
-            <p className="text-[13px] font-[300] text-[#9D9D9D]">
+            <p className="text-[9px] font-[300] text-[#9D9D9D]">
               지도를 선택하면 해당 지역의 모집 리스트를 볼 수 있어요!
             </p>
           </div>
@@ -67,20 +67,20 @@ function MainPage() {
           </div>
 
           {/* 버튼들 */}
-          <div className="flex flex-none justify-center gap-4 border bg-white p-5">
+          <div className="flex flex-none justify-center gap-3 border-x bg-white py-3 px-4">
             <button
               onClick={handleAiRecommendationClick}
-              className="w-[5.5rem] flex-col justify-items-center rounded-xl bg-[#FFE9C1] py-1.5"
+              className="w-[5rem] flex-col justify-items-center rounded-lg bg-[#FFE9C1] pt-1 pb-[0.1rem]"
             >
-              <img src={bulb} alt="Bulb" className="w-7" />
-              <p className="text-sm font-bold text-[#FFA500]">AI 추천</p>
+              <img src={bulb} alt="Bulb" className="w-4" />
+              <p className="text-[0.6rem] font-medium text-[#FF800B]">AI 추천</p>
             </button>
             <button
               onClick={handleReservationClick}
-              className="flex w-[22rem] items-center justify-center gap-2 rounded-xl bg-[#FFA500] p-3"
+              className="flex w-[24rem] items-center justify-center gap-2 rounded-lg bg-[#FFA500]"
             >
-              <img src={hang} alt="Hang" className="w-6" />
-              <p className="text-2xl font-medium text-white">예약 정보 확인</p>
+              <img src={hang} alt="Hang" className="w-4" />
+              <p className="text-white">예약 정보 확인</p>
             </button>
           </div>
         </div>
