@@ -11,7 +11,7 @@ module.exports = {
     container: {
       center: true,
       screens: {
-        DEFAULT: "500px",
+        DEFAULT: "calc(500 / 1024 * 100dvh)",
       },
     },
   },

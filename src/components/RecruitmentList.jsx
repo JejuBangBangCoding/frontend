@@ -38,7 +38,7 @@ const RecruitmentList = ({ selectedRegion }) => {
           }
         );
       }
-
+    
       // 응답 데이터 확인 및 설정
       if (response.data && Array.isArray(response.data)) {
         setItems(response.data);
@@ -47,10 +47,15 @@ const RecruitmentList = ({ selectedRegion }) => {
       }
     } catch (err) {
       console.error("Error fetching items:", err);
-      setError("해당 지역의 농장 정보가 없습니다."); // 에러 메시지 설정
+      setError(
+        activeTab === "일하젠"
+          ? "해당 지역의 농장 정보가 없습니다."
+          : "해당 지역의 명소 정보가 없습니다."
+      ); // 에러 메시지 설정
     } finally {
       setLoading(false);
     }
+    
   };
 
   const handleItemClick = (item) => {
@@ -87,8 +92,8 @@ const RecruitmentList = ({ selectedRegion }) => {
       <div className="custom-scrollbar scrollbar scrollbar-thumb-orange-500 scrollbar-track-gray-100 flex-1 overflow-y-auto p-6">
         <div className="h-[1rem]">
           {/* h-[1rem]은 필수 - 이슈1 확인 (삭제 금지) */}
-          {loading && <p className="text-center text-gray-500">로딩 중...</p>}
-          {error && <p className="text-center text-red-500">{error}</p>}
+          {loading && <p className="mt-32 text-center text-gray-500">로딩 중...</p>}
+          {error && <p className="mt-32 text-center text-red-500">{error}</p>}
           {!loading && !error && items.length === 0 && (
             <div className="mt-32 flex justify-center">
               <p className="text-center text-gray-500">
