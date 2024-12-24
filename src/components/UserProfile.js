@@ -20,7 +20,7 @@ function UserProfile() {
       <img
         src={user?.profileImage || userProfilePlaceholder}
         alt="User Profile"
-        className="absolute right-0 mr-7 h-[2.5rem] w-[2.5rem] rounded-full object-cover"
+        className="absolute right-0 mr-5 h-[2rem] w-[2rem] rounded-full object-cover"
       />
     </>
   );

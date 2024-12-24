@@ -17,7 +17,7 @@ function LandingPage() {
       </div>
 
       {/* 텍스트 로고 */}
-      <img src={textLogo} alt="Text Logo" className="mt-20 w-64 self-center" />
+      <img src={textLogo} alt="Text Logo" className="mt-20 w-[19rem] self-center" />
 
       {/* 메인 그림 */}
       <div className="flex flex-grow items-end justify-center" 
@@ -43,10 +43,10 @@ function LandingPage() {
     className=" h-full object-cover"
   /> */}
       </div>
-      <Link to="/LandingPage2" className="absolute m-[calc(100vh/2)_0] right-3">
-        <img src={rightArrow2} alt="Right Arrow2" className="w-5" />
-      </Link>
-    </div>
+        <Link to="/LandingPage2" className="absolute m-[calc(100vh/2)_0] right-3">
+          <img src={rightArrow2} alt="Right Arrow2" className="w-5" />
+        </Link>
+      </div>
   );
 }
 
