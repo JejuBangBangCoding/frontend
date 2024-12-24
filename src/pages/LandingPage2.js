@@ -10,19 +10,19 @@ import { Link } from "react-router-dom";
 const LandingPage2 = () => {
   return (
     <>
-      <div className="mb-[5.4rem] flex gap-2 self-center pt-12">
-        <img src={whiteDot} alt="White Dot" className="" />
-        <img src={grayDot} alt="Gray Dot" className="" />
-        <img src={whiteDot} alt="White Dot" className="" />
+      <div className="mb-20 flex gap-2 self-center pt-12">
+        <img src={whiteDot} alt="White Dot" className="w-2" />
+        <img src={grayDot} alt="Gray Dot" className="w-2" />
+        <img src={whiteDot} alt="White Dot" className="w-2" />
       </div>
       <img
         src={smallLogo}
         alt="Small Logo"
-        className="mb-7 self-center"
+        className="mb-7 self-center w-20"
       />
       <div className="text-center">
-        <p className="mb-3 text-[3rem] font-black">놀앙뭐하젠:</p>
-        <p className="mb-[-0.3rem] self-center text-[1.175rem]">
+        <p className="mb-3 text-[2.5rem] font-black">놀앙뭐하젠:</p>
+        <p className="mb-[-0.4rem] self-center text-[1rem]">
           표준어로{" "}
           <u>
             <strong>‘놀아서 뭐 할래?’</strong>
@@ -33,18 +33,18 @@ const LandingPage2 = () => {
           의미가 담긴 <strong>제주어</strong>
         </p>
       </div>
-      <Link to="/LandingPage" className="absolute bottom-2/4 left-2">
+      <Link to="/LandingPage" className="absolute m-[calc(100vh/2)_0] left-2">
         <img
           src={leftArrow1}
           alt="Left Arrow1"
-          className=""
+          className="w-5"
         />
       </Link>
-      <Link to="/LandingPage3" className="absolute bottom-2/4 right-2">
+      <Link to="/LandingPage3" className="absolute m-[calc(100vh/2)_0] right-2">
         <img
           src={rightArrow1}
           alt="Right Arrow1"
-          className=""
+          className="w-5"
         />
       </Link>
       <img src={scene} alt="Scene" className="mt-auto" />

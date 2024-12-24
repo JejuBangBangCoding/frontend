@@ -8,17 +8,17 @@ import { Link } from "react-router-dom";
 const LandingPage3 = () => {
   return (
     <>
-      <div className="mb-28 flex gap-2 self-center pt-12">
-        <img src={whiteDot} alt="White Dot" className="" />
-        <img src={whiteDot} alt="White Dot" className="" />
-        <img src={grayDot} alt="Gray Dot" className="" />
+      <div className="mb-20 flex gap-2 self-center pt-12">
+        <img src={whiteDot} alt="White Dot" className="w-2" />
+        <img src={whiteDot} alt="White Dot" className="w-2" />
+        <img src={grayDot} alt="Gray Dot" className="w-2" />
       </div>
       <img
         src={smallLogo}
         alt="Small Logo"
-        className="mb-7 self-center"
+        className="mb-7 self-center w-20"
       />
-      <div className="text-center text-[1.2rem] font-semibold leading-[2.5em] mb-32">
+      <div className="text-center text-[1rem] font-semibold leading-[2.3rem] mb-28">
         <p className="">'놀앙뭐하젠'은</p>
         <p className="">
           <strong>여행객에게</strong> 제주 여행과 용돈벌이를
@@ -30,11 +30,11 @@ const LandingPage3 = () => {
       </p>
       <p className="">노동력을 제공받을 수 있도록 돕는 플랫폼입니다.</p>
       </div>
-      <Link to="/LandingPage2" className="">
+      <Link to="/LandingPage2" className="absolute left-3 m-[calc(100vh/2)_0]">
         <img
           src={leftArrow2}
           alt="Left Arrow2"
-          className="absolute left-3 bottom-2/4"
+          className="w-5"
         />
       </Link>
       <Link to="/LoginPage" className="self-center">
