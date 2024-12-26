@@ -74,14 +74,14 @@ const RecruitmentList = ({ selectedRegion }) => {
       {/* 모집 리스트 - 헤더 */}
       <div className="flex justify-center">
         <div
-          className={`flex-1 border-b py-3 text-sm text-center ${
+          className={`flex-1 border-b py-3 text-center ${
             activeTab === "일하젠" ? "border-[#FF710A] text-[#FF710A]" : ""
           }`}
         >
           <button onClick={() => setActiveTab("일하젠")}>일하젠</button>
         </div>
         <div
-          className={`flex-1 border-b py-3 text-sm text-center ${
+          className={`flex-1 border-b py-3 text-center ${
             activeTab === "놀젠" ? "border-[#FF710A] text-[#FF710A]" : ""
           }`}
         >

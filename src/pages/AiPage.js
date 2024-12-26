@@ -200,8 +200,8 @@ function AiPage() {
 
                 {/* 날짜 선택 정보 */}
                 <div className="mt-5 w-full">
-                  <h1 className="font-semibold">날짜</h1>
-                  <div className="flex items-center space-x-2 text-xs">
+                  <h1 className="font-bold text-lg">날짜</h1>
+                  <div className="flex items-center space-x-2 text-sm">
                     {selectedStartDate && selectedEndDate ? (
                       <>
                         <p>
@@ -217,7 +217,7 @@ function AiPage() {
                         {selectedStartDate.toLocaleDateString()} ~
                       </p>
                     ) : (
-                      <div className="flex items-center text-gray-400 text-xs">
+                      <div className="flex items-center text-gray-400 text-sm">
                         <p>7일 이상 선택해주세요!</p>
                       </div>
                     )}
@@ -225,9 +225,9 @@ function AiPage() {
                 </div>
 
                 {/* 업종 선택 */}
-                <div className="mt-2 w-full">
-                  <h2 className="font-semibold">업종</h2>
-                  <div className="mt-1 flex flex-wrap gap-1 text-[12px]">
+                <div className="mt-4 w-full">
+                  <h2 className="font-bold text-lg">업종</h2>
+                  <div className="mt-1 flex flex-wrap gap-1 text-sm">
                     {["귤", "당근", "감자", "마늘", "양파", "상관없음"].map(
                       (type) => (
                         <button
@@ -248,9 +248,9 @@ function AiPage() {
                 </div>
 
                 {/* 숙식 제공 여부 선택 */}
-                <div className="mt-3 w-full">
-                  <h2 className="font-semibold">숙식 제공 여부</h2>
-                  <div className="mt-1 flex flex-wrap gap-1 text-[12px]">
+                <div className="mt-5 w-full">
+                  <h2 className="font-bold text-lg">숙식 제공 여부</h2>
+                  <div className="mt-1 flex flex-wrap gap-1 text-sm">
                     <button
                       onClick={() => handleAccommodationClick("식사")}
                       className={`inline-block rounded-lg border border-[#FFA500] px-2 py-0.5 text-center ${
@@ -285,9 +285,9 @@ function AiPage() {
                 </div>
 
                 {/* 근무형태 선택 */}
-                <div className="mt-3 w-full">
-                  <h2 className="font-semibold">근무형태</h2>
-                  <div className="mt-1 flex flex-wrap gap-1 text-[12px]">
+                <div className="mt-5 w-full">
+                  <h2 className="font-bold text-lg">근무형태</h2>
+                  <div className="mt-1 flex flex-wrap gap-1 text-sm">
                     {["주5일", "격일근무", "격주근무", "상관없음"].map(
                       (type) => (
                         <button
@@ -331,11 +331,11 @@ function AiPage() {
                 
 
                 <div className="flex w-full flex-col px-1">
-                  <h className="text-[13px] font-[600]">추천 키워드</h>
+                  <h className="text-[15px] font-[700]">추천 키워드</h>
                   <h className="text-[10px] font-[300]">
                     이런 내용이 들어가면 좋아요!
                   </h>
-                  <div className="mt-1 flex flex-wrap gap-1 text-xs">
+                  <div className="mt-2 flex flex-wrap gap-2 text-sm">
                     {[
                       "#귤",
                       "#핫플",
@@ -374,7 +374,7 @@ function AiPage() {
               {/* 다음/추천 버튼 */}
               <button
                 onClick={handleClick}
-                className={`flex h-14 w-60 items-center justify-center rounded-2xl text-white ${
+                className={`flex h-14 w-60 items-center justify-center rounded-2xl text-white text-lg ${
                   isPeriodValid() || contentChanged
                     ? "cursor-pointer bg-[#FFA500]"
                     : "cursor-not-allowed bg-gray-400"
