@@ -32,14 +32,14 @@ const Card = ({ farm, onClick }) => {
 
   return (
     <div className="p-5">
-      <div className="mb-3 text-center">
-        <h1 className="text-2xl font-[700]">{farm.farm_name}</h1>
-        <p className="text-sm text-gray-600">⭐{farm.match_score}</p>
+      <div className="mb-1 text-center">
+        <h1 className="text-xl font-[700]">{farm.farm_name}</h1>
+        <p className="text-sm text-gray-600">⭐ {farm.match_score}</p>
       </div>
 
       <div className="w-full overflow-hidden rounded-lg bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl">
         {/* 이미지 */}
-        <div className="h-80 overflow-hidden">
+        <div className="h-60 overflow-hidden">
           <img
             src={imageUrl}
             alt={farm.title}
@@ -50,14 +50,14 @@ const Card = ({ farm, onClick }) => {
         {/* 카드 본문 */}
         <div className="p-4">
           <h3 className="text-lg font-bold text-gray-800">{farm.title}</h3>
-          <p className="text-sm text-gray-600">{farm.location}</p>
-          <p className="text-sm text-gray-500">{farm.reason}</p>
-          <div className="mt-5 flex flex-wrap gap-2">
+          <p className="text-xs text-gray-600">{farm.location}</p>
+          <p className="text-sm mt-2 font-[500]">{farm.reason}</p>
+          <div className="mt-2 flex flex-wrap gap-1">
             {tags.length > 0 ? (
               tags.map((tag, index) => (
                 <div
                   key={index}
-                  className="inline-block rounded-xl border border-[#FFA500] bg-[#FFDB99] px-2 py-1 text-sm text-gray-800"
+                  className="inline-block rounded-lg border border-[#FFA500] bg-[#FFDB99] px-2 py-0.5 text-xs text-gray-800"
                 >
                   #{tag}
                 </div>
@@ -69,10 +69,10 @@ const Card = ({ farm, onClick }) => {
         </div>
 
         {/* 카드 하단 */}
-        <div className="border-t p-4">
+        <div className="border-t py-3 px-4">
           <button
             onClick={onClick}
-            className="w-full rounded-lg bg-[#FFA500] py-3 text-center text-white hover:bg-[#FF8C00]"
+            className="w-full rounded-lg bg-[#FFA500] py-2 text-center text-white hover:bg-[#FF8C00]"
           >
             상세 보기
           </button>
