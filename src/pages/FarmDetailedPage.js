@@ -136,21 +136,21 @@ function FarmDetailedPage() {
               <img
                 src={`${process.env.REACT_APP_BACKEND_URL}${farmDetails.image}`}
                 alt={farmDetails.farm_name}
-                className="h-60 w-full object-cover"
+                className="h-48 w-full object-cover"
               />
             )}
           </div>
 
           {/* 상세 정보 */}
-          <div className="custom-scrollbar scrollbar-thumb-orange-500 scrollbar-track-gray-100 mx-2 mt-3 flex-1 overflow-y-auto rounded-t-3xl bg-white px-5 pb-10 pt-2 text-center">
+          <div className="custom-scrollbar scrollbar-thumb-orange-500 scrollbar-track-gray-100 flex-1 overflow-y-auto bg-white p-5 pt-3 text-center border-separate">
             {/* pb-24: 고정된 예약 버튼을 피하기 위한 하단 패딩 */}
             {/* 태그 */}
-            <div className="mb-5 flex flex-wrap justify-center gap-2">
+            <div className="mb-3 flex flex-wrap justify-center gap-2">
               {farmDetails.tag?.length > 0 ? (
                 farmDetails.tag.map((tag, index) => (
                   <span
                     key={index}
-                    className="rounded-xl border-[0.1rem] border-[#FFA500] bg-[#FFDB99] px-2 py-1 text-xs"
+                    className="rounded-lg border-[0.1rem] border-[#FFA500] bg-[#FFDB99] px-2 py-0.5 text-[0.7rem]"
                   >
                     #{tag}
                   </span>
@@ -161,29 +161,29 @@ function FarmDetailedPage() {
             </div>
 
             {/* 농장 이름 */}
-            <div className="mb-5 flex items-center justify-between">
+            <div className="mb-4 flex items-center justify-around">
               <div className="flex">
                 <img src={check} alt="Check" className="w-3" />
                 <div className="text-xs">인증업체</div>
               </div>
-              <h2 className="text-3xl font-normal">{farmDetails.farm_name}</h2>
+              <h2 className="text-2xl font-medium">{farmDetails.farm_name}</h2>
               <p className="text-xs">지원자 (3/5)</p>
             </div>
 
             {/* 간단 설명 */}
-            <div className="mb-3 flex items-center justify-center">
+            <div className="mb-3 flex items-center justify-evenly">
               {/* 시급 */}
               <div className="flex flex-col items-center">
-                <img src={money} alt="Money" className="mb-1" />
-                <p className="text-center text-xs">
+                <img src={money} alt="Money" className="mb-1 w-4" />
+                <p className="text-center text-[0.5rem]">
                   시급 {farmDetails.hourly}원
                 </p>
               </div>
 
               {/* 근무일 */}
-              <div className="mx-4 flex flex-col items-center">
-                <img src={calendar} alt="Calendar" className="mb-1" />
-                <p className="text-center text-xs">
+              <div className="flex flex-col items-center">
+                <img src={calendar} alt="Calendar" className="mb-1 w-4" />
+                <p className="text-center text-[0.5rem]">
                   {farmDetails.workdays?.length > 0
                     ? farmDetails.workdays.join(", ")
                     : "정보 없음"}
@@ -191,42 +191,42 @@ function FarmDetailedPage() {
               </div>
 
               {/* 기간(일수) */}
-              <div className="mx-4 flex flex-col items-center">
-                <img src={clock} alt="Clock" className="mb-1" />
-                <p className="text-center text-xs">{farmDetails.duration}</p>
+              <div className="flex flex-col items-center">
+                <img src={clock} alt="Clock" className="mb-1 w-4" />
+                <p className="text-center text-[0.5rem]">{farmDetails.duration}</p>
               </div>
 
               {/* 기간 */}
               <div className="flex flex-col items-center">
-                <img src={hourGlass} alt="Hour Glass" className="mb-1" />
-                <p className="text-center text-xs">
+                <img src={hourGlass} alt="Hour Glass" className="mb-1 w-4" />
+                <p className="text-center text-[0.5rem]">
                   {farmDetails.period_start} ~ {farmDetails.period_end}
                 </p>
               </div>
             </div>
 
-            <div className="my-5 border-[1px]"></div>
+            <div className="my-4 border"></div>
 
             {/* 구인글 제목 */}
-            <p className="my-2 text-xl font-bold">{farmDetails.title}</p>
+            <p className="my-2 text-lg font-bold">{farmDetails.title}</p>
 
             {/* 설명 */}
-            <p className="mb-5 text-lg"> {farmDetails.description}</p>
-            <p className="">☏ 010-1234-5678</p>
+            <p className="mb-5 text-sm"> {farmDetails.description}</p>
+            <p className="text-xs">☏ 010-1234-5678</p>
 
             {/* 농장 위치 */}
             <img src={address} alt="Address" className="my-1" />
             <p className="text-xs">{farmDetails.location}</p>
 
-            <div className="my-5 border-[1px]"></div>
+            <div className="my-4 border-[1px]"></div>
 
             {/* 명소 */}
-            <p className="mb-5 text-xl font-bold">근처에 있는 명소</p>
-            <ol className="mb-16 flex justify-center gap-3">
+            <p className="mb-4 text-xl font-bold">근처에 있는 명소</p>
+            <ol className="mb-10 flex justify-center gap-3">
               {/* 명소 1 */}
               <li className="">
                 <img src={handam} alt="Handam" className="w-[9rem] rounded-2xl" />
-                <p className="text-xl font-bold mt-3 mb-1">한담해변</p>
+                <p className="text-lg font-bold mt-3 mb-1">한담해변</p>
                 <div className="flex justify-center mb-2">
                   <img src={star} alt="Star" className="w-3" />
                   <p className="text-xs">4.6</p>
@@ -247,7 +247,7 @@ function FarmDetailedPage() {
                     광고
                   </p>
                 </div>
-                <p className="text-xl font-bold mt-3 mb-1">랜디스도넛</p>
+                <p className="text-lg font-bold mt-3 mb-1">랜디스도넛</p>
                 <div className="flex justify-center mb-2">
                   <img src={star} alt="Star" className="w-3" />
                   <p className="text-xs">3.8</p>
@@ -259,7 +259,7 @@ function FarmDetailedPage() {
               {/* 명소 3 */}
               <li className="">
                 <img src={arte} alt="Arte" className="w-[9rem] rounded-2xl" />
-                <p className="text-xl font-bold mt-3 mb-1">아르떼뮤지엄</p>
+                <p className="text-lg font-bold mt-3 mb-1">아르떼뮤지엄</p>
                 <div className="flex justify-center mb-2">
                   <img src={star} alt="Star" className="w-3" />
                   <p className="text-xs">4.2</p>
@@ -272,7 +272,7 @@ function FarmDetailedPage() {
 
             {/* 예약 버튼 */}
             <div className="rounded-xl bg-[#FFA500]">
-              <button onClick={handleMatchClick} className="h-14 text-white">
+              <button onClick={handleMatchClick} className="h-12 text-white">
                 예약하기
               </button>
             </div>

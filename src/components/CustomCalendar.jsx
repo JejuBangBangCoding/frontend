@@ -88,25 +88,25 @@ const CustomCalendar = ({
   };
 
   return (
-    <div className="w-[420px] rounded-lg bg-white p-4 shadow-md">
+    <div className="w-[320px] rounded-lg bg-white p-4 shadow-md">
       {/* 월 */}
-      <div className="mb-6 flex items-center justify-center gap-5 font-Pretendard">
-        <button onClick={handlePrevMonth} className="text-xl font-bold">
+      <div className="mb-5 flex items-center justify-center gap-5 font-Pretendard text-sm">
+        <button onClick={handlePrevMonth} className="font-bold">
           &lt;
         </button>
-        <h2 className="text-xl font-semibold">
+        <h2 className="font-bold">
           {new Date(currentYear, currentMonth).toLocaleString("default", {
             month: "long",
           })}{" "}
           {currentYear}
         </h2>
-        <button onClick={handleNextMonth} className="text-xl font-bold">
+        <button onClick={handleNextMonth} className="font-bold">
           &gt;
         </button>
       </div>
 
       {/* 요일 */}
-      <div className="grid grid-cols-7 gap-1 text-center font-bold">
+      <div className="text-sm grid grid-cols-7 gap-1 text-center font-bold">
         {["일", "월", "화", "수", "목", "금", "토"].map((day, index) => (
           <div
             key={day}
@@ -124,7 +124,7 @@ const CustomCalendar = ({
       </div>
 
       {/* 날짜 */}
-      <div className="mt-2 grid grid-cols-7 gap-1">
+      <div className="grid grid-cols-7 gap-1 text-xs">
         {weeks.map((week, i) => (
           <React.Fragment key={i}>
             {week.map((day, idx) => {
@@ -142,7 +142,7 @@ const CustomCalendar = ({
                 <button
                   key={idx}
                   onClick={() => handleDateClick(day)}
-                  className={`h-[3rem] w-[3rem] rounded-full py-2 transition-colors hover:bg-[#FFA500] hover:text-white ${
+                  className={`h-[2.5rem] w-[2.5rem] rounded-full transition-colors hover:bg-[#FFA500] hover:text-white ${
                     selectedClass || inRangeClass
                   } ${isToday ? "border border-[#FFA500]" : ""}`}
                 >
