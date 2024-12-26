@@ -225,7 +225,7 @@ function FarmDetailedPage() {
             <ol className="mb-10 flex justify-center gap-3">
               {/* 명소 1 */}
               <li className="">
-                <img src={handam} alt="Handam" className="w-[9rem] rounded-2xl" />
+                <img src={handam} alt="Handam" className="w-[9rem]  h-24 rounded-2xl" />
                 <p className="text-lg font-bold mt-3 mb-1">한담해변</p>
                 <div className="flex justify-center mb-2">
                   <img src={star} alt="Star" className="w-3" />
@@ -241,7 +241,7 @@ function FarmDetailedPage() {
                   <img
                     src={randys}
                     alt="Randys"
-                    className="w-[9rem] rounded-2xl"
+                    className="w-[9rem] h-24 rounded-2xl"
                   />
                   <p className="absolute top-2 right-2 text-xs p-1 border rounded-lg border-[#FFDB99] bg-[#ffffff]">
                     광고
@@ -258,7 +258,7 @@ function FarmDetailedPage() {
               </li>
               {/* 명소 3 */}
               <li className="">
-                <img src={arte} alt="Arte" className="w-[9rem] rounded-2xl" />
+                <img src={arte} alt="Arte" className="w-[9rem] h-24 rounded-2xl" />
                 <p className="text-lg font-bold mt-3 mb-1">아르떼뮤지엄</p>
                 <div className="flex justify-center mb-2">
                   <img src={star} alt="Star" className="w-3" />
