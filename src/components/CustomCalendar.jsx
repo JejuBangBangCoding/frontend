@@ -90,8 +90,8 @@ const CustomCalendar = ({
   return (
     <div className="w-[320px] rounded-lg bg-white p-4 shadow-md">
       {/* 월 */}
-      <div className="mb-5 flex items-center justify-center gap-5 font-Pretendard text-sm">
-        <button onClick={handlePrevMonth} className="font-bold">
+      <div className="mb-5 flex items-center justify-center gap-2 font-Pretendard text-sm">
+        <button onClick={handlePrevMonth} className="hover:bg-[#FFA500] rounded-full px-2 py-0.5">
           &lt;
         </button>
         <h2 className="font-bold">
@@ -100,7 +100,7 @@ const CustomCalendar = ({
           })}{" "}
           {currentYear}
         </h2>
-        <button onClick={handleNextMonth} className="font-bold">
+        <button onClick={handleNextMonth} className="hover:bg-[#FFA500] rounded-full px-2 py-0.5">
           &gt;
         </button>
       </div>
