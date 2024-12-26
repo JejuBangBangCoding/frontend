@@ -31,15 +31,15 @@ const Card = ({ farm, onClick }) => {
   }, [tags]);
 
   return (
-    <div className="p-5">
-      <div className="mb-3 text-center">
+    <div className="px-5 pt-3 pb-5">
+      <div className="mb-2 text-center">
         <h1 className="text-xl font-[700]">{farm.farm_name}</h1>
         <p className="text-sm text-gray-600">⭐ {farm.match_score}</p>
       </div>
 
       <div className="w-full overflow-hidden rounded-lg bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl">
         {/* 이미지 */}
-        <div className="h-80 overflow-hidden">
+        <div className="h-72 overflow-hidden">
           <img
             src={imageUrl}
             alt={farm.title}
