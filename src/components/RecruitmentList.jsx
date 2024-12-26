@@ -167,9 +167,9 @@ const RecruitmentList = ({ selectedRegion }) => {
                   className="mb-3 flex cursor-pointer rounded-lg"
                 >
                   <div className="flex w-full">
-                    <div className="flex flex-col flex-1 justify-between">
-                      <p className="truncate text-[13px]">{item.name}</p>
-                      <div className="text-[14px] font-bold my-1">
+                    <div className="flex flex-col flex-1 justify-around">
+                      <p className="truncate text-[15px]">{item.name}</p>
+                      <div className="text-[15px] font-bold">
                         <span>{item.address}</span>
                       </div>
                       <div className="flex justify-between items-center">
