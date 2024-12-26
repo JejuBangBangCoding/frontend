@@ -67,20 +67,20 @@ function MainPage() {
           </div>
 
           {/* 버튼들 */}
-          <div className="flex flex-none justify-center gap-3 border-x bg-white py-3 px-4">
+          <div className="flex flex-none justify-center gap-3 border-x bg-white py-4 px-4">
             <button
               onClick={handleAiRecommendationClick}
-              className="w-[5rem] flex-col justify-items-center rounded-lg bg-[#FFE9C1] pt-1 pb-[0.1rem]"
+              className="w-[5rem] flex-col justify-items-center rounded-lg bg-[#FFE9C1] py-1"
             >
-              <img src={bulb} alt="Bulb" className="w-4" />
-              <p className="text-[0.6rem] font-medium text-[#FF800B]">AI 추천</p>
+              <img src={bulb} alt="Bulb" className="w-5" />
+              <p className="text-xs font-medium text-[#FF800B]">AI 추천</p>
             </button>
             <button
               onClick={handleReservationClick}
               className="flex w-[24rem] items-center justify-center gap-2 rounded-lg bg-[#FFA500]"
             >
-              <img src={hang} alt="Hang" className="w-4" />
-              <p className="text-white">예약 정보 확인</p>
+              <img src={hang} alt="Hang" className="w-5" />
+              <p className="text-white text-lg">예약 정보 확인</p>
             </button>
           </div>
         </div>

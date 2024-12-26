@@ -52,7 +52,7 @@ const Map = ({ onRegionClick }) => {
           )}
 
           <p
-            className={`cursor-pointer text-sm font-black transition-all duration-300 ${
+            className={`cursor-pointer font-black transition-all duration-300 ${
               selectedRegion === region.name
                 ? "rounded-full p-0 text-[1.1rem]"
                 : "opacity-50"

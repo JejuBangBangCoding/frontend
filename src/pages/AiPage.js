@@ -187,7 +187,7 @@ function AiPage() {
           <Header showProfile={true} />
 
           {/* Main container */}
-          <div className="container relative mx-auto p-5">
+          <div className="container relative mx-auto p-8">
             {/* 선택 섹션 */}
             {!contentChanged && (
               <div className="flex w-full flex-col items-center p-3">
@@ -365,7 +365,7 @@ function AiPage() {
               {/* 초기화 버튼 */}
               <button
                 onClick={handleReset}
-                className="flex h-14 w-[7.5rem] cursor-pointer items-center justify-center gap-2 rounded-2xl bg-[#E8E8E8]"
+                className="flex h-14 w-32 cursor-pointer items-center justify-center gap-2 rounded-2xl bg-[#E8E8E8]"
               >
                 <img src={refresh} alt="Refresh" className="w-[1rem]" />
                 <p className="">초기화</p>
@@ -374,7 +374,7 @@ function AiPage() {
               {/* 다음/추천 버튼 */}
               <button
                 onClick={handleClick}
-                className={`flex h-14 w-52 items-center justify-center rounded-2xl text-white ${
+                className={`flex h-14 w-60 items-center justify-center rounded-2xl text-white ${
                   isPeriodValid() || contentChanged
                     ? "cursor-pointer bg-[#FFA500]"
                     : "cursor-not-allowed bg-gray-400"

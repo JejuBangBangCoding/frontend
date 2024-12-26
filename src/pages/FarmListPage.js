@@ -50,7 +50,7 @@ function FarmListPage() {
           <div
             className="flex transition-transform duration-300"
             style={{
-              transform: `translateX(-${currentIndex * 360}px)`,
+              transform: `translateX(-${currentIndex * 405}px)`,
               width: `${recommendations.length * 500}px`,
             }}
           >
@@ -58,7 +58,7 @@ function FarmListPage() {
               <div
                 key={farm.id}
                 className="flex-shrink-0"
-                style={{ width: "360px" }}
+                style={{ width: "405px" }}
               >
                 <Card farm={farm} onClick={() => handleFarmClick(farm)} />
               </div>
