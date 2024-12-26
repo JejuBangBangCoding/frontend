@@ -289,11 +289,8 @@ function FarmDetailedPage() {
         setIsChecked={setIsChecked}
         title="유의사항"
       >
-        <p className="mb-4 text-sm font-light">
-          모두를 위한 유의사항 안내이니 꼭 읽어봐 주세요!
-        </p>
         <div className="text-left leading-8">
-          <p className="mb-4">· 예약 시간 10분 전까지 도착해 주세요.</p>
+          <p className="mb-2 font-[600] text-sm text-[#ff3333]">*예약 시간 10분 전까지 도착해 주세요.</p>
           <p className="">
             1. 취소 및 변경
             <br />

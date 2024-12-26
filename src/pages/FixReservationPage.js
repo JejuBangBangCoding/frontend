@@ -54,7 +54,7 @@ function FixReservationPage() {
           {/* 예약 성공 텍스트 */}
           <div className="flex-col justify-items-center">
           <img src={check} alt="Check" className="w-20" />
-            <h2 className="mt-3 mb-5 flex items-end text-2xl font-bold">
+            <h2 className="mt-2 mb-4 flex items-end text-2xl font-bold">
               예약이 확정되었습니다!
             </h2>
           </div>
@@ -63,30 +63,30 @@ function FixReservationPage() {
             <img
               src={`${process.env.REACT_APP_BACKEND_URL}${reservationDetails.image}`}
               alt="Farm"
-              className="w-80 rounded-t-xl"
+              className="w-80 h-72 rounded-t-xl"
             />
             {/* 예약 상세 정보 카드 */}
-            <div className="w-80 rounded-b-xl border bg-white py-6 text-left shadow">
+            <div className="w-80 h-40 rounded-b-xl border bg-white py-2 text-left shadow">
               <div className="flex-col justify-items-center">
-                <p className="text-xl font-semibold">
+                <p className="text-lg font-semibold">
                   <span className=""></span>{" "}
                   {reservationDetails.board_title}
                 </p>
-                <p className="mb-5 text-sm font-medium">
+                <p className="mb-3 text-sm font-medium">
                   <span className=""></span>{" "}
                   {reservationDetails.farm_name}
                 </p>
               </div>
               <div className="flex-col justify-items-start ml-5">
-              <p className="">
+              <p className="text-sm">
                 <span className="text-[#C0C0C0]">예약번호</span>
                 <span className="ml-2">{reservationDetails.reservation_number}</span>
               </p>
-              <p className="my-2">
+              <p className="my-2 text-sm">
                 <span className="text-[#C0C0C0]">예약날짜</span>
                 <span className="ml-2">{reservationDetails.date}</span>
               </p>
-              <p className="">
+              <p className="text-sm">
                 <span className="text-[#C0C0C0]">예약기간</span>
                 <span className="ml-2">
                   {reservationDetails.board_period_start} ~ {reservationDetails.board_period_end}
@@ -129,7 +129,7 @@ function FixReservationPage() {
         </div>
       )}
 
-      <div className="mt-10 px-14">
+      <div className="mt-8 px-8">
         <button
           onClick={() => navigate("/mainpage")}
           className="w-full rounded-lg bg-[#FFA500] px-6 py-3 text-xl font-semibold text-white hover:bg-[#FF710A]"
