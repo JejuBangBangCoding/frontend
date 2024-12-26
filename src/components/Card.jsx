@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import star from "../assets/images/star.svg";
 
 const Card = ({ farm, onClick }) => {
   const [tags, setTags] = useState([]);
@@ -34,7 +35,10 @@ const Card = ({ farm, onClick }) => {
     <div className="px-5 pt-3 pb-5">
       <div className="mb-2 text-center">
         <h1 className="text-xl font-[700]">{farm.farm_name}</h1>
-        <p className="text-sm text-gray-600">⭐ {farm.match_score}</p>
+        <div className="flex justify-center items-center gap-1">
+          <img src={star} alt="star" className="w-4 h-4" />
+          <p className="text-sm text-gray-600">{farm.match_score}</p>
+        </div>
       </div>
 
       <div className="w-full overflow-hidden rounded-lg bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl">
